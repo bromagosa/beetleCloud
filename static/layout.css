@@ -1,0 +1,9 @@
+.pure-g p {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.pure-g .pure-u-md-1-3:nth-child(-n+3) {
+    background: #DDD;
+}
