@@ -1,0 +1,40 @@
+/* ToDo: translete this into pure.css styles */
+/* General Styles */
+
+a {
+    text-decoration: none;
+    color: #fafafa;
+}
+
+body {
+    background: #fafafa;
+}
+
+/* Top Bar */
+
+#top-bar {
+    background: #ae272b;
+    height: 28px;
+}
+
+#top-bar > ul {
+    display: inline-block;
+    height: 28px;
+}
+
+#top-bar > ul > .nav-element {
+    display: inline-block;
+}
+
+#top-bar > ul > .button {
+    display: inline-block;
+    font-weight: bold;
+}
+
+#top-bar > ul.left {
+    float: left;
+}
+
+#top-bar > ul.right {
+    float: right;
+}

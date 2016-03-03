@@ -1,0 +1,20 @@
+<ul class="left">
+    <% for i, section in pairs({ 'Explore', 'Forum', 'Examples' }) do %>
+        <li class="button nav-element"><a href="<%= string.lower(section) %>"><%= section %></a></li>
+    <% end %>
+</ul>
+
+<ul class="right">
+    <form class="search nav-element">
+        <input
+          type="text"
+          name="search"
+          value="Search"
+          onclick="if (this.value === 'Search')
+          this.value = ''" onblur="if (!this.value) this.value = 'Search'">
+    </form>
+
+    <% for i, section in pairs({ 'Run Beetle Blocks', 'Join Beetle Blocks', 'Log In' }) do %>
+        <li class="button nav-element"><a href="<%= string.lower(section) %>"><%= section %></a></li>
+    <% end %>
+</ul>

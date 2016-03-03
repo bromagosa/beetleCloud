@@ -8,9 +8,16 @@ local validate = require 'lapis.validate'
 local bcrypt = require 'bcrypt'
 local db = require 'lapis.db' 
 local Model = require('lapis.db.model').Model
+local util = require('lapis.util')
 
 local capture_errors_json = app_helpers.capture_errors_json
 local yield_error = app_helpers.yield_error
+
+
+-- Utility functions
+
+function unescapeTable(table)
+end
 
 
 -- Database abstractions
@@ -22,6 +29,16 @@ local Users = Model:extend('users', {
 local Projects = Model:extend('projects', {
     primary_key = { 'username', 'projectname' }
 })
+
+
+-- Before filter
+
+app:before_filter(function(self)
+    -- unescape all parameters
+    for k,v in pairs(self.params) do
+        self.params[k] = util.unescape(v)
+    end
+end)
 
 
 -- Data retrieval
@@ -52,14 +69,19 @@ end)
 
 
 app:get('/api/users/:username/projects/:projectname', function(self)
-    return { layout = false, json = Projects:find(self.params.username, self.params.projectname) }
+    local project = Projects:find(self.params.username, self.params.projectname)
+
+    if (project and project.ispublic) then
+        return { layout = false, json = project }
+    else
+        return { layout = false, json = { error = 'Project ' .. self.params.projectname .. ' is either nonexistent or private' } }
+    end
 end)
 
 
 -- Data insertion
 
 app:post('/api/users/new', capture_errors_json(function(self)
-    
     validate.assert_valid(self.params, {
         { 'username', exists = true, min_length = 3, max_length = 200 },
         { 'password', exists = true, min_length = 3 },
@@ -84,6 +106,11 @@ end))
 
 
 app:post('/api/projects/new', capture_errors_json(function(self)
+    -- This should actually be /api/users/:username/projects/new, but for
+    -- some reason it seems you can only use URL parameters if you go the
+    -- respond_to() way, not when using the post() wrapper
+    --
+    -- see: http://leafo.net/lapis/reference/actions.html#handling-http-verbs
 
     -- can't use camel case because SQL doesn't care about case
 
