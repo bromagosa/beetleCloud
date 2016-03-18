@@ -9,15 +9,10 @@ local bcrypt = require 'bcrypt'
 local db = require 'lapis.db' 
 local Model = require('lapis.db.model').Model
 local util = require('lapis.util')
+local respond_to = require("lapis.application").respond_to
 
 local capture_errors_json = app_helpers.capture_errors_json
 local yield_error = app_helpers.yield_error
-
-
--- Utility functions
-
-function unescapeTable(table)
-end
 
 
 -- Database abstractions
@@ -38,6 +33,8 @@ app:before_filter(function(self)
     for k,v in pairs(self.params) do
         self.params[k] = util.unescape(v)
     end
+    -- Set Access Control header
+    self.res.headers['Access-Control-Allow-Origin'] = '*'
 end)
 
 
@@ -81,29 +78,33 @@ end)
 
 -- Data insertion
 
-app:post('/api/users/new', capture_errors_json(function(self)
-    validate.assert_valid(self.params, {
-        { 'username', exists = true, min_length = 3, max_length = 200 },
-        { 'password', exists = true, min_length = 3 },
-        { 'email', exists = true, min_length = 3 }
-    })
+app:match('new_user', '/api/users/new', respond_to({
+    OPTIONS = function(self)
+        self.res.headers['access-control-allow-headers'] = 'Content-Type'
+        self.res.headers['access-control-allow-method'] = 'POST'
+        return { status = 200, layout = false }
+    end,
+    POST = function(self)
+        validate.assert_valid(self.params, {
+            { 'username', exists = true, min_length = 3, max_length = 200 },
+            { 'password', exists = true, min_length = 3 },
+            { 'email', exists = true, min_length = 3 }
+        })
 
-    if (not Users:find(self.params.username)) then
-        yield_error('a user with this username already exists')
+        if (Users:find(self.params.username)) then
+            yield_error('a user with this username already exists')
+        end
+
+        print(3)
+        Users:create({
+            username = self.params.username,
+            password = bcrypt.digest(self.params.password, 11),
+            email = self.params.email
+        })
+        print(4)
+        return { layout = false, status = 200, readyState = 4, json = { ok = 'user ' .. self.params.username .. ' created' }}
     end
-
-    -- passwords should travel over SSL, this needs to be studied and set up 
-    -- in config.lua
-
-    Users:create({
-        username = self.params.username,
-        password = bcrypt.digest(self.params.password, 11),
-        email = self.params.email
-    })
-
-    return { layout = false, json = { ok = 'user ' .. self.params.username .. ' created' }}
-end))
-
+}))
 
 app:post('/api/projects/new', capture_errors_json(function(self)
     -- This should actually be /api/users/:username/projects/new, but for
