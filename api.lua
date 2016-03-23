@@ -9,11 +9,23 @@ local bcrypt = require 'bcrypt'
 local db = require 'lapis.db' 
 local Model = require('lapis.db.model').Model
 local util = require('lapis.util')
-local respond_to = require("lapis.application").respond_to
+local respond_to = require('lapis.application').respond_to
 
-local capture_errors_json = app_helpers.capture_errors_json
-local yield_error = app_helpers.yield_error
 
+-- Utility functions
+
+errorResponse = function(errorText)
+    return jsonResponse({ error = errorText })
+end
+
+jsonResponse = function(json)
+    return {
+        layout = false, 
+        status = 200, 
+        readyState = 4, 
+        json = json
+    }
+end
 
 -- Database abstractions
 
@@ -46,45 +58,108 @@ end)
 
 
 app:get('/api/users', function(self)
-    return { layout = false, json = Users:select({ fields = 'username' }) }
+    return jsonResponse(Users:select({ fields = 'username' }))
 end)
 
 
 app:get('/api/users/:username', function(self)
     -- find() doesn't allow for field filtering
-    return { layout = false, json = Users:select('where username = ?', self.params.username, { fields = 'username' })[1] }
+    return jsonResponse(Users:select('where username = ?', self.params.username, { fields = 'username' })[1])
 end)
 
 
 app:get('/api/users/:username/projects', function(self)
     -- returns all public projects by a user
-    return { layout = false, json = Projects:find_all({ self.params.username }, { 
-        key = 'username',
-        where = { ispublic = true }
-    } )}
+
+    if (self.params.token == self.session.token) then
+        return jsonResponse(Projects:find_all(
+            { self.params.username }, 
+            { key = 'username' }))
+    else
+        return jsonResponse(Projects:find_all(
+            { self.params.username }, 
+            { 
+                key = 'username',
+                where = { ispublic = true }
+            }))
+    end
 end)
 
-
+app:match('token', '/api/mytoken', respond_to({
+    OPTIONS = function(self)
+        self.res.headers['access-control-allow-headers'] = 'Content-Type'
+        self.res.headers['access-control-allow-method'] = 'POST'
+        return { status = 200, layout = false }
+    end,
+    GET = function(self)
+        print('====SESSION====')
+        for k,v in pairs(self.session) do
+            print(k .. ' -> ' .. v)
+        end
+        print('===============')
+        return jsonResponse({ token = self.session.token })
+    end
+}))
+    
 app:get('/api/users/:username/projects/:projectname', function(self)
     local project = Projects:find(self.params.username, self.params.projectname)
 
     if (project and project.ispublic) then
-        return { layout = false, json = project }
+        return jsonResponse(project)
+    elseif (project and self.params.token == self.session.token) then
+        return jsonResponse(project)
     else
-        return { layout = false, json = { error = 'Project ' .. self.params.projectname .. ' is either nonexistent or private' } }
+        return errorResponse('Project ' .. self.params.projectname .. ' is either nonexistent or private')
     end
 end)
 
+-- Session management
 
--- Data insertion
-
-app:match('new_user', '/api/users/new', respond_to({
+app:match('login', '/api/users/login', respond_to({
     OPTIONS = function(self)
         self.res.headers['access-control-allow-headers'] = 'Content-Type'
         self.res.headers['access-control-allow-method'] = 'POST'
         return { status = 200, layout = false }
     end,
     POST = function(self)
+        local user = Users:find(self.params.username)
+
+        if (user == nil) then
+
+            return errorResponse('invalid username')
+
+        elseif (bcrypt.verify(self.params.password, user.password)) then
+
+            self.session.token = bcrypt.digest(math.random() .. '', 11)
+
+            return jsonResponse({ 
+                    text = 'User ' .. self.params.username .. ' logged in',
+                    token = self.session.token
+                })
+        else
+
+            return errorResponse('invalid password')
+
+        end
+    end
+}))
+
+
+-- Data insertion
+
+app:match('new_user', '/api/users/new', respond_to({
+
+    OPTIONS = function(self)
+
+        self.res.headers['access-control-allow-headers'] = 'Content-Type'
+        self.res.headers['access-control-allow-method'] = 'POST'
+
+        return { status = 200, layout = false }
+
+    end,
+
+    POST = function(self)
+
         validate.assert_valid(self.params, {
             { 'username', exists = true, min_length = 3, max_length = 200 },
             { 'password', exists = true, min_length = 3 },
@@ -92,21 +167,21 @@ app:match('new_user', '/api/users/new', respond_to({
         })
 
         if (Users:find(self.params.username)) then
-            yield_error('a user with this username already exists')
+            return errorResponse('a user with this username already exists')
         end
 
-        print(3)
         Users:create({
             username = self.params.username,
             password = bcrypt.digest(self.params.password, 11),
             email = self.params.email
         })
-        print(4)
-        return { layout = false, status = 200, readyState = 4, json = { ok = 'user ' .. self.params.username .. ' created' }}
+
+        return jsonResponse({ text = 'User ' .. self.params.username .. ' created' })
+
     end
 }))
 
-app:post('/api/projects/new', capture_errors_json(function(self)
+app:post('/api/projects/new', function(self)
     -- This should actually be /api/users/:username/projects/new, but for
     -- some reason it seems you can only use URL parameters if you go the
     -- respond_to() way, not when using the post() wrapper
@@ -126,11 +201,11 @@ app:post('/api/projects/new', capture_errors_json(function(self)
     })
 
     if (not Users:find(self.params.username)) then
-        yield_error('no user with this username exists')
+        return errorResponse('no user with this username exists')
     end
 
     if (Projects:find(self.params.username, self.params.projectname)) then
-        yield_error('there is already a project under this name for this user, please choose another name for this project or use /api/projects/update instead')
+        return errorResponse('there is already a project under this name for this user, please choose another name for this project or use /api/projects/update instead')
     end
 
     Projects:create({
@@ -141,5 +216,5 @@ app:post('/api/projects/new', capture_errors_json(function(self)
         contents = self.params.contents
     })
 
-    return { layout = false, json = { ok = 'project ' .. self.params.projectname .. ' created' }}
-end))
+    return jsonResponse({ text = 'project ' .. self.params.projectname .. ' created' })
+end)
