@@ -12,7 +12,7 @@ local util = require('lapis.util')
 local respond_to = require('lapis.application').respond_to
 
 
--- Utility functions
+-- Response generation
 
 errorResponse = function(errorText)
     return jsonResponse({ error = errorText })
@@ -26,6 +26,13 @@ jsonResponse = function(json)
         json = json
     }
 end
+
+cors_options = function(self)
+    self.res.headers['access-control-allow-headers'] = 'Content-Type'
+    self.res.headers['access-control-allow-method'] = 'POST, GET, OPTIONS'
+    return { status = 200, layout = false }
+end
+
 
 -- Database abstractions
 
@@ -45,8 +52,14 @@ app:before_filter(function(self)
     for k,v in pairs(self.params) do
         self.params[k] = util.unescape(v)
     end
+
     -- Set Access Control header
-    self.res.headers['Access-Control-Allow-Origin'] = '*'
+    self.res.headers['Access-Control-Allow-Origin'] = 'http://localhost:8080'
+    self.res.headers['Access-Control-Allow-Credentials'] = 'true'
+
+    if not self.session.username then
+        self.session.username = ''
+    end
 end)
 
 
@@ -68,79 +81,67 @@ app:get('/api/users/:username', function(self)
 end)
 
 
-app:get('/api/users/:username/projects', function(self)
-    -- returns all public projects by a user
+app:match('/api/users/:username/projects', respond_to({
+    OPTIONS = cors_options,
+    GET = function(self)
+        -- returns all public projects by a user
 
-    if (self.params.token == self.session.token) then
-        return jsonResponse(Projects:find_all(
+        if (self.params.username == self.session.username) then
+            return jsonResponse(Projects:find_all(
             { self.params.username }, 
             { key = 'username' }))
-    else
-        return jsonResponse(Projects:find_all(
+        else
+            return jsonResponse(Projects:find_all(
             { self.params.username }, 
             { 
                 key = 'username',
                 where = { ispublic = true }
             }))
-    end
-end)
-
-app:match('token', '/api/mytoken', respond_to({
-    OPTIONS = function(self)
-        self.res.headers['access-control-allow-headers'] = 'Content-Type'
-        self.res.headers['access-control-allow-method'] = 'POST'
-        return { status = 200, layout = false }
-    end,
-    GET = function(self)
-        print('====SESSION====')
-        for k,v in pairs(self.session) do
-            print(k .. ' -> ' .. v)
         end
-        print('===============')
-        return jsonResponse({ token = self.session.token })
     end
 }))
-    
+
 app:get('/api/users/:username/projects/:projectname', function(self)
     local project = Projects:find(self.params.username, self.params.projectname)
 
     if (project and project.ispublic) then
         return jsonResponse(project)
-    elseif (project and self.params.token == self.session.token) then
+    elseif (project and self.params.username == self.session.username) then
         return jsonResponse(project)
     else
         return errorResponse('Project ' .. self.params.projectname .. ' is either nonexistent or private')
     end
 end)
 
+
 -- Session management
 
 app:match('login', '/api/users/login', respond_to({
-    OPTIONS = function(self)
-        self.res.headers['access-control-allow-headers'] = 'Content-Type'
-        self.res.headers['access-control-allow-method'] = 'POST'
-        return { status = 200, layout = false }
-    end,
-    POST = function(self)
+    OPTIONS = cors_options,
+    GET = function(self)
         local user = Users:find(self.params.username)
 
         if (user == nil) then
-
             return errorResponse('invalid username')
-
         elseif (bcrypt.verify(self.params.password, user.password)) then
-
-            self.session.token = bcrypt.digest(math.random() .. '', 11)
-
+            self.session.username = user.username
             return jsonResponse({ 
-                    text = 'User ' .. self.params.username .. ' logged in',
-                    token = self.session.token
+                    text = 'User ' .. self.params.username .. ' logged in'
                 })
         else
-
             return errorResponse('invalid password')
-
         end
+    end
+}))
+
+app:match('logout', '/api/users/logout', respond_to({
+    OPTIONS = cors_options,
+    GET = function(self)
+        local username = self.session.username
+        self.session.username = ''
+        return jsonResponse({ 
+            text = 'User ' .. username .. ' logged out'
+        })
     end
 }))
 
@@ -148,18 +149,8 @@ app:match('login', '/api/users/login', respond_to({
 -- Data insertion
 
 app:match('new_user', '/api/users/new', respond_to({
-
-    OPTIONS = function(self)
-
-        self.res.headers['access-control-allow-headers'] = 'Content-Type'
-        self.res.headers['access-control-allow-method'] = 'POST'
-
-        return { status = 200, layout = false }
-
-    end,
-
+    OPTIONS = cors_options,
     POST = function(self)
-
         validate.assert_valid(self.params, {
             { 'username', exists = true, min_length = 3, max_length = 200 },
             { 'password', exists = true, min_length = 3 },
@@ -177,44 +168,50 @@ app:match('new_user', '/api/users/new', respond_to({
         })
 
         return jsonResponse({ text = 'User ' .. self.params.username .. ' created' })
-
     end
 }))
 
-app:post('/api/projects/new', function(self)
-    -- This should actually be /api/users/:username/projects/new, but for
-    -- some reason it seems you can only use URL parameters if you go the
-    -- respond_to() way, not when using the post() wrapper
-    --
-    -- see: http://leafo.net/lapis/reference/actions.html#handling-http-verbs
+app:match('new_project', '/api/projects/new', respond_to({
+    OPTIONS = cors_options,
+    POST = function(self)
+        -- can't use camel case because SQL doesn't care about case
 
-    -- can't use camel case because SQL doesn't care about case
+        self.params.ispublic = (self.params.ispublic == 'true')
 
-    self.params.ispublic = (self.params.ispublic == 'true')
+        validate.assert_valid(self.params, {
+            { 'projectname', exists = true, min_length = 3 },
+            { 'username', exists = true },
+            { 'ispublic', type = 'boolean' },
+            { 'contents', exists = true }
+        })
 
-    validate.assert_valid(self.params, {
-        { 'projectname', exists = true, min_length = 3 },
-        { 'username', exists = true },
-        { 'ispublic', type = 'boolean' },
-        { 'thumbnail', exists = true },
-        { 'contents', exists = true }
-    })
+        if (not Users:find(self.params.username)) then
+            return errorResponse('no user with this username exists')
+        end
 
-    if (not Users:find(self.params.username)) then
-        return errorResponse('no user with this username exists')
+        if (not self.params.username == self.session.username) then
+            return errorResponse('are you having fun?')
+        end
+
+        if (Projects:find(self.params.username, self.params.projectname)) then
+            return errorResponse('there is already a project under this name for this user, ' ..
+                'please choose another name for this project or use /api/projects/update instead')
+        end
+
+        print('==========HERE=========')
+        for k, v in pairs(self.req.params_post) do
+            print(k .. ' -> ' .. v)
+        end
+        print('==========HERE=========')
+
+        --[[
+        Projects:create({
+            projectname = self.params.projectname,
+            username = self.params.username,
+            ispublic = self.params.ispublic,
+            contents = self.params.contents
+        })
+        ]]--
+        return jsonResponse({ text = 'project ' .. self.params.projectname .. ' created' })
     end
-
-    if (Projects:find(self.params.username, self.params.projectname)) then
-        return errorResponse('there is already a project under this name for this user, please choose another name for this project or use /api/projects/update instead')
-    end
-
-    Projects:create({
-        projectname = self.params.projectname,
-        username = self.params.username,
-        ispublic = self.params.ispublic,
-        thumbnail = self.params.thumbnail,
-        contents = self.params.contents
-    })
-
-    return jsonResponse({ text = 'project ' .. self.params.projectname .. ' created' })
-end)
+}))

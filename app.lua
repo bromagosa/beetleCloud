@@ -23,3 +23,5 @@ end)
 require 'api'
 require 'social'
 require 'admin'
+
+return app
