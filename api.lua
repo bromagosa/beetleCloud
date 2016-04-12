@@ -198,20 +198,15 @@ app:match('new_project', '/api/projects/new', respond_to({
                 'please choose another name for this project or use /api/projects/update instead')
         end
 
-        print('==========HERE=========')
-        for k, v in pairs(self.req.params_post) do
-            print(k .. ' -> ' .. v)
-        end
-        print('==========HERE=========')
-
-        --[[
+        ngx.req.read_body()
+        
         Projects:create({
             projectname = self.params.projectname,
             username = self.params.username,
             ispublic = self.params.ispublic,
-            contents = self.params.contents
+            contents = ngx.req.get_body_data()
         })
-        ]]--
+
         return jsonResponse({ text = 'project ' .. self.params.projectname .. ' created' })
     end
 }))
