@@ -10,6 +10,7 @@ local db = require 'lapis.db'
 local Model = require('lapis.db.model').Model
 local util = require('lapis.util')
 local respond_to = require('lapis.application').respond_to
+local xml = require('xml')
 
 
 -- Response generation
@@ -199,12 +200,17 @@ app:match('new_project', '/api/projects/new', respond_to({
         end
 
         ngx.req.read_body()
+        local xmlString = ngx.req.get_body_data()
+        local xmlData = xml.load(xmlString)
         
         Projects:create({
             projectname = self.params.projectname,
             username = self.params.username,
             ispublic = self.params.ispublic,
-            contents = ngx.req.get_body_data()
+            contents = xmlString,
+            updated = db.format_date(),
+            notes = xml.find(xmlData, 'notes')[1],
+            thumbnail = xml.find(xmlData, 'thumbnail')[1]
         })
 
         return jsonResponse({ text = 'project ' .. self.params.projectname .. ' created' })
