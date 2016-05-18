@@ -102,17 +102,20 @@ app:match('/api/users/:username/projects', respond_to({
     end
 }))
 
-app:get('/api/users/:username/projects/:projectname', function(self)
-    local project = Projects:find(self.params.username, self.params.projectname)
+app:match('fetchproject', '/api/users/:username/projects/:projectname', respond_to({
+    OPTIONS = cors_options,
+    GET = function(self)
+        local project = Projects:find(self.params.username, self.params.projectname)
 
-    if (project and project.ispublic) then
-        return jsonResponse(project)
-    elseif (project and self.params.username == self.session.username) then
-        return jsonResponse(project)
-    else
-        return errorResponse('Project ' .. self.params.projectname .. ' is either nonexistent or private')
+        if (project and project.ispublic) then
+            return jsonResponse(project)
+        elseif (project and self.params.username == self.session.username) then
+            return jsonResponse(project)
+        else
+            return errorResponse('Project ' .. self.params.projectname .. ' is either nonexistent or private')
+        end
     end
-end)
+}))
 
 
 -- Session management
@@ -172,7 +175,7 @@ app:match('new_user', '/api/users/new', respond_to({
     end
 }))
 
-app:match('new_project', '/api/projects/new', respond_to({
+app:match('save_project', '/api/projects/save', respond_to({
     OPTIONS = cors_options,
     POST = function(self)
         -- can't use camel case because SQL doesn't care about case
@@ -194,14 +197,23 @@ app:match('new_project', '/api/projects/new', respond_to({
             return errorResponse('are you having fun?')
         end
 
-        if (Projects:find(self.params.username, self.params.projectname)) then
-            return errorResponse('there is already a project under this name for this user, ' ..
-                'please choose another name for this project or use /api/projects/update instead')
-        end
-
         ngx.req.read_body()
+        local existingProject = Projects:find(self.params.username, self.params.projectname)
         local xmlString = ngx.req.get_body_data()
         local xmlData = xml.load(xmlString)
+
+        if (existingProject) then
+
+            existingProject:update({
+                ispublic = self.params.ispublic,
+                contents = xmlString,
+                updated = db.format_date(),
+                notes = xml.find(xmlData, 'notes')[1],
+                thumbnail = xml.find(xmlData, 'thumbnail')[1]
+            })
+
+            return jsonResponse({ text = 'project ' .. self.params.projectname .. ' updated' })
+        end
         
         Projects:create({
             projectname = self.params.projectname,
