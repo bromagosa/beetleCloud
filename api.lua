@@ -85,7 +85,7 @@ end)
 app:match('/api/users/:username/projects', respond_to({
     OPTIONS = cors_options,
     GET = function(self)
-        -- returns all public projects by a user
+        -- returns all projects by a user
 
         if (self.params.username == self.session.username) then
             return jsonResponse(Projects:find_all(

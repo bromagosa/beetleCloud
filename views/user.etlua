@@ -1,0 +1,10 @@
+<div>
+    <h2><%= params.username %></h2>
+    <h2>About me</h2>
+</div>
+<div>
+    <h2>Shared Projects</h2>
+    <% for k, v in pairs(publicProjects) do %>
+        <img src="<%= v.thumbnail %>"/>
+    <% end %>
+</div>

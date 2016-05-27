@@ -4,13 +4,34 @@
 -- project pages and user pages
 
 local app = require 'app'
+local db = require 'lapis.db' 
+local Model = require('lapis.db.model').Model
+
+-- Database abstractions
+
+local Users = Model:extend('users', {
+    primary_key = { 'username' }
+})
+
+local Projects = Model:extend('projects', {
+    primary_key = { 'username', 'projectname' }
+})
+
+
+-- Endpoints
 
 app:get('/users', function(self)
     return 'all users'
 end)
 
 app:get('/users/:username', function(self)
-    return self.params.username .. '\'s user page'
+    self.publicProjects = Projects:find_all(
+    { self.params.username }, 
+    { 
+        key = 'username',
+        where = { ispublic = true }
+    })
+    return { render = 'user' }
 end)
 
 app:get('/users/:username/projects', function(self)

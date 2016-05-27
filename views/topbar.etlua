@@ -1,6 +1,6 @@
 <ul class="left">
     <% for i, section in pairs({ 'Explore', 'Forum', 'Examples' }) do %>
-        <li class="button nav-element"><a href="<%= string.lower(section) %>"><%= section %></a></li>
+        <li class="button nav-element"><a href="<%= string.lower(section:gsub('%s+','')) %>"><%= section %></a></li>
     <% end %>
 </ul>
 
@@ -15,6 +15,6 @@
     </form>
 
     <% for i, section in pairs({ 'Run Beetle Blocks', 'Join Beetle Blocks', 'Log In' }) do %>
-        <li class="button nav-element"><a href="<%= string.lower(section) %>"><%= section %></a></li>
+        <li class="button nav-element"><a href="<%= string.lower(section:gsub('%s+','')) %>"><%= section %></a></li>
     <% end %>
 </ul>

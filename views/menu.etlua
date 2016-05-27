@@ -1,5 +1,0 @@
-<ul>
-  <% for key, value in pairs(items) do %>
-    <li><a href="/<%= value %>"><%= key %></a></li>
-  <% end %>
-</ul>
