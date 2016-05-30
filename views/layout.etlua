@@ -6,13 +6,13 @@
         <link rel="stylesheet" type="text/css" href="/static/reset.css">
         <link rel="stylesheet" type="text/css" href="/static/pure-min.css">
         <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
-        <link rel="stylesheet" type="text/css" href="/static/layout.css">
         <link rel="stylesheet" type="text/css" href="/static/beetleblocks.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
         <nav id="top-bar"><% render("views/topbar") %></nav>
-        <h1>Beetle Cloud</h1>
-        <% content_for("inner") %>
+        <div class="content">
+            <% content_for("inner") %>
+        </div>
     </body>
 </html>

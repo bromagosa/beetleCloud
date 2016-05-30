@@ -1,11 +1,11 @@
-<ul class="left">
+<ul class="pure-g pure-menu-list">
     <% for i, section in pairs({ 'Explore', 'Forum', 'Examples' }) do %>
-        <li class="button nav-element"><a href="<%= string.lower(section:gsub('%s+','')) %>"><%= section %></a></li>
+        <li class="pure-menu-item pure-u-2-24"><a class="pure-menu-link" href="<%= string.lower(section:gsub('%s+','')) %>"><%= section %></a></li>
     <% end %>
-</ul>
 
-<ul class="right">
-    <form class="search nav-element">
+    <i class="pure-u-5-24"></i>
+
+    <form class="search nav-element pure-u-4-24">
         <input
           type="text"
           name="search"
@@ -15,6 +15,6 @@
     </form>
 
     <% for i, section in pairs({ 'Run Beetle Blocks', 'Join Beetle Blocks', 'Log In' }) do %>
-        <li class="button nav-element"><a href="<%= string.lower(section:gsub('%s+','')) %>"><%= section %></a></li>
+        <li class="pure-menu-item pure-u-3-24"><a class="pure-menu-link" href="<%= string.lower(section:gsub('%s+','')) %>"><%= section %></a></li>
     <% end %>
 </ul>

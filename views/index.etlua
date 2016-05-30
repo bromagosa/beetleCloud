@@ -1,1 +1,37 @@
-<p>Welcome to the Beetle Blocks social site</p>
+<div id="bb-title"><i class="logo"></i><span>Beetle Blocks</span></div>
+<span id="bb-subtitle">Visual Code for 3D Design</span>
+
+<div class="pure-g">
+    <div class="pure-u-1-3">
+        <div class="info-box">
+            <div class="title about"><span class="glyph">ⓘ</span><span class="title-text">About</span></div>
+            <div class="text">
+                <p>Beetle Blocks is a graphical blocks-based programming environment for 3D design and fabrication.</p> 
+                <p>Use code to control a beetle that can place 3D shapes and extrude its path as a tube. Then make a 3D print!  </p>
+            </div>
+        </div>
+    </div>
+    <div class="pure-u-1-3">
+        <div class="info-box">
+            <div class="title about"><span class="glyph">✎</span><span class="title-text">Credits</span></div>
+            <div class="text">
+                <p>By <a href="http://ericrosenbaum.com" target="_blank">Eric Rosenbaum</a>, <a href="http://architecture.pratt.edu/?p=4545" target="_blank">Duks Koschitz</a>, and <a href="https://github.com/bromagosa" target="_blank">Bernat Romagosa</a>, with additional software development by <a href="https://github.com/jmoenig" target="_blank">Jens Mönig</a>.</p>
+                <p>Beetle Blocks is based on <a href="http://scratch.mit.edu" target="_blank">Scratch</a> and implemented using <a href="http://snap.berkeley.edu" target="_blank">Snap!</a> and <a href="http://threejs.org" target="_blank">ThreeJS</a>.</p>
+                <p>This project has been partially sponsored by the <a target="_blank" href="https://www.pratt.edu/">Pratt Institute</a>, <a target="_bank" href="http://citilab.eu">Citilab - Cornellà</a> and <a target="_blank" href="http://arduino.org">Arduino.org</a>.</p>
+            </div>
+        </div>
+    </div>
+    <div class="pure-u-1-3">
+        <div class="info-box">
+            <div class="title about"><span class="glyph">⚠</span><span class="title-text">Work in progress</span></div>
+            <div class="text">
+                <p><b>Please note:</b> Beetle Blocks is alpha software, currently in development. Only the <a href="http://www.google.com/chrome" target="_blank">Chrome</a> browser is currently supported. We'd love to hear your feature requests and bug reports on <a href="https://github.com/ericrosenbaum/BeetleBlocks" target="_blank">github</a>.</p> 
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="pure-g" id="run">
+    <img class="beetle" src="static/beetle.png">
+    <a class="pure-button red-button pure-u-1-2" align="center" href="runbeetleblocks">Run Beetle Blocks ▶</a>
+</div>

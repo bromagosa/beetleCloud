@@ -1,3 +1,11 @@
+<%
+publicProjects = Projects:find_all(
+    { params.username }, 
+    { 
+        key = 'username',
+        where = { ispublic = true }
+    })
+%>
 <div>
     <h2><%= params.username %></h2>
     <h2>About me</h2>

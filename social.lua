@@ -20,17 +20,16 @@ local Projects = Model:extend('projects', {
 
 -- Endpoints
 
+app:get('/login', function(self)
+    return { render = 'login' }
+end)
+
 app:get('/users', function(self)
     return 'all users'
 end)
 
 app:get('/users/:username', function(self)
-    self.publicProjects = Projects:find_all(
-    { self.params.username }, 
-    { 
-        key = 'username',
-        where = { ispublic = true }
-    })
+    self.Projects = Projects;
     return { render = 'user' }
 end)
 
