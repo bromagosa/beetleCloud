@@ -5,6 +5,7 @@
 
 local lapis = require 'lapis'
 local app = lapis.Application()
+local db = require 'lapis.db' 
 
 app:enable('etlua')
 app.layout = require 'views.layout'
@@ -16,6 +17,7 @@ package.loaded.bcrypt = bcryptlib
 
 -- This module only takes care of the index page
 app:get('/', function(self)
+    self.db = db
     return { render = 'index' }
 end)
 

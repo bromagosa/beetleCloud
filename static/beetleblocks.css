@@ -32,29 +32,31 @@ p {
     margin: 0 12px;
 }
 
-.info-box .title {
+.info-box .title,
+.carrousel .title {
     display: block;
     border-radius: 5px 5px 0 0;
     border: 1px solid #dfdedd;
     height: 50px;
-    background: #f7f8f8;
+    background-color: #eaebeb;
 }
 
 .info-box .title .glyph {
-    font-weight: bold;
     color: #6f7274;
     font-size: 1.3em;
     margin-left: 0.5em; 
 }
 
-.info-box .title .title-text {
+.info-box .title .title-text,
+.carrousel .title .title-text {
     font-size: 1.3em;
     font-weight: bold;
     line-height: 50px;
     margin-left: 0.5em;
 }
 
-.info-box .text {
+.info-box .text,
+.carrousel .projects {
     border-radius: 0 0 5px 5px;
     border: 1px solid #dfdedd;
     border-top: none;
@@ -147,7 +149,7 @@ p {
 }
 
 #run {
-    margin-top: 5em;
+    margin: 5em 0;
 }
 
 #run .pure-button {
@@ -157,4 +159,48 @@ p {
 .beetle {
     position: absolute;
     margin-top: -1.5em;
+}
+
+/* Project carrousel */
+
+.carrousel .title .title-text {
+    margin-left: 1em;
+}
+
+.carrousel .arrow a {
+    font-size: 2em;
+    line-height: 145px;
+    width: 100%;
+    display: block;
+    text-align: center;
+    vertical-align: middle;
+    color: #dadbdb;
+}
+
+.carrousel .arrow a:hover {
+    color: #6f7274;
+}
+
+.carrousel .project {
+    text-align: center;
+}
+
+.carrousel .project .thumbnail {
+    border-radius: 5px;
+}
+
+.carrousel .project .name {
+    display: block;
+}
+
+.carrousel .project .author {
+    display: block;
+}
+
+.carrousel .project .empty {
+    display: inline-block;
+    border: 2px dashed #dddddd;
+    border-radius: 5px;
+    height: 120px;
+    width: 160px;
 }

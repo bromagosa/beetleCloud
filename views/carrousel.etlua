@@ -1,0 +1,26 @@
+<% local projects = db.select('projectName, username, thumbnail from projects where isPublic = true order by id desc limit 5 offset ?', params.page or 0) %> <!--'-->
+<div class="carrousel">
+    <div class="title"><span class="title-text">Newest Projects</span></div>
+    <div class="projects pure-g">
+        <div class="arrow pure-u-1-12">
+            <a href="?page=<%= math.max((params.page or 0) - 1, 0) %>" ><i class="fa fa-arrow-circle-left"></i></a>
+        </div>
+        <% local projectCount = 0 %>
+        <% for i, project in pairs(projects) do %>
+        <div class="project pure-u-1-6">
+            <img class="thumbnail" src="<%= project.thumbnail %>">
+            <span class="name"><%= project.projectname %></span>
+            <span class="author">by <a href="#"><%= project.username %></a></span>
+        </div>
+        <% projectCount = projectCount + 1 %>
+        <% end %>
+        <% for i = projectCount, 4, 1 do %>
+        <div class="project pure-u-1-6">
+            <div class="empty"></div>
+        </div>
+        <% end %>
+        <div class="arrow pure-u-1-12">
+            <a href="?page=<%= (params.page or 0) + 1 %>"><i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+</div>
