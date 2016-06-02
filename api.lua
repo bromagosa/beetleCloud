@@ -70,6 +70,9 @@ app:get('/api', function(self)
     return { layout = false, 'Beetle Cloud API' }
 end)
 
+app:get('/projects/:limit/:offset', function(self)
+    return jsonResponse(db.select('projectName, username, thumbnail from projects where isPublic = true order by id desc limit ? offset ?', self.params.limit or 5, self.params.offset or 0))
+end)
 
 app:get('/api/users', function(self)
     return jsonResponse(Users:select({ fields = 'username' }))
