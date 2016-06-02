@@ -10,17 +10,18 @@
             updateCarrousel();
         };
         function updateCarrousel() {
-            for (var i = 1; i < projects.length; i ++) {
+            for (var i = 0; i < projects.length; i ++) {
                 var div = document.getElementById('project-' + i);
                 div.className = 'project pure-u-1-6';
                 div.children[0].src = projects[i].thumbnail;
-                div.children[1].textContent = projects[i].projectName;
-                div.children[2].children[0].textContent = projects[1].username;
+                div.children[1].textContent = projects[i].projectname;
+                div.children[2].children[0].textContent = projects[i].username;
             }
-            for (var i = projects.length; i < 6; i ++) {
+            for (var i = projects.length || 0; i < 5; i ++) {
                 var div = document.getElementById('project-' + i);
                 div.className = 'project pure-u-1-6 empty';
                 div.children[0].src = '';
+                div.children[1].textContent = '';
             }
         };
     </script>
@@ -30,14 +31,14 @@
             <a onclick="if (offset > 0) { offset--; getData(); }"><i class="fa fa-arrow-circle-left"></i></a>
         </div>
         <% for i = 1, 5, 1 do %>
-        <div id="project-<%= i %>">
+        <div id="project-<%= i - 1 %>">
             <img class="thumbnail" src="">
             <span class="name"></span>
             <span class="author">by <a href="#"></a></span>
         </div>
         <% end %>
         <div class="arrow pure-u-1-12">
-            <a onclick="offset ++; getData()"><i class="fa fa-arrow-circle-right"></i></a>
+            <a onclick="if (projects.length > 0) { offset ++; getData(); }"><i class="fa fa-arrow-circle-right"></i></a>
         </div>
     </div>
     <script>
