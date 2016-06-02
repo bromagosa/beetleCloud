@@ -45,6 +45,9 @@ local Projects = Model:extend('projects', {
     primary_key = { 'username', 'projectname' }
 })
 
+local Comments = Model:extend('comments', {
+    primary_key = { 'id' }
+})
 
 -- Before filter
 
@@ -70,20 +73,22 @@ app:get('/api', function(self)
     return { layout = false, 'Beetle Cloud API' }
 end)
 
-app:get('/projects/:limit/:offset', function(self)
-    return jsonResponse(db.select('projectName, username, thumbnail from projects where isPublic = true order by id desc limit ? offset ?', self.params.limit or 5, self.params.offset or 0))
-end)
-
 app:get('/api/users', function(self)
     return jsonResponse(Users:select({ fields = 'username' }))
 end)
-
 
 app:get('/api/users/:username', function(self)
     -- find() doesn't allow for field filtering
     return jsonResponse(Users:select('where username = ?', self.params.username, { fields = 'username' })[1])
 end)
 
+app:get('/projects/:limit/:offset', function(self)
+    return jsonResponse(
+        db.select(
+            'projectName, username, thumbnail from projects where isPublic = true order by id desc limit ? offset ?',
+            self.params.limit or 5,
+            self.params.offset or 0))
+end)
 
 app:match('/api/users/:username/projects', respond_to({
     OPTIONS = cors_options,
@@ -114,6 +119,20 @@ app:match('fetchproject', '/api/users/:username/projects/:projectname', respond_
             return jsonResponse(project)
         elseif (project and self.params.username == self.session.username) then
             return jsonResponse(project)
+        else
+            return errorResponse('Project ' .. self.params.projectname .. ' is either nonexistent or private')
+        end
+    end
+}))
+
+app:match('fetchcomments', '/api/users/:username/projects/:projectname/comments', respond_to({
+    OPTIONS = cors_options,
+    GET = function(self)
+
+        local project = Projects:find(self.params.username, self.params.projectname)
+
+        if (project and project.ispublic) then
+            return jsonResponse(Comments:select('where projectowner = ? and projectname = ?', self.params.username, self.params.projectname, { fields = 'contents, author, date' }))
         else
             return errorResponse('Project ' .. self.params.projectname .. ' is either nonexistent or private')
         end
@@ -229,5 +248,44 @@ app:match('save_project', '/api/projects/save', respond_to({
         })
 
         return jsonResponse({ text = 'project ' .. self.params.projectname .. ' created' })
+    end
+}))
+
+app:match('new_comment', '/api/comments/new', respond_to({
+    OPTIONS = cors_options,
+    POST = function(self)
+        -- can't use camel case because SQL doesn't care about case
+
+        validate.assert_valid(self.params, {
+            { 'projectowner', exists = true },
+            { 'username', exists = true },
+            { 'author', exists = true }
+        })
+
+        if (not Users:find(self.params.projectowner) or not Users:find(self.params.author)) then
+            return errorResponse('no user with this username exists')
+        end
+
+        if (not self.params.author == self.session.username) then
+            return errorResponse('are you having fun?')
+        end
+
+        ngx.req.read_body()
+        local project = Projects:find(self.params.projectowner, self.params.projectname)
+
+        if (project) then
+
+            Comments:create({
+                projectname = self.params.projectname,
+                projectowner = self.params.projectowner,
+                author = self.params.author,
+                contents = req.get_body_data(),
+                date = db.format_date()
+            })
+
+            return jsonResponse({ text = 'comment added' })
+        else
+            return errorResponse('this user does not have any project under this name')
+        end
     end
 }))

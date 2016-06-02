@@ -1,6 +1,7 @@
 /* General Styles */
 
 a {
+    cursor: pointer;
     text-decoration: none;
     color: #6f7274;
 }

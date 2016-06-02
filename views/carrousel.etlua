@@ -16,6 +16,7 @@
                 div.children[0].src = projects[i].thumbnail;
                 div.children[1].textContent = projects[i].projectname;
                 div.children[2].children[0].textContent = projects[i].username;
+                div.children[2].children[0].href = '/users/' + projects[i].username;
             }
             for (var i = projects.length || 0; i < 5; i ++) {
                 var div = document.getElementById('project-' + i);
@@ -34,7 +35,7 @@
         <div id="project-<%= i - 1 %>">
             <img class="thumbnail" src="">
             <span class="name"></span>
-            <span class="author">by <a href="#"></a></span>
+            <span class="author">by <a href=""></a></span>
         </div>
         <% end %>
         <div class="arrow pure-u-1-12">
