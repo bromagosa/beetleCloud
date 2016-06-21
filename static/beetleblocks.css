@@ -209,3 +209,8 @@ p {
 .carrousel .project.empty .author {
     display: none;
 }
+
+/* Login form */
+h1.fail {
+    background: rgba(255,0,0,0.2);
+}

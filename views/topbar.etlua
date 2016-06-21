@@ -13,8 +13,18 @@
           onclick="if (this.value === 'Search')
           this.value = ''" onblur="if (!this.value) this.value = 'Search'">
     </form>
+    <% 
+        local rightSections = { 'Run Beetle Blocks' }
+        if (session.username == '') then
+            rightSections[2] = 'Join Beetle Blocks'
+            rightSections[3] = 'Log In'
+        else
+            rightSections[2] = 'My Stuff'
+            rightSections[3] = 'Log Out'
+        end
 
-    <% for i, section in pairs({ 'Run Beetle Blocks', 'Join Beetle Blocks', 'Log In' }) do %>
-        <li class="pure-menu-item pure-u-3-24"><a class="pure-menu-link" href="<%= string.lower(section:gsub('%s+','')) %>"><%= section %></a></li>
+        for i, section in pairs(rightSections) do
+    %>
+            <li class="pure-menu-item pure-u-3-24"><a class="pure-menu-link" href="<%= string.lower(section:gsub('%s+','')) %>"><%= section %></a></li>
     <% end %>
 </ul>

@@ -1,0 +1,26 @@
+<% if (params.fail) then %>
+<h1 class="fail"><i class="glyph fa fa-thumbs-o-down"></i> Failed login</h1>
+<% else %>
+<h1>Log into Beetle Blocks</h1>
+<% end %>
+<form class="pure-form pure-form-aligned" method="GET" action="/api/users/login">
+    <fieldset>
+        <div class="pure-control-group">
+            <label for="username">Username</label>
+            <input id="username" name="username" type="text" placeholder="Username">
+        </div>
+
+        <div class="pure-control-group">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" placeholder="Password">
+        </div>
+
+        <div class="pure-controls">
+            <label for="cb" class="pure-checkbox">
+                <input id="cb" name="staylogged" type="checkbox"> keep me logged in
+            </label>
+
+            <button type="submit" class="pure-button red-button">Sign in</button>
+        </div>
+    </fieldset>
+</form>

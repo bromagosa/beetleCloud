@@ -21,7 +21,12 @@ local Projects = Model:extend('projects', {
 -- Endpoints
 
 app:get('/login', function(self)
+    self.fail = self.params.fail
     return { render = 'login' }
+end)
+
+app:get('/logout', function(self)
+    return { redirect_to = '/api/users/logout' }
 end)
 
 app:get('/users', function(self)

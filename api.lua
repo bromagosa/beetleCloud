@@ -146,16 +146,29 @@ app:match('login', '/api/users/login', respond_to({
     OPTIONS = cors_options,
     GET = function(self)
         local user = Users:find(self.params.username)
+        local comesFromWebClient = string.sub(ngx.var.http_referer,-5)
 
         if (user == nil) then
-            return errorResponse('invalid username')
+            if comesFromWebClient then
+                return { redirect_to = '/login?fail' }
+            else
+                return errorResponse('invalid username')
+            end
         elseif (bcrypt.verify(self.params.password, user.password)) then
             self.session.username = user.username
-            return jsonResponse({ 
+            if comesFromWebClient then
+                return { redirect_to = '/' }
+            else
+                return jsonResponse({ 
                     text = 'User ' .. self.params.username .. ' logged in'
                 })
+            end
         else
-            return errorResponse('invalid password')
+            if comesFromWebClient then
+                return { redirect_to = '/login?fail=true' }
+            else
+                return errorResponse('invalid password')
+            end
         end
     end
 }))
@@ -164,10 +177,15 @@ app:match('logout', '/api/users/logout', respond_to({
     OPTIONS = cors_options,
     GET = function(self)
         local username = self.session.username
+        local comesFromWebClient = string.sub(ngx.var.http_referer,-5)
         self.session.username = ''
-        return jsonResponse({ 
-            text = 'User ' .. username .. ' logged out'
-        })
+        if comesFromWebClient then
+            return { redirect_to = '/' }
+        else
+            return jsonResponse({ 
+                text = 'User ' .. username .. ' logged out'
+            })
+        end
     end
 }))
 
