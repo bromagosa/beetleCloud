@@ -58,6 +58,7 @@ app:before_filter(function(self)
     end
 
     -- Set Access Control header
+--    self.res.headers['Access-Control-Allow-Origin'] = 'http://beetleblocks.com'
     self.res.headers['Access-Control-Allow-Origin'] = 'http://localhost:8080'
     self.res.headers['Access-Control-Allow-Credentials'] = 'true'
 
@@ -146,11 +147,11 @@ app:match('login', '/api/users/login', respond_to({
     OPTIONS = cors_options,
     GET = function(self)
         local user = Users:find(self.params.username)
-        local comesFromWebClient = string.sub(ngx.var.http_referer,-5)
+        local comesFromWebClient = string.sub(ngx.var.http_referer,-5) == 'login'
 
         if (user == nil) then
             if comesFromWebClient then
-                return { redirect_to = '/login?fail' }
+                return { redirect_to = '/login?fail=true' }
             else
                 return errorResponse('invalid username')
             end
