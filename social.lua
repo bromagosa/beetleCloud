@@ -45,7 +45,7 @@ end)
 app:get('/users/:username/projects/:projectname', function(self)
     self.project = Projects:find(self.params.username, self.params.projectname)
     if (self.project and
-        (self.project.isPublic or
+        (self.project.ispublic or
             self.session.username == self.project.username)) then
         date = require('date')
         updated = date(self.project.updated)
