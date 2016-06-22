@@ -259,3 +259,15 @@ span.author {
 .stats span {
     line-height: 2em;
 }
+
+/* Not Found */
+
+.not-found {
+    margin-top: 50px;
+}
+
+.not-found img {
+    margin: 0 auto;
+    width: 350px;
+    display: block;
+}
