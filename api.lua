@@ -58,8 +58,8 @@ app:before_filter(function(self)
     end
 
     -- Set Access Control header
---    self.res.headers['Access-Control-Allow-Origin'] = 'http://beetleblocks.com'
-    self.res.headers['Access-Control-Allow-Origin'] = 'http://localhost:8080'
+    self.res.headers['Access-Control-Allow-Origin'] = 'http://beetleblocks.com'
+--    self.res.headers['Access-Control-Allow-Origin'] = 'http://localhost:8080'
     self.res.headers['Access-Control-Allow-Credentials'] = 'true'
 
     if not self.session.username then

@@ -7,7 +7,7 @@ a {
 }
 
 body {
-    background: #fafafa;
+    background: #fdfdfd;
     color: #2e2c2c;
 }
 
@@ -29,6 +29,7 @@ p {
 }
 
 /* Info boxes */
+
 .info-box {
     margin: 0 12px;
 }
@@ -48,8 +49,7 @@ p {
     margin-left: 0.5em; 
 }
 
-.info-box .title .title-text,
-.carrousel .title .title-text {
+.title-text {
     font-size: 1.3em;
     font-weight: bold;
     line-height: 50px;
@@ -211,6 +211,51 @@ p {
 }
 
 /* Login form */
+
 h1.fail {
     background: rgba(255,0,0,0.2);
+}
+
+/* Project page */
+
+.project-container {
+    background: #f8f8f8;
+    padding: 16px 40px 40px 40px;
+}
+
+.project span {
+    display: block;
+}
+
+.project .title-text {
+    margin-left: 0;
+}
+
+.project .details {
+    position: relative;
+}
+
+.project .details .pure-button {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.big-thumbnail {
+    margin: 10px 0;
+    width: 480px;
+}
+
+span.notes-title {
+    line-height: 50px;
+    font-weight: bold;
+    margin-top: 24px;
+}
+
+span.author {
+    font-weight: bold;
+}
+
+.stats span {
+    line-height: 2em;
 }

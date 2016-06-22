@@ -15,6 +15,7 @@
                 div.className = 'project pure-u-1-6';
                 div.children[0].src = projects[i].thumbnail;
                 div.children[1].textContent = projects[i].projectname;
+                div.children[1].href = '/users/' + projects[i].username + '/projects/' + projects[i].projectname;
                 div.children[2].children[0].textContent = projects[i].username;
                 div.children[2].children[0].href = '/users/' + projects[i].username;
             }
@@ -34,7 +35,7 @@
         <% for i = 1, 5, 1 do %>
         <div id="project-<%= i - 1 %>">
             <img class="thumbnail" src="">
-            <span class="name"></span>
+            <a class="name"></a>
             <span class="author">by <a href=""></a></span>
         </div>
         <% end %>

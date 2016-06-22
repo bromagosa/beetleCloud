@@ -43,5 +43,18 @@ app:get('/users/:username/projects', function(self)
 end)
 
 app:get('/users/:username/projects/:projectname', function(self)
-    return 'project ' .. self.params.projectname .. ' by ' .. self.params.username
+    self.project = Projects:find(self.params.username, self.params.projectname)
+    if (self.project and
+        (self.project.isPublic or
+            self.session.username == self.project.username)) then
+        date = require('date')
+        updated = date(self.project.updated)
+        self.project.modifiedString = 
+            string.format('%02d', updated:getday()) ..
+                '.' .. string.format('%02d', updated:getmonth()) ..
+                '.' .. updated:getyear()
+        return { render = 'project' }
+    else
+        return { render = 'notfound' }
+    end
 end)

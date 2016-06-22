@@ -1,0 +1,24 @@
+<div class="project-container">
+    <div class="project pure-g">
+        <div class="postcard pure-u-1-2">
+            <span class="title-text"><%= project.projectname %></span>
+            <span class="author">by <a href="/users/<%= project.username %>"><%= project.username %></a></span>
+            <img class="big-thumbnail" src="<%= project.thumbnail %>">
+            <div class="stats pure-g">
+                <div class="pure-u-1-2">
+                    <span>Views: </span>
+                    <span>Shared: </span>
+                </div>
+                <div class="pure-u-1-2">
+                    <span><i class="glyph fa fa-thumbs-o-up"></i></span>
+                    <span>Modified: <%= project.modifiedString %></span>
+                </div>
+            </div>
+        </div>
+        <div class="details pure-u-1-2">
+            <span class="notes-title">Project notes</span>
+            <span class="notes"><%= project.notes %></span>
+            <a class="pure-button red-button" align="center" href="/run#present:Username=<%= project.username %>&ProjectName=<%= project.projectname %>">Open Project</a>
+        </div>
+    </div>
+</div>
