@@ -11,3 +11,4 @@ uwsgi_temp
 config.lua
 .*.swp
 .*.swo
+static/run

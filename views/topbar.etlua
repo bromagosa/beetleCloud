@@ -9,22 +9,20 @@
         <input
           type="text"
           name="search"
-          value="Search"
-          onclick="if (this.value === 'Search')
-          this.value = ''" onblur="if (!this.value) this.value = 'Search'">
+          placeholder="Search">
     </form>
     <% 
-        local rightSections = { 'Run Beetle Blocks' }
+        local rightSections = { run = 'Run Beetle Blocks' }
         if (session.username == '') then
-            rightSections[2] = 'Join Beetle Blocks'
-            rightSections[3] = 'Log In'
+            rightSections['signup'] = 'Join Beetle Blocks'
+            rightSections['login'] = 'Log In'
         else
-            rightSections[2] = 'My Stuff'
-            rightSections[3] = 'Log Out'
+            rightSections['mystuff'] = 'My Stuff'
+            rightSections['logout'] = 'Log Out'
         end
 
-        for i, section in pairs(rightSections) do
+        for href, section in pairs(rightSections) do
     %>
-            <li class="pure-menu-item pure-u-3-24"><a class="pure-menu-link" href="<%= string.lower(section:gsub('%s+','')) %>"><%= section %></a></li>
+            <li class="pure-menu-item pure-u-3-24"><a class="pure-menu-link" href="<%= href %>"><%= section %></a></li>
     <% end %>
 </ul>

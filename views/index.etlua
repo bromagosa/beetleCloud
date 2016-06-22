@@ -33,7 +33,7 @@
 
 <div class="pure-g" id="run">
     <img class="beetle" src="static/beetle.png">
-    <a class="pure-button red-button pure-u-1-2" align="center" href="runbeetleblocks">Run Beetle Blocks ▶</a>
+    <a class="pure-button red-button pure-u-1-2" align="center" href="run">Run Beetle Blocks ▶</a>
 </div>
 
 <% render("views/carrousel") %>
