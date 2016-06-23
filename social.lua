@@ -28,6 +28,10 @@ app:get('/signup', function(self)
     return { render = 'notready' }
 end)
 
+app:get('/mystuff', function(self)
+    return { render = 'notready' }
+end)
+
 app:get('/login', function(self)
     self.fail = self.params.fail
     return { render = 'login' }
