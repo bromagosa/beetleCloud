@@ -44,6 +44,10 @@ h3 {
     width: 100%;
 }
 
+.spacer {
+    padding: 0.5em;
+}
+
 /* Info boxes */
 
 .info-box {
@@ -87,6 +91,17 @@ h3 {
 }
 
 /* Top Bar */
+
+.go-home {
+    position: absolute;
+    right: 0.5em;
+    font-size: 1.8em;
+    color: #fafafa;
+}
+
+a.go-home:hover {
+    color: #eee;
+}
 
 #top-bar {
     background: #ae272b;
@@ -296,4 +311,21 @@ span.author {
 
 .explore-contents p {
     margin-bottom: 1em;
+}
+
+/* Examples */
+
+.primer span,
+.primer img,
+.primer a {
+    display: block;
+}
+
+.primer img {
+    border: 1px solid #999;
+    margin-bottom: 0.5em;
+}
+
+.primer a {
+    margin-left: 0.5em;
 }

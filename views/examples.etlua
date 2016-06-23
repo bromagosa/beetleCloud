@@ -1,0 +1,27 @@
+<span class="title-text">Examples</span>
+<div class="pure-g">
+<% 
+shapes = { 'chair', 'nautilus', 'bracelet', 'wave surface' }
+for k, example in pairs(shapes) do
+%>
+<div class="pure-u-1-4">
+    <a href="/run#present:Username=bb-examples&ProjectName=<%= example %>&editMode=true">
+        <div class="spacer">
+            <img class="img-responsive" src="/static/examples/<%= example %>.jpg">
+        </div>
+    </a>
+</div>
+<%
+end
+%>
+</div>
+
+<hr>
+
+<div class="primer">
+    <span class="title-text">Comprehensive Collection of Examples</span>
+    <a href="/static/bb-primer.pdf">
+        <img src="/static/primer.jpg">
+        <span>Download a collection of examples</span>
+    </a>
+</div>

@@ -11,7 +11,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
-        <nav id="top-bar"><% render("views/topbar") %></nav>
+        <nav id="top-bar"><a class="go-home" href="/"><i class="fa fa-home"></i></a><% render("views/topbar") %></nav>
         <div class="content">
             <% content_for("inner") %>
         </div>
