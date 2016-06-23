@@ -1,1 +1,35 @@
 <span class="title-text">Beetle Blocks in Action</span>
+
+<hr>
+
+<div class="pure-g">
+    <div class="pure-u-1-3">
+        <a href="https://commons.pratt.edu/des-comp-spring-2015/" target="_blank">
+            <img class="img-responsive img-hover" src="/static/pratt-design-and-computation.jpg" alt="">
+        </a>
+    </div>
+    <div class="pure-u-2-3">
+        <div class="explore-contents">
+            <h3>Design and Computation at the Pratt Institute</h3>
+            <p>In Duks Koschitz's course, students use Beetleblocks for in-depth exploration of 2D and 3D algorithmic design. They fabricate their designs using wire-bending machines, pen-plotters, and 3D printers. Check out the student blogs to track their progress.</p>    
+            <a class="pure-button red-button" href="https://commons.pratt.edu/des-comp-spring-2015/" target="_blank">See more</a>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<div class="pure-g">
+    <div class="pure-u-1-3">
+        <a href="http://tinkering.exploratorium.edu/2015/07/07/beetleblocks-watercolorbot-and-turtle-art-more-explorations" target="_blank">
+            <img class="img-responsive img-hover" src="/static/tinkering-studio-watercolorbot.jpg" alt="">
+        </a>
+    </div>
+    <div class="pure-u-2-3">
+        <div class="explore-contents">
+            <h3>Exploratorium Tinkering Studio</h3>
+            <p>The facilitators at the San Francisco Exploratorium Tinkering Studio experiment with Beetleblocks themselves, in workshops with teachers, and with museum visitors. They use the watercolorbot to make colorful paintings of Beetleblocks designs.</p> 
+            <a class="pure-button red-button" href="http://tinkering.exploratorium.edu/2015/07/07/beetleblocks-watercolorbot-and-turtle-art-more-explorations" target="_blank">See more</a>
+        </div>
+    </div>
+</div>

@@ -12,7 +12,17 @@ body {
 }
 
 p {
-   line-height: 1.3em; 
+    line-height: 1.3em; 
+}
+
+hr {
+    border: 1px solid #eee;
+}
+
+h3 {
+    font-size: 1.2em;
+    font-weight: bold;
+    line-height: 2.5em;
 }
 
 /* Buttons */
@@ -26,6 +36,12 @@ p {
     background-color: #ac2029;
     color: #fafafa;
     font-weight: bold;
+}
+
+/* General classes */
+
+.img-responsive {
+    width: 100%;
 }
 
 /* Info boxes */
@@ -260,7 +276,7 @@ span.author {
     line-height: 2em;
 }
 
-/* Not Found */
+/* Project not found */
 
 .not-found {
     margin-top: 50px;
@@ -270,4 +286,14 @@ span.author {
     margin: 0 auto;
     width: 350px;
     display: block;
+}
+
+/* Explore */
+
+.explore-contents {
+    padding-left: 20px;
+}
+
+.explore-contents p {
+    margin-bottom: 1em;
 }

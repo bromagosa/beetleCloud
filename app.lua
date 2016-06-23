@@ -24,6 +24,7 @@ end)
 -- Other application aspects are spread over several modules
 require 'api'
 require 'social'
+require 'static'
 require 'admin'
 
 return app
