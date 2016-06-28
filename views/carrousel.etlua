@@ -13,12 +13,14 @@
             for (var i = 0; i < projects.length; i ++) {
                 var div = document.getElementById('project-' + i);
                 div.className = 'project pure-u-1-6';
-                div.children[0].href = '/users/' + projects[i].username + '/projects/' + projects[i].projectname;
+                console.log(projects[i].projectname);
+                div.children[0].href = '/users/' + encodeURIComponent(projects[i].username) +
+                                        '/projects/' + encodeURIComponent(projects[i].projectname);
                 div.children[0].children[0].src = projects[i].thumbnail;
                 div.children[1].textContent = projects[i].projectname;
                 div.children[1].href = div.children[0].href;
                 div.children[2].children[0].textContent = projects[i].username;
-                div.children[2].children[0].href = '/users/' + projects[i].username;
+                div.children[2].children[0].href = '/users/' + encodeURIComponent(projects[i].username);
             }
             for (var i = projects.length || 0; i < 5; i ++) {
                 var div = document.getElementById('project-' + i);
