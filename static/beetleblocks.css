@@ -223,6 +223,10 @@ a.go-home:hover {
     border-radius: 5px;
 }
 
+.carrousel .project.empty .thumbnail {
+    display: none;
+}
+
 .carrousel .project .name {
     display: block;
 }
