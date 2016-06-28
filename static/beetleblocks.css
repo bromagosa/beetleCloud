@@ -218,6 +218,8 @@ a.go-home:hover {
 }
 
 .carrousel .project .thumbnail {
+    width: 160px;
+    height: 120px;
     border-radius: 5px;
 }
 
