@@ -55,7 +55,7 @@ h3 {
 }
 
 .info-box .title,
-.carrousel .title {
+.carousel .title {
     display: block;
     border-radius: 5px 5px 0 0;
     border: 1px solid #dfdedd;
@@ -77,7 +77,7 @@ h3 {
 }
 
 .info-box .text,
-.carrousel .projects {
+.carousel .projects {
     border-radius: 0 0 5px 5px;
     border: 1px solid #dfdedd;
     border-top: none;
@@ -193,13 +193,13 @@ a.go-home:hover {
     margin-top: -1.5em;
 }
 
-/* Project carrousel */
+/* Project carousel */
 
-.carrousel .title .title-text {
+.carousel .title .title-text {
     margin-left: 1em;
 }
 
-.carrousel .arrow a {
+.carousel .arrow a {
     font-size: 2em;
     line-height: 145px;
     width: 100%;
@@ -209,33 +209,33 @@ a.go-home:hover {
     color: #dadbdb;
 }
 
-.carrousel .arrow a:hover {
+.carousel .arrow a:hover {
     color: #6f7274;
 }
 
-.carrousel .project {
+.carousel .project {
     text-align: center;
 }
 
-.carrousel .project .thumbnail {
+.carousel .project .thumbnail {
     width: 160px;
     height: 120px;
     border-radius: 5px;
 }
 
-.carrousel .project.empty .thumbnail {
+.carousel .project.empty .thumbnail {
     display: none;
 }
 
-.carrousel .project .name {
+.carousel .project .name {
     display: block;
 }
 
-.carrousel .project .author {
+.carousel .project .author {
     display: block;
 }
 
-.carrousel .project.empty .name {
+.carousel .project.empty .name {
     display: inline-block;
     border: 2px dashed #dddddd;
     border-radius: 5px;
@@ -243,8 +243,30 @@ a.go-home:hover {
     width: 160px;
 }
 
-.carrousel .project.empty .author {
+.carousel .project.empty .author {
     display: none;
+}
+
+@keyframes fade-out {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.carousel.fade-out .project {
+    animation-name: fade-out;
+    animation-duration: 0.5s;
+    opacity: 0;
+}
+
+.carousel.fade-in .project {
+    animation-name: fade-in;
+    animation-duration: 0.5s;
+    opacity: 1;
 }
 
 /* Login form */

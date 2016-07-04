@@ -36,4 +36,4 @@
     <a class="pure-button red-button pure-u-1-2" align="center" href="run">Run Beetle Blocks ▶</a>
 </div>
 
-<% render("views/carrousel") %>
+<% render("views/carousel") %>
