@@ -247,26 +247,12 @@ a.go-home:hover {
     display: none;
 }
 
-@keyframes fade-out {
-    from { opacity: 1; }
-    to { opacity: 0; }
-}
-
-@keyframes fade-in {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-.carousel.fade-out .project {
-    animation-name: fade-out;
-    animation-duration: 0.5s;
-    opacity: 0;
-}
-
-.carousel.fade-in .project {
-    animation-name: fade-in;
-    animation-duration: 0.5s;
-    opacity: 1;
+.carousel {
+    transition: opacity 0.25s linear;
+    -webkit-transition: opacity 0.25s linear;
+    -moz-transition: opacity 0.25s linear;
+    -o-transition: opacity 0.25s linear;
+    -ms-transition: opacity 0.25s linear;
 }
 
 /* Login form */
