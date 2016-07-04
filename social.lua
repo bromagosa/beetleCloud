@@ -25,7 +25,17 @@ app:get('/forum', function(self)
 end)
 
 app:get('/signup', function(self)
-    return { render = 'notready' }
+    self.fail = self.params.fail
+    self.reason = self.params.reason
+    return { render = 'signup' }
+end)
+
+app:get('/user_created', function(self)
+    return { render = 'user_created' }
+end)
+
+app:get('/tos', function(self)
+    return { render = 'tos' }
 end)
 
 app:get('/mystuff', function(self)

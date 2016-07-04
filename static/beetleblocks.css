@@ -259,9 +259,9 @@ a.go-home:hover {
     -ms-transition: opacity 0.25s linear;
 }
 
-/* Login form */
+/* Forms */
 
-h1.fail {
+.fail {
     background: rgba(255,0,0,0.2);
 }
 

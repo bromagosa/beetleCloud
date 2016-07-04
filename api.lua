@@ -177,7 +177,7 @@ app:match('logout', '/api/users/logout', respond_to({
     OPTIONS = cors_options,
     GET = function(self)
         local username = self.session.username
-        local comesFromWebClient = string.sub(ngx.var.http_referer,-5)
+        local comesFromWebClient = string.sub(ngx.var.http_referer,-1) == '/'
         self.session.username = ''
         if comesFromWebClient then
             return { redirect_to = '/' }
@@ -195,14 +195,24 @@ app:match('logout', '/api/users/logout', respond_to({
 app:match('new_user', '/api/users/new', respond_to({
     OPTIONS = cors_options,
     POST = function(self)
+        local comesFromWebClient = string.sub(ngx.var.http_referer,-6) == 'signup'
+
         validate.assert_valid(self.params, {
             { 'username', exists = true, min_length = 3, max_length = 200 },
             { 'password', exists = true, min_length = 3 },
             { 'email', exists = true, min_length = 3 }
         })
 
+        if (comesFromWebClient and not self.params.password == self.params.password_repeat) then
+                return { redirect_to = '/signup?fail=true&reason=Passwords%20do%20not%20match' }
+        end
+
         if (Users:find(self.params.username)) then
-            return errorResponse('a user with this username already exists')
+            if (comesFromWebClient) then
+                return { redirect_to = '/signup?fail=true&reason=Username%20already%20exists' }
+            else
+                return errorResponse('a user with this username already exists')
+            end
         end
 
         Users:create({
@@ -210,8 +220,11 @@ app:match('new_user', '/api/users/new', respond_to({
             password = bcrypt.digest(self.params.password, 11),
             email = self.params.email
         })
-
-        return jsonResponse({ text = 'User ' .. self.params.username .. ' created' })
+            if (comesFromWebClient) then
+                return { redirect_to = '/user_created' }
+            else
+                return jsonResponse({ text = 'User ' .. self.params.username .. ' created' })
+            end
     end
 }))
 

@@ -1,0 +1,36 @@
+<% if (params.fail) then %>
+    <h1 class="fail"><i class="glyph fa fa-thumbs-o-down"></i> Account creation failed: <%= params.reason %></h1>
+<% else %>
+    <h1>Create a Beetle Blocks account</h1>
+<% end %>
+<form class="pure-form pure-form-aligned" method="POST" action="/api/users/new">
+    <fieldset>
+        <div class="pure-control-group">
+            <label for="username">Username</label>
+            <input id="username" name="username" type="text" placeholder="Username">
+        </div>
+
+        <div class="pure-control-group">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" placeholder="Password">
+        </div>
+
+        <div class="pure-control-group">
+            <label for="password_repeat">Repeat password</label>
+            <input id="password_repeat" name="password_repeat" type="password" placeholder="Repeat password">
+        </div>
+
+        <div class="pure-control-group">
+            <label for="email">Email adress</label>
+            <input id="email" name="email" type="email" placeholder="Email address">
+        </div>
+
+        <div class="pure-controls">
+            <label for="tos" class="pure-checkbox">
+                <input id="tos" name="tos" type="checkbox"> I have read and agree to the <a target="_blank" href="/tos">Terms of Service</a>
+            </label>
+
+            <button type="submit" class="pure-button red-button">Sign up</button>
+        </div>
+    </fieldset>
+</form>
