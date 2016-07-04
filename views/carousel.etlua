@@ -5,7 +5,8 @@
             carouselDiv = document.currentScript.parentElement,
             projects;
         function getData() {
-            carouselDiv.style.opacity = 0;
+            carouselDiv.classList.add('fade');
+            setTimeout(function () { carouselDiv.classList.remove('fade'); }, 250);
             ajax.open("GET", "/projects/5/" + offset, false);
             ajax.send();
             projects =JSON.parse(ajax.responseText);
@@ -31,7 +32,6 @@
                 div.children[1].textContent = '';
                 div.children[1].removeAttribute('href');
             }
-            carouselDiv.style.opacity = 1;
         };
     </script>
     <div class="title"><span class="title-text">Newest Projects</span></div>

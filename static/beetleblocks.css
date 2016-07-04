@@ -247,7 +247,11 @@ a.go-home:hover {
     display: none;
 }
 
-.carousel {
+.carousel.fade .project {
+    opacity: 0;
+}
+
+.carousel .project {
     transition: opacity 0.25s linear;
     -webkit-transition: opacity 0.25s linear;
     -moz-transition: opacity 0.25s linear;
