@@ -6,11 +6,15 @@
             projects;
         function getData() {
             carouselDiv.classList.add('fade');
-            setTimeout(function () { carouselDiv.classList.remove('fade'); }, 250);
-            ajax.open("GET", "/projects/5/" + offset, false);
+            ajax.onreadystatechange = function () {
+                if (ajax.readyState == 4 && ajax.status == 200) {
+                    projects =JSON.parse(ajax.responseText);
+                    updateCarrousel();
+                    carouselDiv.classList.remove('fade');
+                }
+            };
+            ajax.open("GET", "/projects/5/" + offset, true);
             ajax.send();
-            projects =JSON.parse(ajax.responseText);
-            updateCarrousel();
         };
         function updateCarrousel() {
             for (var i = 0; i < projects.length; i ++) {
