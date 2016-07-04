@@ -58,7 +58,6 @@ app:before_filter(function(self)
     end
 
     -- Set Access Control header
-    self.res.headers['Access-Control-Allow-Origin'] = 'http://beetleblocks.com'
 --    self.res.headers['Access-Control-Allow-Origin'] = 'http://localhost:8080'
     self.res.headers['Access-Control-Allow-Credentials'] = 'true'
 
@@ -267,6 +266,31 @@ app:match('save_project', '/api/projects/save', respond_to({
         })
 
         return jsonResponse({ text = 'project ' .. self.params.projectname .. ' created' })
+    end
+}))
+
+app:match('remove_project', '/api/users/:username/projects/:projectname/delete', respond_to({
+    OPTIONS = cors_options,
+    GET = function(self)
+        -- can't use camel case because SQL doesn't care about case
+
+        if (not Users:find(self.params.username)) then
+            return errorResponse('no user with this username exists')
+        end
+
+        if (not self.params.username == self.session.username) then
+            return errorResponse('are you having fun?')
+        end
+
+        local project = Projects:find(self.params.username, self.params.projectname)
+
+        if (project) then
+            project:delete()
+            return jsonResponse({ text = 'project ' .. self.params.projectname .. ' removed' })
+        else
+            return errorResponse('project does not exist')
+        end
+        
     end
 }))
 
