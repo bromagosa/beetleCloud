@@ -246,8 +246,8 @@ app:match('save_project', '/api/projects/save', respond_to({
             return errorResponse('no user with this username exists')
         end
 
-        if (not self.params.username == self.session.username) then
-            return errorResponse('are you having fun?')
+        if (self.params.username ~= self.session.username) then
+            return errorResponse('authentication error')
         end
 
         ngx.req.read_body()
@@ -265,10 +265,14 @@ app:match('save_project', '/api/projects/save', respond_to({
                 thumbnail = xml.find(xmlData, 'thumbnail')[1]
             })
 
+            if (existingProject.ispublic ~= (self.params.ispublic == 'true')) then
+                existingProject:update({ shared = db.format_date() })
+            end
+
             return jsonResponse({ text = 'project ' .. self.params.projectname .. ' updated' })
         end
         
-        Projects:create({
+        project = Projects:create({
             projectname = self.params.projectname,
             username = self.params.username,
             ispublic = self.params.ispublic,
@@ -278,7 +282,42 @@ app:match('save_project', '/api/projects/save', respond_to({
             thumbnail = xml.find(xmlData, 'thumbnail')[1]
         })
 
+        if (self.params.ispublic == 'true') then
+            project:update({ shared = db.format_date() })
+        end
+
         return jsonResponse({ text = 'project ' .. self.params.projectname .. ' created' })
+    end
+}))
+
+app:match('set_visibility', '/api/users/:username/projects/:projectname/visibility', respond_to({
+    OPTIONS = cors_options,
+    GET = function(self)
+
+        if (not Users:find(self.params.username)) then
+            return errorResponse('no user with this username exists')
+        end
+
+        if (self.params.username ~= self.session.username) then
+            return errorResponse('authentication error')
+        end
+
+        local project = Projects:find(self.params.username, self.params.projectname)
+
+        if (project) then
+            project:update({ ispublic = self.params.ispublic == 'true' })
+            if (self.params.ispublic == 'true') then
+                project:update({ shared = db.format_date() })
+            end
+
+            return jsonResponse({ 
+                text = 'project ' .. self.params.projectname .. ' is now ' ..
+                (self.params.ispublic == 'true' and 'public' or 'private')
+            })
+        else
+            return errorResponse('project does not exist')
+        end
+        
     end
 }))
 
@@ -291,8 +330,8 @@ app:match('remove_project', '/api/users/:username/projects/:projectname/delete',
             return errorResponse('no user with this username exists')
         end
 
-        if (not self.params.username == self.session.username) then
-            return errorResponse('are you having fun?')
+        if (self.params.username ~= self.session.username) then
+            return errorResponse('authentication error')
         end
 
         local project = Projects:find(self.params.username, self.params.projectname)
@@ -322,8 +361,8 @@ app:match('new_comment', '/api/comments/new', respond_to({
             return errorResponse('no user with this username exists')
         end
 
-        if (not self.params.author == self.session.username) then
-            return errorResponse('are you having fun?')
+        if (self.params.author ~= self.session.username) then
+            return errorResponse('authentication error')
         end
 
         ngx.req.read_body()

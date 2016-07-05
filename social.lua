@@ -69,14 +69,18 @@ app:get('/users/:username/projects/:projectname', function(self)
     if (self.project and
         (self.project.ispublic or
             self.session.username == self.project.username)) then
-        date = require('date')
-        updated = date(self.project.updated)
-        self.project.modifiedString = 
-            string.format('%02d', updated:getday()) ..
-                '.' .. string.format('%02d', updated:getmonth()) ..
-                '.' .. updated:getyear()
+        self.project.modifiedString = dateString(self.project.updated)
+        self.project.sharedString = dateString(self.project.shared)
+            
         return { render = 'project' }
     else
         return { render = 'notfound' }
     end
 end)
+
+function dateString(sqlDate)
+    actualDate = require('date')(sqlDate)
+    return string.format('%02d', actualDate:getday()) ..
+                '.' .. string.format('%02d', actualDate:getmonth()) ..
+                '.' .. actualDate:getyear()
+end
