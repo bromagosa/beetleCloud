@@ -18,7 +18,7 @@
         </div>
         <div class="details pure-u-1-2">
             <span class="notes-title">Project notes</span>
-            <span class="notes"><%= project.notes %></span>
+            <span class="notes"><%= project.notes or 'This project has no notes.' %></span>
             <a class="pure-button red-button" align="center" href="/run#present:Username=<%= util.escape(project.username) %>&ProjectName=<%= util.escape(project.projectname) %>">Open Project</a>
         </div>
     </div>
