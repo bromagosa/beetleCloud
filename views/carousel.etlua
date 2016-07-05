@@ -45,8 +45,8 @@
         </div>
         <% for i = 1, 5, 1 do %>
         <div id="project-<%= i - 1 %>">
-            <a><img class="thumbnail" src=""></a>
-            <a class="name"></a>
+            <a target="_blank"><img class="thumbnail" src=""></a>
+            <a target="_blank" class="name"></a>
             <span class="author">by <a href=""></a></span>
         </div>
         <% end %>
