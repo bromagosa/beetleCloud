@@ -11,9 +11,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
-        <nav id="top-bar"><a class="go-home" href="/"><i class="fa fa-home"></i></a><% render("views/topbar") %></nav>
-        <div class="content">
-            <% content_for("inner") %>
+        <div class="wrapper">
+            <nav id="top-bar"><a class="go-home" href="/"><i class="fa fa-home"></i></a><% render("views/topbar") %></nav>
+            <div class="content">
+                <% content_for("inner") %>
+            </div>
+            <footer class="footer"><small><% if session.username ~= '' then %>Logged in as <a href="/users/<%= session.username %>/"><%= session.username %></a><% end %></small></footer>
         </div>
     </body>
 </html>
