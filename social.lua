@@ -17,6 +17,9 @@ local Projects = Model:extend('projects', {
     primary_key = { 'username', 'projectname' }
 })
 
+local Likes = Model:extend('likes', {
+    primary_key = { 'id' }
+})
 
 -- Endpoints
 
@@ -71,7 +74,20 @@ app:get('/users/:username/projects/:projectname', function(self)
             self.session.username == self.project.username)) then
         self.project.modifiedString = dateString(self.project.updated)
         self.project.sharedString = dateString(self.project.shared)
-            
+        self.project.likes =
+            Likes:count('projectname = ? and projectowner = ?', 
+                self.params.projectname, 
+                self.params.username)
+        self.project.likedByUser =
+            Likes:count('liker = ? and projectname = ? and projectowner = ?', 
+                self.session.username, 
+                self.params.projectname, 
+                self.params.username) > 0
+        
+        self.project:update({
+            views = (self.project.views or 0) + 1
+        })
+
         return { render = 'project' }
     else
         return { render = 'notfound' }

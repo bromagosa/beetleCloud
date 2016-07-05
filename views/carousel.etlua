@@ -13,7 +13,7 @@
                     carouselDiv.classList.remove('fade');
                 }
             };
-            ajax.open("GET", "/projects/5/" + offset, true);
+            ajax.open('GET', '/projects/5/' + offset, true);
             ajax.send();
         };
         function updateCarrousel() {

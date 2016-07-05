@@ -49,6 +49,11 @@ local Comments = Model:extend('comments', {
     primary_key = { 'id' }
 })
 
+local Likes = Model:extend('likes', {
+    primary_key = { 'id' }
+})
+
+
 -- Before filter
 
 app:before_filter(function(self)
@@ -61,7 +66,7 @@ app:before_filter(function(self)
 --    self.res.headers['Access-Control-Allow-Origin'] = 'http://localhost:8080'
     self.res.headers['Access-Control-Allow-Credentials'] = 'true'
 
-    if not self.session.username then
+    if (not self.session.username) then
         self.session.username = ''
     end
 end)
@@ -177,7 +182,7 @@ app:match('logout', '/api/users/logout', respond_to({
     OPTIONS = cors_options,
     GET = function(self)
         local username = self.session.username
-        local comesFromWebClient = string.sub(ngx.var.http_referer,-1) == '/'
+        local comesFromWebClient = ngx.var.http_referer:match('/run') == nil
         self.session.username = ''
         if comesFromWebClient then
             return { redirect_to = '/' }
@@ -380,7 +385,48 @@ app:match('new_comment', '/api/comments/new', respond_to({
 
             return jsonResponse({ text = 'comment added' })
         else
-            return errorResponse('this user does not have any project under this name')
+            return errorResponse('could not find project')
+        end
+    end
+}))
+
+app:match('toggle_like', '/api/users/:username/projects/:projectname/like', respond_to({
+    OPTIONS = cors_options,
+    GET = function(self)
+        -- can't use camel case because SQL doesn't care about case
+
+        if (not self.session.username) then
+            return errorResponse('you are not logged in')
+        end
+
+        local project = Projects:find(self.params.username, self.params.projectname)
+
+        if (project) then
+
+            if (Likes:count('liker = ? and projectname = ? and projectowner = ?', 
+                self.session.username, 
+                self.params.projectname, 
+                self.params.username) == 0) then
+
+                Likes:create({
+                    projectname = self.params.projectname,
+                    projectowner = self.params.username,
+                    liker = self.session.username
+                })
+
+                return jsonResponse({ text = 'project liked' })
+            else
+                db.delete(
+                    'likes',
+                    'liker = ? and projectname = ? and projectowner = ?',
+                    self.session.username, 
+                    self.params.projectname, 
+                    self.params.username)
+                return jsonResponse({ text = 'project unliked' })
+            end
+
+        else
+            return errorResponse('could not find project')
         end
     end
 }))

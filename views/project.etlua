@@ -7,11 +7,16 @@
             <img class="big-thumbnail" src="<%= project.thumbnail %>">
             <div class="stats pure-g">
                 <div class="pure-u-1-2">
-                    <span>Views: </span>
+                    <span>Views: <%= project.views or 0 %></span>
                     <span>Shared: <%= project.sharedString %></span>
                 </div>
                 <div class="pure-u-1-2">
-                    <span><i class="glyph fa fa-thumbs-o-up"></i></span>
+                    <span id="likes">
+                        <i <% if (session.username ~= '') then %> onclick="toggleLike()" <% end %> 
+                        class="clickable glyph fa fa-thumbs-o-up <%= project.likedByUser and 'liked' %>"
+                        <% if (project.likedByUser) then %> title="you like this project" <% end %> ></i>
+                        <i><%= project.likes %></i>
+                    </span>
                     <span>Modified: <%= project.modifiedString %></span>
                 </div>
             </div>
@@ -23,3 +28,23 @@
         </div>
     </div>
 </div>
+<script>
+    function toggleLike () {
+        var ajax = new XMLHttpRequest();
+        ajax.onreadystatechange = function () {
+            if (ajax.readyState == 4 && ajax.status == 200) {
+                if ((JSON.parse(ajax.responseText)).text.match('unliked')) {
+                    document.getElementById('likes').children[0].classList.remove('liked');
+                    document.getElementById('likes').children[1].textContent =
+                        Number(document.getElementById('likes').children[1].textContent) - 1;
+                } else {
+                    document.getElementById('likes').children[0].classList.add('liked');
+                    document.getElementById('likes').children[1].textContent =
+                        Number(document.getElementById('likes').children[1].textContent) + 1;
+                }
+            }
+        };
+        ajax.open('GET', '/api' + window.location.pathname + '/like' , true);
+        ajax.send(); 
+    }
+</script>

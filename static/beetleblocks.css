@@ -6,6 +6,10 @@ a {
     color: #6f7274;
 }
 
+.clickable {
+    cursor: pointer;
+}
+
 body {
     background: #fdfdfd;
     color: #2e2c2c;
@@ -307,6 +311,10 @@ span.author {
 
 .stats span {
     line-height: 2em;
+}
+
+.liked {
+    color: #ac2029;
 }
 
 /* Project not found */
