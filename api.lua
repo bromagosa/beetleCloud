@@ -233,7 +233,8 @@ app:match('new_user', '/api/users/new', respond_to({
         Users:create({
             username = self.params.username,
             password = bcrypt.digest(self.params.password, 11),
-            email = self.params.email
+            email = self.params.email,
+            joined = db.format_date()
         })
             if (comesFromWebClient) then
                 return { redirect_to = '/user_created' }
