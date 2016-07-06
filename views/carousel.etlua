@@ -1,35 +1,35 @@
 <div class="carousel">
     <script>
-        var ajax = new XMLHttpRequest(),
-            offset = 0,
-            carouselDiv = document.currentScript.parentElement,
-            projects;
-        function getData() {
-            carouselDiv.classList.add('fade');
-            ajax.onreadystatechange = function () {
-                if (ajax.readyState == 4 && ajax.status == 200) {
-                    projects =JSON.parse(ajax.responseText);
-                    updateCarrousel();
-                    carouselDiv.classList.remove('fade');
+        var ajax_<%= collection %> = new XMLHttpRequest(),
+            offset_<%= collection %> = 0,
+            carouselDiv_<%= collection %> = document.currentScript.parentElement,
+            projects_<%= collection %>;
+        function get<%= collection %>() {
+            carouselDiv_<%= collection %>.classList.add('fade');
+            ajax_<%= collection %>.onreadystatechange = function () {
+                if (ajax_<%= collection %>.readyState == 4 && ajax_<%= collection %>.status == 200) {
+                    projects_<%= collection %> =JSON.parse(ajax_<%= collection %>.responseText);
+                    update<%= collection %>();
+                    carouselDiv_<%= collection %>.classList.remove('fade');
                 }
             };
-            ajax.open('GET', '/projects/5/' + offset, true);
-            ajax.send();
+            ajax_<%= collection %>.open('GET', '/projects/<%= collection %>/5/' + offset_<%= collection %>, true);
+            ajax_<%= collection %>.send();
         };
-        function updateCarrousel() {
-            for (var i = 0; i < projects.length; i ++) {
-                var div = document.getElementById('project-' + i); // What if there are TWO carousels in a page?
+        function update<%= collection %>() {
+            for (var i = 0; i < projects_<%= collection %>.length; i ++) {
+                var div = document.getElementById('project-' + i + '-<%= collection %>');
                 div.className = 'project pure-u-1-6';
-                div.children[0].href = '/users/' + encodeURIComponent(projects[i].username) +
-                                        '/projects/' + encodeURIComponent(projects[i].projectname);
-                div.children[0].children[0].src = projects[i].thumbnail;
-                div.children[1].textContent = projects[i].projectname;
+                div.children[0].href = '/users/' + encodeURIComponent(projects_<%= collection %>[i].username) +
+                                        '/projects/' + encodeURIComponent(projects_<%= collection %>[i].projectname);
+                div.children[0].children[0].src = projects_<%= collection %>[i].thumbnail;
+                div.children[1].textContent = projects_<%= collection %>[i].projectname;
                 div.children[1].href = div.children[0].href;
-                div.children[2].children[0].textContent = projects[i].username;
-                div.children[2].children[0].href = '/users/' + encodeURIComponent(projects[i].username);
+                div.children[2].children[0].textContent = projects_<%= collection %>[i].username;
+                div.children[2].children[0].href = '/users/' + encodeURIComponent(projects_<%= collection %>[i].username);
             }
-            for (var i = projects.length || 0; i < 5; i ++) {
-                var div = document.getElementById('project-' + i);
+            for (var i = projects_<%= collection %>.length || 0; i < 5; i ++) {
+                var div = document.getElementById('project-' + i + '-<%= collection %>');
                 div.className = 'project pure-u-1-6 empty';
                 div.children[0].removeAttribute('href');
                 div.children[0].children[0].removeAttribute('src');
@@ -38,23 +38,23 @@
             }
         };
     </script>
-    <div class="title"><span class="title-text">Newest Projects</span></div>
+    <div class="title"><span class="title-text"><%= title %></span></div>
     <div class="projects pure-g">
         <div class="arrow pure-u-1-12">
-            <a onclick="if (offset > 0) { offset = offset - 5; getData(); }"><i class="fa fa-arrow-circle-left"></i></a>
+            <a onclick="if (offset_<%= collection %> > 0) { offset_<%= collection %> = offset_<%= collection %> - 5; get<%= collection %>(); }"><i class="fa fa-arrow-circle-left"></i></a>
         </div>
         <% for i = 1, 5, 1 do %>
-        <div id="project-<%= i - 1 %>">
+        <div id="project-<%= i - 1 %>-<%= collection %>">
             <a target="_blank"><img class="thumbnail" src=""></a>
             <a target="_blank" class="name"></a>
             <span class="author">by <a href=""></a></span>
         </div>
         <% end %>
         <div class="arrow pure-u-1-12">
-            <a onclick="if (projects.length == 5) { offset = offset + 5; getData(); }"><i class="fa fa-arrow-circle-right"></i></a>
+            <a onclick="if (projects_<%= collection %>.length == 5) { offset_<%= collection %> = offset_<%= collection %> + 5; get<%= collection %>(); }"><i class="fa fa-arrow-circle-right"></i></a>
         </div>
     </div>
     <script>
-        getData();
+        get<%= collection %>();
     </script>
 </div>

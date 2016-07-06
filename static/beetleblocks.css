@@ -225,6 +225,10 @@ a.go-home:hover {
 
 /* Project carousel */
 
+.carousel {
+    margin-bottom: 1em;
+}
+
 .carousel .title .title-text {
     margin-left: 1em;
 }

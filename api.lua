@@ -87,10 +87,17 @@ app:get('/api/users/:username', function(self)
     return jsonResponse(Users:select('where username = ?', self.params.username, { fields = 'username' })[1])
 end)
 
-app:get('/projects/:limit/:offset', function(self)
+app:get('/projects/:selection/:limit/:offset', function(self)
+
+    local query = { 
+        newest = 'where isPublic = true order by id desc',
+        popular = 'where isPublic = true order by id asc',
+        favorite = 'where isPublic = true order by id asc'
+    }
+
     return jsonResponse(
         db.select(
-            'projectName, username, thumbnail from projects where isPublic = true order by id desc limit ? offset ?',
+            'projectName, username, thumbnail from projects ' .. query[self.params.selection] ..' limit ? offset ?',
             self.params.limit or 5,
             self.params.offset or 0))
 end)
