@@ -13,7 +13,7 @@
                     carouselDiv_<%= collection %>.classList.remove('fade');
                 }
             };
-            ajax_<%= collection %>.open('GET', '/projects/<%= collection %>/5/' + offset_<%= collection %>, true);
+            ajax_<%= collection %>.open('GET', '/projects/<%= collection %>/5/' + offset_<%= collection %> + '<%= '/' .. (username or '') %>', true);
             ajax_<%= collection %>.send();
         };
         function update<%= collection %>() {

@@ -1,18 +1,17 @@
-<%
-publicProjects = Projects:find_all(
-    { params.username }, 
-    { 
-        key = 'username',
-        where = { ispublic = true }
-    })
-%>
-<div>
-    <h2><%= params.username %></h2>
-    <h2>About me</h2>
-</div>
-<div>
-    <h2>Shared Projects</h2>
-    <% for k, v in pairs(publicProjects) do %>
-        <img src="<%= v.thumbnail %>"/>
-    <% end %>
+<div class="user">
+    <span class="title-text"><%= user.username %></span>
+    <div class="info pure-g">
+        <div class="pure-u-5-8 pure-g">
+            <span class="title-text">About me</span>
+            <span class="pure-u-7-8"><%= user.about or 'This user has not provided any description.' %></span>
+        </div>
+        <div class="details pure-u-3-8">
+            <span class="joined"><strong>Joined:</strong> <%= user.joinedString %></span>
+            <span class="location"><%= user.location or 'Planet Earth' %></span>
+        </div>
+    </div>
+    <%
+        render("views/carousel", { collection = 'shared', title = 'Shared Projects', username = user.username })
+        render("views/carousel", { collection = 'favorite', title = 'Liked Projects', username = user.username })
+    %>
 </div>

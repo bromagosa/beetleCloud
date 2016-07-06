@@ -59,7 +59,8 @@ app:get('/users', function(self)
 end)
 
 app:get('/users/:username', function(self)
-    self.Projects = Projects;
+    self.user = Users:find(self.params.username)
+    self.user.joinedString = dateString(self.user.joined)
     return { render = 'user' }
 end)
 

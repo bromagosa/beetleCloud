@@ -310,18 +310,18 @@ a.go-home:hover {
     background: rgba(255,0,0,0.2);
 }
 
-/* Project page */
+/* Project and user pages */
 
 .project-container {
     background: #f8f8f8;
     padding: 16px 40px 40px 40px;
 }
 
-.project span {
+.project span, .user span {
     display: block;
 }
 
-.project .title-text {
+.project .title-text, .user .title-text {
     margin-left: 0;
 }
 
@@ -356,6 +356,18 @@ span.author {
 
 .liked {
     color: #ac2029;
+}
+
+.user .details {
+    margin-top: 10px;
+}
+
+.user .details span {
+    line-height: 2em;
+}
+
+.user .info {
+    margin-bottom: 2em;
 }
 
 /* Project not found */
