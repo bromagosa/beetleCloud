@@ -1,9 +1,11 @@
 <div class="user">
     <span class="title-text"><%= user.username %></span>
     <div class="info pure-g">
-        <div class="pure-u-5-8 pure-g">
+        <div class="pure-u-5-8">
             <span class="title-text">About me</span>
-            <span class="pure-u-7-8"><%= user.about or 'This user has not provided any description.' %></span>
+            <div class="pure-g">
+                <span class="about pure-u-3-4"><%= user.about or 'This user has not provided any description.' %></span>
+            </div>
         </div>
         <div class="details pure-u-3-8">
             <span class="joined"><strong>Joined:</strong> <%= user.joinedString %></span>
