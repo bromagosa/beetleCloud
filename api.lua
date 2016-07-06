@@ -92,7 +92,7 @@ app:get('/projects/:selection/:limit/:offset', function(self)
     local query = { 
         newest = 'projectName, username, thumbnail from projects where isPublic = true order by id desc',
         popular = 'count(*) as likecount, projects.projectName, projects.username, projects.thumbnail from projects, likes where projects.isPublic = true and projects.projectName = likes.projectName and projects.username = likes.projectowner group by projects.projectname, projects.username order by likecount desc',
-        favorite = 'distinct projects.id, projects.projectName as projectname, projects.username from projects, likes where projects.projectName = likes.projectName and projects.username = likes.projectowner and likes.liker = \'Examples\' group by projects.projectname, projects.username order by projects.id desc'
+        favorite = 'distinct projects.id, projects.projectName, projects.username, projects.thumbnail from projects, likes where projects.projectName = likes.projectName and projects.username = likes.projectowner and likes.liker = \'Examples\' group by projects.projectname, projects.username order by projects.id desc'
     }
 
     return jsonResponse(
