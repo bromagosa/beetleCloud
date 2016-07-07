@@ -91,7 +91,6 @@ app:get('/api/projects/:selection/:limit/:offset(/:username)', function(self)
 
     local username = self.params.username or 'Examples'
     local list = self.params.list or ''
-    print(list)
 
     local query = { 
         newest = 'projectName, username, thumbnail from projects where isPublic = true order by id desc',

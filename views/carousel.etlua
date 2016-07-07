@@ -1,36 +1,37 @@
+<% local id = collection .. title:gsub('%s+','') %>
 <div class="carousel">
     <script>
-        var ajax_<%= collection %> = new XMLHttpRequest(),
-            offset_<%= collection %> = 0,
-            carouselDiv_<%= collection %> = document.currentScript.parentElement,
-            projects_<%= collection %>;
-        function get<%= collection %>() {
-            carouselDiv_<%= collection %>.classList.add('fade');
-            ajax_<%= collection %>.onreadystatechange = function () {
-                if (ajax_<%= collection %>.readyState == 4 && ajax_<%= collection %>.status == 200) {
-                    projects_<%= collection %> =JSON.parse(ajax_<%= collection %>.responseText);
-                    update<%= collection %>();
-                    carouselDiv_<%= collection %>.classList.remove('fade');
+        var ajax_<%= id %> = new XMLHttpRequest(),
+            offset_<%= id %> = 0,
+            carouselDiv_<%= id %> = document.currentScript.parentElement,
+            projects_<%= id %>;
+        function get<%= id %>() {
+            carouselDiv_<%= id %>.classList.add('fade');
+            ajax_<%= id %>.onreadystatechange = function () {
+                if (ajax_<%= id %>.readyState == 4 && ajax_<%= id %>.status == 200) {
+                    projects_<%= id %> =JSON.parse(ajax_<%= id %>.responseText);
+                    update<%= id %>();
+                    carouselDiv_<%= id %>.classList.remove('fade');
                 }
             };
             // The second part of the query needs to be enclosed between double commas, as SQL strings are enclosed by single ones
-            ajax_<%= collection %>.open('GET', '/api/projects/<%= collection %>/5/' + offset_<%= collection %> + "<%= '/' .. (username or '') %>?list=<%- list or '' %>", true);
-            ajax_<%= collection %>.send();
+            ajax_<%= id %>.open('GET', '/api/projects/<%= collection %>/5/' + offset_<%= id %> + "<%= '/' .. (username or '') %>?list=<%- list or '' %>", true);
+            ajax_<%= id %>.send();
         };
-        function update<%= collection %>() {
-            for (var i = 0; i < projects_<%= collection %>.length; i ++) {
-                var div = document.getElementById('project-' + i + '-<%= collection %>');
+        function update<%= id %>() {
+            for (var i = 0; i < projects_<%= id %>.length; i ++) {
+                var div = document.getElementById('project-' + i + '-<%= id %>');
                 div.className = 'project pure-u-1-6';
-                div.children[0].href = '/users/' + encodeURIComponent(projects_<%= collection %>[i].username) +
-                                        '/projects/' + encodeURIComponent(projects_<%= collection %>[i].projectname);
-                div.children[0].children[0].src = projects_<%= collection %>[i].thumbnail;
-                div.children[1].textContent = projects_<%= collection %>[i].projectname;
+                div.children[0].href = '/users/' + encodeURIComponent(projects_<%= id %>[i].username) +
+                                        '/projects/' + encodeURIComponent(projects_<%= id %>[i].projectname);
+                div.children[0].children[0].src = projects_<%= id %>[i].thumbnail;
+                div.children[1].textContent = projects_<%= id %>[i].projectname;
                 div.children[1].href = div.children[0].href;
-                div.children[2].children[0].textContent = projects_<%= collection %>[i].username;
-                div.children[2].children[0].href = '/users/' + encodeURIComponent(projects_<%= collection %>[i].username);
+                div.children[2].children[0].textContent = projects_<%= id %>[i].username;
+                div.children[2].children[0].href = '/users/' + encodeURIComponent(projects_<%= id %>[i].username);
             }
-            for (var i = projects_<%= collection %>.length || 0; i < 5; i ++) {
-                var div = document.getElementById('project-' + i + '-<%= collection %>');
+            for (var i = projects_<%= id %>.length || 0; i < 5; i ++) {
+                var div = document.getElementById('project-' + i + '-<%= id %>');
                 div.className = 'project pure-u-1-6 empty';
                 div.children[0].removeAttribute('href');
                 div.children[0].children[0].removeAttribute('src');
@@ -42,20 +43,20 @@
     <div class="title"><span class="title-text"><%= title %></span></div>
     <div class="projects pure-g">
         <div class="arrow pure-u-1-12">
-            <a onclick="if (offset_<%= collection %> > 0) { offset_<%= collection %> = offset_<%= collection %> - 5; get<%= collection %>(); }"><i class="fa fa-arrow-circle-left"></i></a>
+            <a onclick="if (offset_<%= id %> > 0) { offset_<%= id %> = offset_<%= id %> - 5; get<%= id %>(); }"><i class="fa fa-arrow-circle-left"></i></a>
         </div>
         <% for i = 1, 5, 1 do %>
-        <div id="project-<%= i - 1 %>-<%= collection %>">
+        <div id="project-<%= i - 1 %>-<%= id %>">
             <a target="_blank"><img class="thumbnail" src=""></a>
             <a target="_blank" class="name"></a>
             <span class="author">by <a href=""></a></span>
         </div>
         <% end %>
         <div class="arrow pure-u-1-12">
-            <a onclick="if (projects_<%= collection %>.length == 5) { offset_<%= collection %> = offset_<%= collection %> + 5; get<%= collection %>(); }"><i class="fa fa-arrow-circle-right"></i></a>
+            <a onclick="if (projects_<%= id %>.length == 5) { offset_<%= id %> = offset_<%= id %> + 5; get<%= id %>(); }"><i class="fa fa-arrow-circle-right"></i></a>
         </div>
     </div>
     <script>
-        get<%= collection %>();
+        get<%= id %>();
     </script>
 </div>
