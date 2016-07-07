@@ -13,7 +13,8 @@
                     carouselDiv_<%= collection %>.classList.remove('fade');
                 }
             };
-            ajax_<%= collection %>.open('GET', '/projects/<%= collection %>/5/' + offset_<%= collection %> + '<%= '/' .. (username or '') %>', true);
+            // The second part of the query needs to be enclosed between double commas, as SQL strings are enclosed by single ones
+            ajax_<%= collection %>.open('GET', '/api/projects/<%= collection %>/5/' + offset_<%= collection %> + "<%= '/' .. (username or '') %>?list=<%- list or '' %>", true);
             ajax_<%= collection %>.send();
         };
         function update<%= collection %>() {

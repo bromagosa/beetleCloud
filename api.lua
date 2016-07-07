@@ -87,15 +87,18 @@ app:get('/api/users/:username', function(self)
     return jsonResponse(Users:select('where username = ?', self.params.username, { fields = 'username' })[1])
 end)
 
-app:get('/projects/:selection/:limit/:offset(/:username)', function(self)
+app:get('/api/projects/:selection/:limit/:offset(/:username)', function(self)
 
     local username = self.params.username or 'Examples'
+    local list = self.params.list or ''
+    print(list)
 
     local query = { 
         newest = 'projectName, username, thumbnail from projects where isPublic = true order by id desc',
         popular = 'count(*) as likecount, projects.projectName, projects.username, projects.thumbnail from projects, likes where projects.isPublic = true and projects.projectName = likes.projectName and projects.username = likes.projectowner group by projects.projectname, projects.username order by likecount desc',
         favorite = 'distinct projects.id, projects.projectName, projects.username, projects.thumbnail from projects, likes where projects.projectName = likes.projectName and projects.username = likes.projectowner and likes.liker = \'' .. username .. '\' group by projects.projectname, projects.username order by projects.id desc',
-        shared = 'projectName, username, thumbnail from projects where isPublic = true and username = \'' .. username .. '\' order by id desc'
+        shared = 'projectName, username, thumbnail from projects where isPublic = true and username = \'' .. username .. '\' order by id desc',
+        list = 'projectName, username, thumbnail from projects where isPublic = true and username = \'' .. username .. '\' and projectName in ' .. list ..  ' order by id desc'
     }
 
     return jsonResponse(
@@ -105,7 +108,7 @@ app:get('/projects/:selection/:limit/:offset(/:username)', function(self)
             self.params.offset or 0))
 end)
 
-app:match('/api/users/:username/projects', respond_to({
+app:match('project_list', '/api/users/:username/projects', respond_to({
     OPTIONS = cors_options,
     GET = function(self)
         -- returns all projects by a user
@@ -125,7 +128,7 @@ app:match('/api/users/:username/projects', respond_to({
     end
 }))
 
-app:match('fetchproject', '/api/users/:username/projects/:projectname', respond_to({
+app:match('fetch_project', '/api/users/:username/projects/:projectname', respond_to({
     OPTIONS = cors_options,
     GET = function(self)
         local project = Projects:find(self.params.username, self.params.projectname)
@@ -140,7 +143,7 @@ app:match('fetchproject', '/api/users/:username/projects/:projectname', respond_
     end
 }))
 
-app:match('fetchcomments', '/api/users/:username/projects/:projectname/comments', respond_to({
+app:match('fetch_comments', '/api/users/:username/projects/:projectname/comments', respond_to({
     OPTIONS = cors_options,
     GET = function(self)
 
@@ -153,7 +156,6 @@ app:match('fetchcomments', '/api/users/:username/projects/:projectname/comments'
         end
     end
 }))
-
 
 -- Session management
 
