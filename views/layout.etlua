@@ -16,7 +16,9 @@
             <div class="content">
                 <% content_for("inner") %>
             </div>
-            <footer class="footer"><small><% if session.username ~= '' then %>Logged in as <a href="/users/<%= session.username %>/"><%= session.username %></a><% end %></small></footer>
+            <footer class="footer">
+                <small>The Beetle Cloud is free software released under the <a target="_blank" href="http://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License v3 (GPLv3)</a>. Please visit our <a target="_blank" href="https://github.com/bromagosa/beetleCloud">GitHub repository</a> to access its source code and report bugs, improvements, or feature requests.<% if session.username ~= '' then %><br>You are logged in as <a href="/users/<%= session.username %>/"><%= session.username %></a><% end %></small>
+            </footer>
         </div>
     </body>
 </html>

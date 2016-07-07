@@ -25,7 +25,8 @@
         <div class="info-box">
             <div class="title"><i class="glyph fa fa-wrench"></i><span class="title-text">Work in progress</span></div>
             <div class="text">
-                <p><b>Please note:</b> Beetle Blocks is alpha software, currently in development. Only the <a href="http://www.google.com/chrome" target="_blank">Chrome</a> browser is currently supported. We'd love to hear your feature requests and bug reports on <a href="https://github.com/ericrosenbaum/BeetleBlocks" target="_blank">GitHub</a>.</p> 
+                <p><b>Please note:</b> Beetle Blocks is alpha software, currently in development. Only the <a href="http://www.google.com/chrome" target="_blank">Chrome</a> browser is currently supported, although latest versions of other browsers can run it just fine too.</p>
+                </p>We'd love to hear your feature requests and bug reports on <a href="https://github.com/ericrosenbaum/BeetleBlocks" target="_blank">GitHub</a>.</p> 
             </div>
         </div>
     </div>
