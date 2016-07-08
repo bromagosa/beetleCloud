@@ -1,5 +1,5 @@
 <ul class="pure-g pure-menu-list">
-    <% for i, section in pairs({ 'Explore', 'Forum', 'Examples' }) do %>
+    <% for i, section in pairs({ 'Explore', 'Examples' }) do -- Forum section removed until we have one %> 
         <li class="pure-menu-item pure-u-2-24"><a class="pure-menu-link" href="/<%= string.lower(section:gsub('%s+','')) %>"><%= section %></a></li>
     <% end %>
 
