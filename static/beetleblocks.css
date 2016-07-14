@@ -126,7 +126,8 @@ a.go-home:hover {
     height: 28px;
 }
 
-#top-bar > ul {
+#top-bar .pure-menu ul.pure-menu-list {
+    display: block;
     font-size: 0.9em;
     line-height: 28px;
     height: 28px;
@@ -135,7 +136,7 @@ a.go-home:hover {
 }
 
 
-#top-bar > ul input {
+#top-bar .pure-menu ul.pure-menu-list input {
     width: 95%;
     border: none;
     background: #64131a;
@@ -158,8 +159,13 @@ a.go-home:hover {
     color: #ae272b;
 }
 
-#top-bar > ul > .pure-menu-item {
+#top-bar .pure-menu ul.pure-menu-list .pure-menu-item {
     font-weight: bold;
+}
+
+.pure-menu-horizontal .pure-menu-children {
+    width: 100%;
+    background: #ae272b;
 }
 
 /* Footer */
