@@ -1,16 +1,9 @@
 <span class="title-text">Examples</span>
 <%
-    -- warning! These are NOT Lua lists, these are stringified SQL lists!
+    shapeCollections = {'Randomness', 'Computational ideas', '3d objects', 'Drawing with boundaries', 'Rotational patterns and models', 'Grids', 'Simple geometric shapes', 'Sphere calculus with sin and cos', 'Miscellaneous'}
 
-    shapeCollections = {}
-    shapeCollections['Simple Geometric Shapes'] = "('Sphere','Sphere with sin and cos','Random walk sphere','Pyramid','Octahedron','Octagon','3d grid')"
-    shapeCollections['Recursivity and Fractals'] = "('3d spiral with cubes')"
-    shapeCollections['Random Shapes'] = "('3d random pattern ')"
-    shapeCollections['Iterative Shapes'] = "('Rotated loops','Staircase','3d spiral')"
-    shapeCollections['2D Drawings'] = "('Filled triangle','Filled rectangle','Filled circle','Circle boundary','Random walk within boundary','Drawing with hatches','Boundary with sin function','Bouncing arcs within boundary','2d attractor','2d attractor 2')"
-
-    for title, shapes in pairs(shapeCollections) do
-        render("views/carousel", { collection = 'list', title = title, username = 'Examples', list = shapes })
+    for k, title in pairs(shapeCollections) do
+        render("views/carousel", { collection = 'notes', title = title, username = 'Examples', notes = title })
     end
 %>
 

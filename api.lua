@@ -91,12 +91,14 @@ app:get('/api/projects/:selection/:limit/:offset(/:username)', function(self)
 
     local username = self.params.username or 'Examples'
     local list = self.params.list or ''
+    local notes = self.params.notes or ''
 
     local query = { 
         newest = 'projectName, username, thumbnail from projects where isPublic = true order by id desc',
         popular = 'count(*) as likecount, projects.projectName, projects.username, projects.thumbnail from projects, likes where projects.isPublic = true and projects.projectName = likes.projectName and projects.username = likes.projectowner group by projects.projectname, projects.username order by likecount desc',
         favorite = 'distinct projects.id, projects.projectName, projects.username, projects.thumbnail from projects, likes where projects.projectName = likes.projectName and projects.username = likes.projectowner and likes.liker = \'' .. username .. '\' group by projects.projectname, projects.username order by projects.id desc',
         shared = 'projectName, username, thumbnail from projects where isPublic = true and username = \'' .. username .. '\' order by id desc',
+        notes = 'projectName, username, thumbnail from projects where isPublic = true and username = \'' .. username .. '\' and notes = \'' .. notes .. '\' order by id desc',
         list = 'projectName, username, thumbnail from projects where isPublic = true and username = \'' .. username .. '\' and projectName in ' .. list ..  ' order by id desc'
     }
 
