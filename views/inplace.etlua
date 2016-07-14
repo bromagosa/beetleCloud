@@ -1,0 +1,24 @@
+<script>
+    var ajax_<%= id %> = new XMLHttpRequest();
+    function update_<%= id %> () {
+        ajax_<%= id %>.onreadystatechange = function () {
+            if (ajax_<%= id %>.readyState == 4 && ajax_<%= id %>.status == 200) {
+                document.getElementById('<%= id %>').classList.add('flash');
+            }
+        };
+        ajax_<%= id %>.open('POST', '/api/<%- path %>/update/<%- property %>');
+        ajax_<%= id %>.send(document.getElementById('<%= id %>').textContent); 
+    };
+    function checkKey_<%= id %> (event, element) {
+        var code = (event.keyCode ? event.keyCode : event.which);
+        if (code == 13) { document.getElementById('fake-input').focus(); }
+    };
+</script>
+<div style="width: 0; height: 0; overflow: hidden;"><input id="fake-input" style="opacity:0; filter:alpha(opacity=0);"></input></div>
+<span
+    class="in-place"
+    id="<%= id %>"
+    contenteditable="true"
+    onblur="update_<%= id %>()"
+    onfocus="document.getElementById('<%= id %>').classList.remove('flash');"
+    onkeypress="checkKey_<%= id %>(event, this)"><%- content %></span>

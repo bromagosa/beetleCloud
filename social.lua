@@ -41,7 +41,7 @@ app:get('/tos', function(self)
     return { render = 'tos' }
 end)
 
-app:get('/mystuff', function(self)
+app:get('/myprojects', function(self)
     return { render = 'notready' }
 end)
 

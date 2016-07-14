@@ -1,15 +1,37 @@
 <div class="user">
-    <span class="title-text"><%= user.username %></span>
+    <span class="title-text"><%- user.username %></span>
     <div class="info pure-g">
         <div class="pure-u-5-8">
             <span class="title-text">About me</span>
             <div class="pure-g">
-                <span class="about pure-u-3-4"><%= user.about or 'This user has not provided any description.' %></span>
+                <span class="about pure-u-3-4">
+                    <% if (user.username == session.username) then
+                        render("views/inplace", { 
+                                content = user.about or 'Click to edit your description.', 
+                                id = user.username:gsub('%s+', '') .. '_about',
+                                path = 'users/' .. user.username,
+                                property = 'about'
+                        })
+                      else %>
+                        <%- user.about or 'This user has not provided any description.' %> 
+                    <% end %>
+                </span>
             </div>
         </div>
         <div class="details pure-u-3-8">
             <span class="joined"><strong>Joined:</strong> <%= user.joinedString %></span>
-            <span class="location"><%= user.location or 'Planet Earth' %></span>
+            <span class="location">
+                <% if (user.username == session.username) then
+                    render("views/inplace", { 
+                            content = user.location or 'Click to edit your location.',
+                            id = user.username:gsub('%s+', '') .. '_location',
+                            path = 'users/' .. user.username,
+                            property = 'location'
+                        })
+                else %>
+                  <%- user.location or 'Planet Earth' %> 
+                <% end %>
+            </span>
         </div>
     </div>
     <%

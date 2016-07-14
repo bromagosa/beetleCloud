@@ -43,6 +43,24 @@ h3 {
     position:relative;
 }
 
+.in-place:hover {
+    padding: 0 2px;
+    border: 2px dashed #dddddd;
+}
+
+.flash {
+    animation: flasher 1s linear;
+}
+
+@keyframes flasher {  
+    0% { background: #eaebeb; }
+    50% { opacity: 0.0; }
+    100% {
+        background: auto;
+        opacity: 1;
+    }
+}
+
 /* Buttons */
 
 .pure-button {

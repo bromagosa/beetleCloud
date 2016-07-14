@@ -45,10 +45,6 @@ local Projects = Model:extend('projects', {
     primary_key = { 'username', 'projectname' }
 })
 
-local Comments = Model:extend('comments', {
-    primary_key = { 'id' }
-})
-
 local Likes = Model:extend('likes', {
     primary_key = { 'id' }
 })
@@ -144,19 +140,6 @@ app:match('fetch_project', '/api/users/:username/projects/:projectname', respond
     end
 }))
 
-app:match('fetch_comments', '/api/users/:username/projects/:projectname/comments', respond_to({
-    OPTIONS = cors_options,
-    GET = function(self)
-
-        local project = Projects:find(self.params.username, self.params.projectname)
-
-        if (project and project.ispublic) then
-            return jsonResponse(Comments:select('where projectowner = ? and projectname = ?', self.params.username, self.params.projectname, { fields = 'contents, author, date' }))
-        else
-            return errorResponse('Project ' .. self.params.projectname .. ' is either nonexistent or private')
-        end
-    end
-}))
 
 -- Session management
 
@@ -239,11 +222,54 @@ app:match('new_user', '/api/users/new', respond_to({
             email = self.params.email,
             joined = db.format_date()
         })
-            if (comesFromWebClient) then
-                return { redirect_to = '/user_created' }
-            else
-                return jsonResponse({ text = 'User ' .. self.params.username .. ' created' })
-            end
+
+        if (comesFromWebClient) then
+            return { redirect_to = '/user_created' }
+        else
+            return jsonResponse({ text = 'User ' .. self.params.username .. ' created' })
+        end
+    end
+}))
+
+app:match('update_user', '/api/users/:username/update/:property', respond_to({
+    OPTIONS = cors_options,
+    POST = function(self)
+        local user = Users:find(self.params.username);
+
+        if (not user) then
+            return errorResponse('no user with this username exists')
+        end
+
+        if (self.params.username ~= self.session.username) then
+            return errorResponse('authentication error')
+        end
+
+        local options = {}
+        ngx.req.read_body()
+        options[self.params.property] = ngx.req.get_body_data()
+        user:update(options)
+
+    end
+}))
+
+app:match('update_project', '/api/users/:username/projects/:projectname/update/:property', respond_to({
+    OPTIONS = cors_options,
+    POST = function(self)
+        local project = Projects:find(self.params.username, self.params.projectname);
+
+        if (not project) then
+            return errorResponse('this project does not exist')
+        end
+
+        if (self.params.username ~= self.session.username) then
+            return errorResponse('authentication error')
+        end
+
+        local options = {}
+        ngx.req.read_body()
+        options[self.params.property] = ngx.req.get_body_data()
+        project:update(options)
+
     end
 }))
 
@@ -364,45 +390,6 @@ app:match('remove_project', '/api/users/:username/projects/:projectname/delete',
             return errorResponse('project does not exist')
         end
         
-    end
-}))
-
-app:match('new_comment', '/api/comments/new', respond_to({
-    OPTIONS = cors_options,
-    POST = function(self)
-        -- can't use camel case because SQL doesn't care about case
-
-        validate.assert_valid(self.params, {
-            { 'projectowner', exists = true },
-            { 'username', exists = true },
-            { 'author', exists = true }
-        })
-
-        if (not Users:find(self.params.projectowner) or not Users:find(self.params.author)) then
-            return errorResponse('no user with this username exists')
-        end
-
-        if (self.params.author ~= self.session.username) then
-            return errorResponse('authentication error')
-        end
-
-        ngx.req.read_body()
-        local project = Projects:find(self.params.projectowner, self.params.projectname)
-
-        if (project) then
-
-            Comments:create({
-                projectname = self.params.projectname,
-                projectowner = self.params.projectowner,
-                author = self.params.author,
-                contents = req.get_body_data(),
-                date = db.format_date()
-            })
-
-            return jsonResponse({ text = 'comment added' })
-        else
-            return errorResponse('could not find project')
-        end
     end
 }))
 
