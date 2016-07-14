@@ -63,7 +63,7 @@ app:before_filter(function(self)
     end
 
     -- Set Access Control header
---    self.res.headers['Access-Control-Allow-Origin'] = 'http://localhost:8080'
+    self.res.headers['Access-Control-Allow-Origin'] = 'http://localhost:8080'
     self.res.headers['Access-Control-Allow-Credentials'] = 'true'
 
     if (not self.session.username) then
@@ -277,7 +277,6 @@ app:match('save_project', '/api/projects/save', respond_to({
         if (existingProject) then
 
             existingProject:update({
-                ispublic = self.params.ispublic,
                 contents = xmlString,
                 updated = db.format_date(),
                 notes = xml.find(xmlData, 'notes')[1],
@@ -289,23 +288,26 @@ app:match('save_project', '/api/projects/save', respond_to({
             end
 
             return jsonResponse({ text = 'project ' .. self.params.projectname .. ' updated' })
-        end
-        
-        project = Projects:create({
-            projectname = self.params.projectname,
-            username = self.params.username,
-            ispublic = self.params.ispublic,
-            contents = xmlString,
-            updated = db.format_date(),
-            notes = xml.find(xmlData, 'notes')[1],
-            thumbnail = xml.find(xmlData, 'thumbnail')[1]
-        })
 
-        if (self.params.ispublic == 'true') then
-            project:update({ shared = db.format_date() })
-        end
+        else
 
-        return jsonResponse({ text = 'project ' .. self.params.projectname .. ' created' })
+            project = Projects:create({
+                projectname = self.params.projectname,
+                username = self.params.username,
+                ispublic = self.params.ispublic,
+                contents = xmlString,
+                updated = db.format_date(),
+                notes = xml.find(xmlData, 'notes')[1],
+                thumbnail = xml.find(xmlData, 'thumbnail')[1]
+            })
+
+            if (self.params.ispublic == 'true') then
+                project:update({ shared = db.format_date() })
+            end
+
+            return jsonResponse({ text = 'project ' .. self.params.projectname .. ' created' })
+
+        end
     end
 }))
 

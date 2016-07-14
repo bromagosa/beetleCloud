@@ -96,6 +96,7 @@ app:get('/users/:username/projects/:projectname', function(self)
 end)
 
 function dateString(sqlDate)
+    if (sqlDate == nil) then return 'never' end
     actualDate = require('date')(sqlDate)
     return string.format('%02d', actualDate:getday()) ..
                 '.' .. string.format('%02d', actualDate:getmonth()) ..
