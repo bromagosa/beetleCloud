@@ -1,5 +1,8 @@
 #!/bin/bash
 
+SCRIPTPATH=$(cd ${0%/*} && pwd -P)
+# PASSWORD=`cat $SCRIPTPATH/../config.lua | grep password | tail -n1 | sed -E "s/.*'(.*)'.*/\1/g"`
+
 ###########################
 ####### LOAD CONFIG #######
 ###########################
@@ -23,7 +26,6 @@ while [ $# -gt 0 ]; do
 done
 
 if [ $# = 0 ]; then
-    SCRIPTPATH=$(cd ${0%/*} && pwd -P)
     source $SCRIPTPATH/pg_backup.config
 fi;
 
@@ -77,7 +79,7 @@ if [ $ENABLE_GLOBALS_BACKUPS = "yes" ]
 then
     echo "Globals backup"
 
-    if ! pg_dumpall -g -h "$HOSTNAME" -U "$USERNAME" | gzip > $FINAL_BACKUP_DIR"globals".sql.gz.in_progress; then
+    if ! pg_dumpall -w -g -h "$HOSTNAME" -U "$USERNAME" | gzip > $FINAL_BACKUP_DIR"globals".sql.gz.in_progress; then
         echo "[!!ERROR!!] Failed to produce globals backup" 1>&2
     else
         mv $FINAL_BACKUP_DIR"globals".sql.gz.in_progress $FINAL_BACKUP_DIR"globals".sql.gz
@@ -109,7 +111,7 @@ for DATABASE in $SCHEMA_ONLY_DB_LIST
 do
     echo "Schema-only backup of $DATABASE"
 
-    if ! pg_dump -Fp -s -h "$HOSTNAME" -U "$USERNAME" "$DATABASE" | gzip > $FINAL_BACKUP_DIR"$DATABASE"_SCHEMA.sql.gz.in_progress; then
+    if ! pg_dump -w -Fp -s -h "$HOSTNAME" -U "$USERNAME" "$DATABASE" | gzip > $FINAL_BACKUP_DIR"$DATABASE"_SCHEMA.sql.gz.in_progress; then
         echo "[!!ERROR!!] Failed to backup database schema of $DATABASE" 1>&2
     else
         mv $FINAL_BACKUP_DIR"$DATABASE"_SCHEMA.sql.gz.in_progress $FINAL_BACKUP_DIR"$DATABASE"_SCHEMA.sql.gz
@@ -137,7 +139,7 @@ do
     then
         echo "Plain backup of $DATABASE"
 
-        if ! pg_dump -Fp -h "$HOSTNAME" -U "$USERNAME" "$DATABASE" | gzip > $FINAL_BACKUP_DIR"$DATABASE".sql.gz.in_progress; then
+        if ! pg_dump -w -Fp -h "$HOSTNAME" -U "$USERNAME" "$DATABASE" | gzip > $FINAL_BACKUP_DIR"$DATABASE".sql.gz.in_progress; then
             echo "[!!ERROR!!] Failed to produce plain backup database $DATABASE" 1>&2
         else
             mv $FINAL_BACKUP_DIR"$DATABASE".sql.gz.in_progress $FINAL_BACKUP_DIR"$DATABASE".sql.gz
@@ -148,7 +150,7 @@ do
     then
         echo "Custom backup of $DATABASE"
 
-        if ! pg_dump -Fc -h "$HOSTNAME" -U "$USERNAME" "$DATABASE" -f $FINAL_BACKUP_DIR"$DATABASE".custom.in_progress; then
+        if ! pg_dump -w -Fc -h "$HOSTNAME" -U "$USERNAME" "$DATABASE" -f $FINAL_BACKUP_DIR"$DATABASE".custom.in_progress; then
             echo "[!!ERROR!!] Failed to produce custom backup database $DATABASE" 1>&2
         else
             mv $FINAL_BACKUP_DIR"$DATABASE".custom.in_progress $FINAL_BACKUP_DIR"$DATABASE".custom
