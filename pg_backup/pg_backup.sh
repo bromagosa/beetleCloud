@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPTPATH=$(cd ${0%/*} && pwd -P)
-# PASSWORD=`cat $SCRIPTPATH/../config.lua | grep password | tail -n1 | sed -E "s/.*'(.*)'.*/\1/g"`
+export PGPASSWORD=`cat $SCRIPTPATH/../config.lua | grep password | tail -n1 | sed -E "s/.*'(.*)'.*/\1/g"`
 
 ###########################
 ####### LOAD CONFIG #######
@@ -159,4 +159,5 @@ do
 
 done
 
+export PGPASSWORD=''
 echo -e "\nAll database backups complete!"
