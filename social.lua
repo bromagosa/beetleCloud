@@ -74,7 +74,7 @@ app:get('/users/:username/projects/:projectname', function(self)
         (self.project.ispublic or
             self.session.username == self.project.username)) then
         self.project.modifiedString = dateString(self.project.updated)
-        self.project.sharedString = dateString(self.project.shared)
+        self.project.sharedString = self.project.ispublic and dateString(self.project.shared) or '-'
         self.project.likes =
             Likes:count('projectname = ? and projectowner = ?', 
                 self.params.projectname, 

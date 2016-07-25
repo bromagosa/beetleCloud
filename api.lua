@@ -309,7 +309,8 @@ app:match('save_project', '/api/projects/save', respond_to({
                 thumbnail = xml.find(xmlData, 'thumbnail')[1]
             })
 
-            if (existingProject.ispublic ~= (self.params.ispublic == 'true')) then
+            if ((existingProject.shared == nil and self.params.ispublic == 'true')
+                or (self.params.ispublic == 'true' and not existingProject.ispublic)) then
                 existingProject:update({ shared = db.format_date() })
             end
 
