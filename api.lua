@@ -276,8 +276,17 @@ app:match('update_project', '/api/users/:username/projects/:projectname/update/:
         local options = {}
         ngx.req.read_body()
         options[self.params.property] = ngx.req.get_body_data()
+
+        if (self.params.property == 'notes') then
+            -- Special case! Notes are saved both in a column and inside the XML
+            local xmlData = xml.load(project.contents)
+            xml.find(xmlData, 'notes')[1] = options['notes']
+            options['contents'] = xml.dump(xmlData)
+        end
+
         project:update(options)
 
+        
     end
 }))
 
