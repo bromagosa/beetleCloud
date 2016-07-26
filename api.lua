@@ -147,7 +147,7 @@ app:match('login', '/api/users/login', respond_to({
     OPTIONS = cors_options,
     GET = function(self)
         local user = Users:find(self.params.username)
-        local comesFromWebClient = string.sub(ngx.var.http_referer,-5) == 'login'
+        local comesFromWebClient = ngx.var.http_referer:match('/run') == nil
 
         if (user == nil) then
             if comesFromWebClient then
@@ -190,13 +190,21 @@ app:match('logout', '/api/users/logout', respond_to({
     end
 }))
 
+app:match('current_user', '/api/user', respond_to({
+    -- Gives back the currently logged user
+    OPTIONS = cors_options,
+    GET = function(self)
+        return jsonResponse({ username = self.session.username })
+    end
+}))
+
 
 -- Data insertion
 
 app:match('new_user', '/api/users/new', respond_to({
     OPTIONS = cors_options,
     POST = function(self)
-        local comesFromWebClient = string.sub(ngx.var.http_referer,-6) == 'signup'
+        local comesFromWebClient = ngx.var.http_referer:match('/run') == nil
 
         validate.assert_valid(self.params, {
             { 'username', exists = true, min_length = 3, max_length = 200 },
