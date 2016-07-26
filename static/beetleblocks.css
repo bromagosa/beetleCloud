@@ -39,26 +39,8 @@ h3 {
 }
 
 .wrapper {
-    min-height:100%;
-    position:relative;
-}
-
-.in-place:hover {
-    padding: 0 2px;
-    border: 2px dashed #dddddd;
-}
-
-.flash {
-    animation: flasher 1s linear;
-}
-
-@keyframes flasher {  
-    0% { background: #eaebeb; }
-    50% { opacity: 0.0; }
-    100% {
-        background: auto;
-        opacity: 1;
-    }
+    min-height: 100%;
+    position: relative;
 }
 
 /* Buttons */
@@ -82,6 +64,24 @@ h3 {
 
 .spacer {
     padding: 0.5em;
+}
+
+.in-place:hover {
+    padding: 0 2px;
+    border: 2px dashed #dddddd;
+}
+
+.flash {
+    animation: flasher 1s linear;
+}
+
+@keyframes flasher {  
+    0% { background: #eaebeb; }
+    50% { opacity: 0.0; }
+    100% {
+        background: auto;
+        opacity: 1;
+    }
 }
 
 /* Info boxes */
@@ -327,6 +327,41 @@ a.go-home:hover {
     -moz-transition: opacity 0.25s linear;
     -o-transition: opacity 0.25s linear;
     -ms-transition: opacity 0.25s linear;
+}
+
+/* Project Browser */
+
+.browser {
+    padding: 15px;
+    border: 1px solid #dfdedd;
+    margin-bottom: 1em;
+}
+
+.browser .search input {
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    line-height: 1.5em;
+    border: 1px solid #dfdedd;
+    border-radius: 5px;
+    padding: 0.25em 1em;
+    margin-bottom: 1em;
+}
+
+.browser .project-list {
+    margin: 1em 0;
+    height: 20em;
+    overflow-y: scroll;
+}
+
+.browser .project-item {
+    padding: 0.1em 0.5em;
+    line-height: 1.5em;
+}
+
+.browser .project-item:hover {
+    background-color: #eaebeb;
 }
 
 /* Forms */

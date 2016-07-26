@@ -42,7 +42,8 @@ app:get('/tos', function(self)
 end)
 
 app:get('/myprojects', function(self)
-    return { render = 'notready' }
+    self.projects = Projects:select('where username = ?', self.session.username, { fields = 'projectname, thumbnail, notes, ispublic, updated' })
+    return { render = 'myprojects' }
 end)
 
 app:get('/login', function(self)

@@ -285,7 +285,6 @@ app:match('update_project', '/api/users/:username/projects/:projectname/update/:
         end
 
         project:update(options)
-
         
     end
 }))
