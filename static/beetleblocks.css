@@ -364,6 +364,14 @@ a.go-home:hover {
     background-color: #eaebeb;
 }
 
+.browser .bottom-controls .pure-button {
+    width: 90%;
+}
+
+.browser .big-thumbnail {
+    margin-top: 4em;
+}
+
 /* Forms */
 
 .fail {
