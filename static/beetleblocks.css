@@ -356,11 +356,17 @@ a.go-home:hover {
 }
 
 .browser .project-item {
-    padding: 0.1em 0.5em;
+    padding: 0.1em 0 0.1em 0.5em;
+    margin-right: 0.5em;
     line-height: 1.5em;
+    border: 2px solid transparent;
 }
 
 .browser .project-item:hover {
+    border: 2px dashed #eaebeb;
+}
+
+.browser .project-item.selected {
     background-color: #eaebeb;
 }
 

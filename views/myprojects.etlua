@@ -3,24 +3,24 @@
     <span class="title-text">My Projects</span>
     <div class="browser pure-g">
         <div class="left-pane pure-u-13-24">
-            <form class="search">
-                <input type="text" name="search" placeholder="Search...">
-            </form>
+            <div class="search">
+                <input type="text" name="search" placeholder="Search..." oninput="search(this.value)" onchange="search(this.value)">
+            </div>
             <div class="top-controls pure-g">
                 <span class="pure-u-1-3">
-                    <a class="pure-button" align="center">Project name</a>
+                    <a class="pure-button" onclick="sortBy('projectname')" align="center">Project name <i class="fa fa-sort"></i></a>
                 </span>
                 <span align="center" class="pure-u-1-3">
-                    <a class="pure-button">Date</a>
+                    <a class="pure-button" onclick="sortBy('date')">Date <i class="fa fa-sort"></i></a>
                 </span>
                 <span align="center" class="pure-u-1-3">
-                    <a class="pure-button">Shared</a>
+                    <a class="pure-button" onclick="sortBy('shared')">Shared <i class="fa fa-sort"></i></a>
                 </span>
             </div>
 
             <div class="project-list">
                 <% for k, project in pairs(projects) do %>
-                    <div class="project-item pure-g clickable" onclick="selectProject('<%= project.projectname %>')">
+                    <div class="project-item pure-g clickable" onclick="selectProject('<%= project.projectname %>', this)">
                         <span class='pure-u-1-3'><%= project.projectname %></span>
                         <span class='pure-u-1-3' align="center"><%= dateString(project.updated) %></span>
                         <span class='pure-u-1-3' align="center"><%= project.ispublic and '✔' or '✘' %></span>
@@ -54,12 +54,46 @@
     var projectListDiv = document.getElementsByClassName('project-list')[0],
         scrollbarWidth = projectListDiv.offsetWidth - projectListDiv.clientWidth,
         thumbnailDiv = document.getElementsByClassName('big-thumbnail')[0],
-        currentProject;
+        currentProject,
+        columns = ['projectname', 'date', 'shared'],
+        sorting = {projectname: true, date: true, shared: true};
+
     document.getElementsByClassName('top-controls')[0].style.marginRight = scrollbarWidth + 'px';
 
-    function selectProject (projectName) {
+    function selectProject (projectName, element) {
         currentProject = projectName;
         thumbnailDiv.src = thumbnails[projectName];
+        [].forEach.call(
+                document.getElementsByClassName('project-item'),
+                function (e) {
+                    e.classList.remove('selected');
+                });
+        element.classList.add('selected');
     };
+
+    function sortBy (column) {
+        var elements = [].slice.call(document.getElementsByClassName('project-item'), 0);
+        sorting[column] = !sorting[column];
+        elements = elements.sort(
+                function (a, b) {
+                    if (sorting[column]) {
+                        return (a.children[columns.indexOf(column)].textContent > b.children[columns.indexOf(column)].textContent);
+                    } else {
+                        return (a.children[columns.indexOf(column)].textContent < b.children[columns.indexOf(column)].textContent);
+                    }
+                });
+        projectListDiv.innerHTML = elements.reduce(function(previous, current) { a = current; return previous + current.outerHTML }, '');
+    };
+
+    function search (text) {
+        var elements = [].slice.call(document.getElementsByClassName('project-item'), 0);
+        elements.forEach(function (element) {
+            if (element.textContent.match(text)) {
+                element.style.display = 'block';
+            } else {
+                element.style.display = 'none';
+            }
+        });
+    }
 </script>
 
