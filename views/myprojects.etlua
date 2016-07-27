@@ -77,9 +77,9 @@
         elements = elements.sort(
                 function (a, b) {
                     if (sorting[column]) {
-                        return (a.children[columns.indexOf(column)].textContent > b.children[columns.indexOf(column)].textContent);
+                        return (a.children[columns.indexOf(column)].textContent.toUpperCase() >= b.children[columns.indexOf(column)].textContent.toUpperCase());
                     } else {
-                        return (a.children[columns.indexOf(column)].textContent < b.children[columns.indexOf(column)].textContent);
+                        return (a.children[columns.indexOf(column)].textContent.toUpperCase() < b.children[columns.indexOf(column)].textContent.toUpperCase());
                     }
                 });
         projectListDiv.innerHTML = elements.reduce(function(previous, current) { a = current; return previous + current.outerHTML }, '');
