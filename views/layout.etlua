@@ -6,6 +6,7 @@
         <link rel="stylesheet" type="text/css" href="/static/reset.css">
         <link rel="stylesheet" type="text/css" href="/static/pure-min.css">
         <link rel="stylesheet" type="text/css" href="/static/grids-responsive-min.css">
+        <link rel="stylesheet" type="text/css" href="/static/custom-alert/custom-alert.min.css">
         <link rel="stylesheet" type="text/css" href="/static/beetleblocks.css">
         <link rel="stylesheet" type="text/css" href="/static/font-awesome-4.6.3/css/font-awesome.min.css">
         <script src="/static/menus.js"></script>

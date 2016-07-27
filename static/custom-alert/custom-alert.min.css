@@ -1,0 +1,10 @@
+#customAlert-overlay,#customConfirm-overlay{display:none;opacity:.5;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:10;background:#000}
+.customalert{background-color:#fff;font-family:arial;border-radius:5px;width:550px;font-size:1em;display:none;position:fixed;max-width:100vw;max-height:100vh;z-index:4294967294;top:5%;box-shadow:0 0 10px 0 rgba(0,0,0,0.3);-webkit-box-shadow:0 0 10px 0 rgba(0,0,0,0.3);margin-left:-275px}
+@media(min-width:321px){.customalert{top:25%;left:50%;padding:10px}}@media(max-width:550px){.customalert{margin-left:-50vw}
+}.customalert .customalert_header,.customalert .customalert_body,.customalert .customalert_footer{text-align:center;background:#fff}
+.customalert .customalert_header{font-size:.75em}.customalert .customalert_body{padding:10px;font-size:1.2em}
+.customalert .customalert_footer button{margin-top:5px;margin-bottom:5px;width:100px;padding:5px;word-wrap:break-word;font-family:arial;border:0}
+.customalert.customalert_confirm .customalert_footer button.customalert_button_confirm{margin-right:10px;background-color:#68bb74;color:#edf7ef}
+.customalert.customalert_confirm .customalert_footer button.customalert_button_confirm:hover{background-color:#3f8d4b;color:#dcefdf}
+.customalert.customalert_confirm .customalert_footer button.customalert_button_cancel{background-color:#e2614b;color:#fbece9}
+.customalert.customalert_confirm .customalert_footer button.customalert_button_cancel:hover{background-color:#b0321c;color:#f8d8d3}

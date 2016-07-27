@@ -66,6 +66,13 @@ h3 {
     padding: 0.5em;
 }
 
+.ellipsis {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .in-place:hover {
     padding: 0 2px;
     border: 2px dashed #dddddd;
@@ -295,10 +302,6 @@ a.go-home:hover {
 
 .carousel .project .name {
     margin-top: 6px;
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .carousel .project .author {
@@ -412,6 +415,7 @@ a.go-home:hover {
 .big-thumbnail {
     margin: 10px 0;
     width: 480px;
+    height: 360px;
 }
 
 span.notes-title {

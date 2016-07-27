@@ -12,4 +12,7 @@ Parallel cloud for Beetle Blocks, plus its sharing site
 ### Style
 * [Eric Meyer](http://meyerweb.com/)'s [reset.css](http://meyerweb.com/eric/tools/css/reset/index.html) - [[ public domain ](https://wiki.creativecommons.org/wiki/Public_domain)]
 * [Yahoo](https://github.com/yahoo)'s [pure.css](http://purecss.io/) module set - [[ Yahoo! Inc. BSD license ](https://raw.githubusercontent.com/yahoo/pure/master/LICENSE.md)]
-* [FontAwesome](http://fontawesome.io/) - [[ SIL OFL](http://fontawesome.io/),[ MIT ](http://opensource.org/licenses/mit-license.html)]
+* [Dave Gandy](https://github.com/davegandy)'s [FontAwesome](http://fontawesome.io/) - [[ SIL OFL](http://fontawesome.io/),[ MIT ](http://opensource.org/licenses/mit-license.html)]
+
+### Widgets
+* [Philippe Assis](https://github.com/PhilippeAssis)'s [custom-alert](https://github.com/PhilippeAssis/custom-alert) - [[ ISC ](https://opensource.org/licenses/ISC)]

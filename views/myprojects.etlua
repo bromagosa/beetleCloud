@@ -7,13 +7,13 @@
                 <input type="text" name="search" placeholder="Search..." oninput="search(this.value)" onchange="search(this.value)">
             </div>
             <div class="top-controls pure-g">
-                <span class="pure-u-1-3">
+                <span class="pure-u-10-24">
                     <a class="pure-button" onclick="sortBy('projectname')" align="center">Project name <i class="fa fa-sort"></i></a>
                 </span>
-                <span align="center" class="pure-u-1-3">
+                <span align="center" class="pure-u-7-24">
                     <a class="pure-button" onclick="sortBy('date')">Date <i class="fa fa-sort"></i></a>
                 </span>
-                <span align="center" class="pure-u-1-3">
+                <span align="center" class="pure-u-7-24">
                     <a class="pure-button" onclick="sortBy('shared')">Shared <i class="fa fa-sort"></i></a>
                 </span>
             </div>
@@ -21,9 +21,9 @@
             <div class="project-list">
                 <% for k, project in pairs(projects) do %>
                     <div class="project-item pure-g clickable" onclick="selectProject('<%= project.projectname %>', this)">
-                        <span class='pure-u-1-3'><%= project.projectname %></span>
-                        <span class='pure-u-1-3' align="center"><%= dateString(project.updated) %></span>
-                        <span class='pure-u-1-3' align="center"><%= project.ispublic and '✔' or '✘' %></span>
+                        <span class='pure-u-10-24 ellipsis'><%= project.projectname %></span>
+                        <span class='pure-u-7-24' align="center"><%= dateString(project.updated) %></span>
+                        <span class='pure-u-7-24' align="center"><%= project.ispublic and '✔' or '✘' %></span>
                     </div>
                 <script>thumbnails['<%= project.projectname %>'] = '<%= project.thumbnail %>'</script>
                 <% end %>
@@ -31,13 +31,13 @@
 
             <div class="bottom-controls pure-g">
                 <span align="center" class="pure-u-1-3">
-                    <a class="pure-button" align="center">Open</a>
+                    <a class="pure-button" id="open-button" align="center" target="_blank">Open</a>
                 </span>
                 <span align="center" class="pure-u-1-3">
-                    <a class="pure-button" align="center">Delete</a>
+                    <a class="pure-button" id="delete-button" align="center" onclick="deleteProject()">Delete</a>
                 </span>
                 <span align="center" class="pure-u-1-3">
-                    <a class="pure-button" align="center">Share</a>
+                    <a class="pure-button" id="share-button" align="center" onclick="shareProject()">Share</a>
                 </span>
             </div>
         </div>
@@ -50,30 +50,43 @@
         render("views/carousel", { collection = 'favorite', title = 'Liked Projects', username = session.username })
     %>
 </div>
+<script src="/static/custom-alert/custom-alert.min.js"></script>
 <script>
     var projectListDiv = document.getElementsByClassName('project-list')[0],
         scrollbarWidth = projectListDiv.offsetWidth - projectListDiv.clientWidth,
         thumbnailDiv = document.getElementsByClassName('big-thumbnail')[0],
         currentProject,
         columns = ['projectname', 'date', 'shared'],
-        sorting = {projectname: true, date: true, shared: true};
+        sorting = {projectname: true, date: true, shared: true},
+        ajax = new XMLHttpRequest();
 
     document.getElementsByClassName('top-controls')[0].style.marginRight = scrollbarWidth + 'px';
 
     function selectProject (projectName, element) {
+
+        if (!projectName) {
+            thumbnailDiv.src = '';
+            return;
+        }
+
         currentProject = projectName;
+
         thumbnailDiv.src = thumbnails[projectName];
         [].forEach.call(
                 document.getElementsByClassName('project-item'),
                 function (e) {
                     e.classList.remove('selected');
                 });
+
         element.classList.add('selected');
+
+        document.getElementById('open-button').href = "/run#present:Username=<%- session.username %>&ProjectName=" + encodeURIComponent(projectName);
+        document.getElementById('share-button').innerHTML = element.children[2].textContent == '✔' ? 'Unshare' : 'Share';
     };
 
     function getColumnContent (element, column) {
         return element.children[columns.indexOf(column)].textContent.toUpperCase();
-    }
+    };
 
     function sortBy (column) {
         var elements = [].slice.call(document.getElementsByClassName('project-item'), 0);
@@ -100,6 +113,39 @@
                 element.style.display = 'none';
             }
         });
-    }
+    };
+
+    function deleteProject () {
+        confirm('You are about to remove the project "' + currentProject
+                + '"<br/><br/>This action is <strong>permanent</strong> and cannot be undone. Are you sure you want to continue?',
+                function (data) {
+                    if (data) {
+                        ajax.onreadystatechange = function () {
+                            if (ajax.readyState == 4 && ajax.status == 200) {
+                                document.getElementsByClassName('project-item selected')[0].remove();
+                                selectProject();
+                            }
+                        };
+                        ajax.open('GET', '/api/users/<%- session.username %>/projects/' + encodeURIComponent(currentProject) + '/delete', true);
+                        ajax.send();
+                    }
+                },
+                { return: true });
+    };
+
+    function shareProject () {
+        var element = document.getElementsByClassName('project-item selected')[0],
+            isPublic = element.children[2].textContent == '✔';
+
+        ajax.onreadystatechange = function () {
+            if (ajax.readyState == 4 && ajax.status == 200) {
+                element.children[2].innerHTML = isPublic ? '✘' : '✔';
+                document.getElementById('share-button').innerHTML = isPublic ? 'Share' : 'Unshare';
+            }
+        };
+
+        ajax.open('GET', '/api/users/<%- session.username %>/projects/' + encodeURIComponent(currentProject) + '/visibility/?ispublic=' + !isPublic, true);
+        ajax.send();
+    };
 </script>
 
