@@ -82,13 +82,13 @@
                         return (a.children[columns.indexOf(column)].textContent.toUpperCase() < b.children[columns.indexOf(column)].textContent.toUpperCase());
                     }
                 });
-        projectListDiv.innerHTML = elements.reduce(function(previous, current) { a = current; return previous + current.outerHTML }, '');
+        projectListDiv.innerHTML = elements.reduce(function(previous, current) { return previous + current.outerHTML }, '');
     };
 
     function search (text) {
         var elements = [].slice.call(document.getElementsByClassName('project-item'), 0);
         elements.forEach(function (element) {
-            if (element.textContent.match(text)) {
+            if (element.textContent.toUpperCase().match(text.toUpperCase())) {
                 element.style.display = 'block';
             } else {
                 element.style.display = 'none';
