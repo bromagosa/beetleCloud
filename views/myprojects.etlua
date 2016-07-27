@@ -71,17 +71,23 @@
         element.classList.add('selected');
     };
 
+    function getColumnContent (element, column) {
+        return element.children[columns.indexOf(column)].textContent.toUpperCase();
+    }
+
     function sortBy (column) {
         var elements = [].slice.call(document.getElementsByClassName('project-item'), 0);
+
         sorting[column] = !sorting[column];
-        elements = elements.sort(
+
+        elements.sort(
                 function (a, b) {
-                    if (sorting[column]) {
-                        return (a.children[columns.indexOf(column)].textContent.toUpperCase() >= b.children[columns.indexOf(column)].textContent.toUpperCase());
-                    } else {
-                        return (a.children[columns.indexOf(column)].textContent.toUpperCase() < b.children[columns.indexOf(column)].textContent.toUpperCase());
-                    }
-                });
+                        if (sorting[column]) {
+                            return getColumnContent(a, column) >= getColumnContent(b, column) ? 1 : -1;
+                        } else {
+                            return getColumnContent(a, column) < getColumnContent(b, column) ? 1 : -1;
+                        }
+                })
         projectListDiv.innerHTML = elements.reduce(function(previous, current) { return previous + current.outerHTML }, '');
     };
 
