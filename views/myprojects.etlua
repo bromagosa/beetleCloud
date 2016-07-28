@@ -80,7 +80,7 @@
 
         element.classList.add('selected');
 
-        document.getElementById('open-button').href = "/run#present:Username=<%- session.username %>&ProjectName=" + encodeURIComponent(projectName);
+        document.getElementById('open-button').href = "/users/<%- session.username %>/projects/" + encodeURIComponent(projectName);
         document.getElementById('share-button').innerHTML = element.children[2].textContent == '✔' ? 'Unshare' : 'Share';
     };
 
