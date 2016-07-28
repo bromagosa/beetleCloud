@@ -6,8 +6,8 @@ a {
     color: #6f7274;
 }
 
-.clickable {
-    cursor: pointer;
+em {
+    font-style: italic;
 }
 
 html {
@@ -38,11 +38,6 @@ h3 {
     line-height: 2.5em;
 }
 
-.wrapper {
-    min-height: 100%;
-    position: relative;
-}
-
 /* Buttons */
 
 .pure-button {
@@ -57,6 +52,10 @@ h3 {
 }
 
 /* General classes */
+
+.clickable {
+    cursor: pointer;
+}
 
 .img-responsive {
     width: 100%;
@@ -211,6 +210,11 @@ a.go-home:hover {
     width: 1170px;
     margin: 0 auto;
     padding: 1em 0 90px 0;
+}
+
+.wrapper {
+    min-height: 100%;
+    position: relative;
 }
 
 /* Landing page */
@@ -489,4 +493,9 @@ span.author {
 
 .primer a {
     margin-left: 0.5em;
+}
+
+/* Custom alerts */
+.customalert_body a:hover {
+    color: #ac2029;
 }

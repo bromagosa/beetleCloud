@@ -50,7 +50,7 @@
         render("views/carousel", { collection = 'favorite', title = 'Liked Projects', username = session.username })
     %>
 </div>
-<script src="/static/custom-alert/custom-alert.min.js"></script>
+
 <script>
     var projectListDiv = document.getElementsByClassName('project-list')[0],
         scrollbarWidth = projectListDiv.offsetWidth - projectListDiv.clientWidth,
@@ -85,7 +85,13 @@
     };
 
     function getColumnContent (element, column) {
-        return element.children[columns.indexOf(column)].textContent.toUpperCase();
+        var text = element.children[columns.indexOf(column)].textContent;
+
+        if (column == 'date') {
+            return new Date(text.replace(/(..)\.(..)\.(....)/g,'$2\/$1\/$3')); // reformat date string into MM/DD/YYYY
+        } else {
+            return text.toUpperCase();
+        }
     };
 
     function sortBy (column) {
@@ -108,7 +114,7 @@
         var elements = [].slice.call(document.getElementsByClassName('project-item'), 0);
         elements.forEach(function (element) {
             if (element.textContent.toUpperCase().match(text.toUpperCase())) {
-                element.style.display = 'block';
+                element.style.display = null;
             } else {
                 element.style.display = 'none';
             }

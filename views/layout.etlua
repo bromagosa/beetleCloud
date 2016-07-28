@@ -13,6 +13,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
+        <script src="/static/custom-alert/custom-alert.min.js"></script>
         <div class="wrapper">
             <nav id="top-bar"><a class="go-home" href="/"><i class="fa fa-home"></i></a><% render("views/topbar") %></nav>
             <div class="content">
@@ -23,4 +24,11 @@
             </footer>
         </div>
     </body>
+    <!--
+    <script>
+        if (!localStorage["-beetlecloud-alreadyVisited"]) {
+            localStorage["-beetlecloud-alreadyVisited"] = true;
+            alert('Welcome to the new Beetle Blocks social site!<br><br>We hope you\'ll enjoy sharing projects with the community and exploring what other users are doing.<br><br>If you have used Beetle Blocks before, you may be wondering where all your projects went. We have switched from the Snap<em>!</em> cloud to a system of our own, and thus your projects will need to be manually moved to the new system.<br><br>Please refer to <a href="/migration">this section</a> for information on how to do so.')
+}
+    </script>-->
 </html>

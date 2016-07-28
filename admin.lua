@@ -8,4 +8,8 @@ app:get('/admin', function(self)
     return 'Administration'
 end)
 
+app:get('/migration', function(self)
+    return { render = 'migration' }
+end)
+
 return app
