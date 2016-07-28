@@ -26,6 +26,7 @@ body {
 
 p {
     line-height: 1.3em; 
+    margin-bottom: 1em;
 }
 
 hr {
@@ -498,4 +499,29 @@ span.author {
 /* Custom alerts */
 .customalert_body a:hover {
     color: #ac2029;
+}
+
+/* Migration */
+
+#project-list {
+    display: none;
+}
+
+#project-list form {
+    padding-left: 1em;
+}
+
+#project-list input {
+    margin-right: 0.5em;
+}
+
+#import-result {
+    display: none;
+}
+
+#import-result pre {
+    font-family: monospace;
+    border: 1px solid #999;
+    padding: 1em;
+    background: #f8f8f8;
 }

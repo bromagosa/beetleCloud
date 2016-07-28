@@ -24,11 +24,10 @@
             </footer>
         </div>
     </body>
-    <!--
-    <script>
-        if (!localStorage["-beetlecloud-alreadyVisited"]) {
-            localStorage["-beetlecloud-alreadyVisited"] = true;
-            alert('Welcome to the new Beetle Blocks social site!<br><br>We hope you\'ll enjoy sharing projects with the community and exploring what other users are doing.<br><br>If you have used Beetle Blocks before, you may be wondering where all your projects went. We have switched from the Snap<em>!</em> cloud to a system of our own, and thus your projects will need to be manually moved to the new system.<br><br>Please refer to <a href="/migration">this section</a> for information on how to do so.')
-}
-    </script>-->
+        <script>
+            if (!localStorage["-beetlecloud-alreadyVisited"]) {
+                localStorage["-beetlecloud-alreadyVisited"] = true;
+                alert('Welcome to the new Beetle Blocks social site!<br><br>We hope you\'ll enjoy sharing projects with the community and exploring what other users are doing.<br><br>If you have used Beetle Blocks before, you may be wondering where all your projects went. We have switched from the Snap<em>!</em> cloud to a new system, and thus your projects will need to be migrated to the new cloud.<br><br>Please refer to <a href="/migration">this section</a> to automatically do so.<br><br>Please note that you will need an <a href="signup">account</a> in the new Beetle Blocks social site in order to migrate your old projects.<br><br>You can always access the migration wizard later on by choosing the <a href="/migration">Migration</a> option in the user menu, after logging in.')
+            }
+        </script>
 </html>

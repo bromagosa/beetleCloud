@@ -9,7 +9,11 @@ app:get('/admin', function(self)
 end)
 
 app:get('/migration', function(self)
-    return { render = 'migration' }
+    if (self.session.username == '') then
+        return { render = 'premigration' }
+    else
+        return { render = 'migration' }
+    end
 end)
 
 return app
