@@ -42,7 +42,7 @@ app:get('/tos', function(self)
 end)
 
 app:get('/myprojects', function(self)
-    self.projects = Projects:select('where username = ?', self.session.username, { fields = 'projectname, thumbnail, notes, ispublic, updated' })
+    self.projects = Projects:select('where username = ? order by id desc', self.session.username, { fields = 'projectname, thumbnail, notes, ispublic, updated' })
     return { render = 'myprojects' }
 end)
 
