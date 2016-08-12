@@ -15,7 +15,7 @@
     <body>
         <script src="/static/custom-alert/custom-alert.min.js"></script>
         <div class="wrapper">
-            <nav id="top-bar"><a class="go-home" href="/"><i class="fa fa-home"></i></a><% render("views/topbar") %></nav>
+            <nav id="top-bar"><% render("views/topbar") %></nav>
             <div class="content">
                 <% content_for("inner") %>
             </div>
