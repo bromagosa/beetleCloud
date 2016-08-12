@@ -33,7 +33,7 @@
                             property = 'notes'
                     })
                   else %>
-                      <%= project.notes or 'This project has no notes.' %>
+                      <%= project.notes ~= '' and project.notes or 'This project has no notes.' %>
                 <% end %>
             </span>
             <a class="pure-button red-button" align="center" href="/run#present:Username=<%- project.username %>&ProjectName=<%- project.projectname %>">Open Project</a>
