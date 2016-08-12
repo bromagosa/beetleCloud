@@ -7,13 +7,8 @@
 
         <i class="pure-u-4-24"></i>
 
-        <form class="search nav-element pure-u-4-24">
-            <input
-              type="text"
-              name="search"
-              placeholder="Search">
-        </form>
-
+        <% render("views/search") %>
+        
         <i class="pure-u-2-24"></i>
 
         <li class="pure-menu-item pure-u-3-24"><a class="pure-menu-link" href="/run">Run Beetle Blocks</a></li>

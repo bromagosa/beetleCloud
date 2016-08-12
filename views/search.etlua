@@ -1,0 +1,52 @@
+<div class="search nav-element pure-u-4-24">
+    <input
+      type="text"
+      name="search"
+      oninput="search(this.value)"
+      onchange="search(this.value)">
+</div>
+<ul id="search-results">
+</ul>
+<script>
+    var ajax = new XMLHttpRequest(),
+        resultsDiv = document.getElementById('search-results');
+    function search (string) {
+        ajax.onreadystatechange = function () {
+            if (ajax.readyState == 4 && ajax.status == 200) {
+                showResults(JSON.parse(ajax.responseText));
+            }
+        };
+
+        ajax.open('GET', '/api/search/' + encodeURIComponent(string))
+        ajax.send();
+    };
+
+    function showResults (results) {
+        var users = results.users,
+            projects = results.projects;
+
+        resultsDiv.innerHTML = '';
+
+        if (users[0]) {
+            resultsDiv.innerHTML += users.reduce(
+                    function (previous, current) {
+                        return previous + newResultEntry(
+                                current.username,
+                                '/users/' + encodeURIComponent(current.username));
+                    });
+        }
+
+        if (projects[0]) {
+            resultsDiv.innerHTML += projects.reduce(
+                    function (previous, current) {
+                        return previous + newResultEntry(
+                                current.projectname,
+                                '/users/' + encodeURIComponent(current.username) + '/projects/' + encodeURIComponent(current.projectname));
+                    });
+        }
+    };
+
+    function newResultEntry (label, href) {
+        return '<li><a href="' + href + '">' + label + '</a></li>';
+    };
+</script>

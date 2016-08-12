@@ -80,7 +80,7 @@ end)
 
 app:get('/api/users/:username', function(self)
     -- find() doesn't allow for field filtering
-    return jsonResponse(Users:select('where username = ?', self.params.username, { fields = 'username' })[1])
+    return jsonResponse(Users:select('where username = ?', self.params.username, { fields = 'username, location, about, joined' })[1])
 end)
 
 app:get('/api/projects/:selection/:limit/:offset(/:username)', function(self)
@@ -140,6 +140,12 @@ app:match('fetch_project', '/api/users/:username/projects/:projectname', respond
     end
 }))
 
+app:get('/api/search/:query', function(self)
+    local query = '.*' .. self.params.query .. '.*'
+    local matchingUsers = Users:select('where username ~ ? or about ~ ? order by id desc limit 5', query, query, { fields = 'username' })
+    local matchingProjects = Projects:select('where ispublic = \'true\' and projectname ~ ? or notes ~ ? order by id desc limit 5', query, query, { fields = 'projectname, username' })
+    return jsonResponse({ users = matchingUsers, projects = matchingProjects })
+end)
 
 -- Session management
 

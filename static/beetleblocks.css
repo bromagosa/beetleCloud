@@ -204,6 +204,13 @@ a.go-home:hover {
     background: #ae272b;
 }
 
+/* Search */
+
+#search-results {
+    display: block;
+    position: absolute;
+}
+
 /* Footer */
 
 .footer {

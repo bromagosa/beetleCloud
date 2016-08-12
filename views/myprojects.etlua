@@ -4,7 +4,7 @@
     <div class="browser pure-g">
         <div class="left-pane pure-u-13-24">
             <div class="search">
-                <input type="text" name="search" placeholder="Search..." oninput="search(this.value)" onchange="search(this.value)">
+                <input type="text" name="search" placeholder="Search..." oninput="searchProject(this.value)" onchange="searchProject(this.value)">
             </div>
             <div class="top-controls pure-g">
                 <span class="pure-u-10-24">
@@ -110,7 +110,7 @@
         projectListDiv.innerHTML = elements.reduce(function(previous, current) { return previous + current.outerHTML }, '');
     };
 
-    function search (text) {
+    function searchProject (text) {
         var elements = [].slice.call(document.getElementsByClassName('project-item'), 0);
         elements.forEach(function (element) {
             if (element.textContent.toUpperCase().match(text.toUpperCase())) {
