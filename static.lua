@@ -7,8 +7,8 @@ local app = require 'app'
 
 -- Endpoints
 
-app:get('/explore', function(self)
-    return { render = 'explore' }
+app:get('/stories', function(self)
+    return { render = 'stories' }
 end)
 
 app:get('/examples', function(self)
