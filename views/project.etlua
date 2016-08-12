@@ -33,7 +33,7 @@
                             property = 'notes'
                     })
                   else %>
-                      <span class="note-contents"><%= project.notes or 'This project has no notes.' %></span>
+                      <%= project.notes or 'This project has no notes.' %>
                 <% end %>
             </span>
             <a class="pure-button red-button" align="center" href="/run#present:Username=<%- project.username %>&ProjectName=<%- project.projectname %>">Open Project</a>
@@ -60,6 +60,6 @@
         ajax.send(); 
     };
 
-    document.getElementsByClassName('note-contents')[0].innerHTML = buildHyperlinks(document.getElementsByClassName('note-contents')[0].innerHTML);
+    document.getElementsByClassName('notes')[0].innerHTML = buildHyperlinks(document.getElementsByClassName('notes')[0].innerHTML);
 
 </script>
