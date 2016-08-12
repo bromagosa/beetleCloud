@@ -39,3 +39,8 @@
         render("views/carousel", { collection = 'favorite', title = 'Liked Projects', username = user.username })
     %>
 </div>
+
+<script>
+    document.getElementsByClassName('location')[0].innerHTML = buildHyperlinks(document.getElementsByClassName('location')[0].innerHTML);
+    document.getElementsByClassName('about')[0].innerHTML = buildHyperlinks(document.getElementsByClassName('about')[0].innerHTML);
+</script>

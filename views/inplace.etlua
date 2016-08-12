@@ -21,4 +21,5 @@
     contenteditable="true"
     onblur="update_<%= id %>()"
     onfocus="document.getElementById('<%= id %>').classList.remove('flash');"
-    onkeypress="checkKey_<%= id %>(event, this)"><%- content %></span>
+    onkeypress="checkKey_<%= id %>(event, this)"><%- content %>
+</span>

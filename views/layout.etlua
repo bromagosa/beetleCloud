@@ -10,6 +10,7 @@
         <link rel="stylesheet" type="text/css" href="/static/beetleblocks.css">
         <link rel="stylesheet" type="text/css" href="/static/font-awesome-4.6.3/css/font-awesome.min.css">
         <script src="/static/menus.js"></script>
+        <script src="/static/beetleblocks.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
