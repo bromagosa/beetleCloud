@@ -5,7 +5,7 @@
 
 local lapis = require 'lapis'
 local app = lapis.Application()
-local db = require 'lapis.db' 
+local db = require 'lapis.db'
 
 app:enable('etlua')
 app.layout = require 'views.layout'

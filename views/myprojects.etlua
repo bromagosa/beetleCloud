@@ -80,7 +80,7 @@
 
         element.classList.add('selected');
 
-        document.getElementById('open-button').href = "/users/<%- session.username %>/projects/" + encodeURIComponent(projectName);
+        document.getElementById('open-button').href = "/users/<%= session.username %>/projects/" + encodeURIComponent(projectName);
         document.getElementById('share-button').innerHTML = element.children[2].textContent == '✔' ? 'Unshare' : 'Share';
     };
 
@@ -132,7 +132,7 @@
                                 selectProject();
                             }
                         };
-                        ajax.open('GET', '/api/users/<%- session.username %>/projects/' + encodeURIComponent(currentProject) + '/delete', true);
+                        ajax.open('GET', '/api/users/<%= session.username %>/projects/' + encodeURIComponent(currentProject) + '/delete', true);
                         ajax.send();
                     }
                 },
@@ -150,7 +150,7 @@
             }
         };
 
-        ajax.open('GET', '/api/users/<%- session.username %>/projects/' + encodeURIComponent(currentProject) + '/visibility/?ispublic=' + !isPublic, true);
+        ajax.open('GET', '/api/users/<%= session.username %>/projects/' + encodeURIComponent(currentProject) + '/visibility/?ispublic=' + !isPublic, true);
         ajax.send();
     };
 </script>

@@ -15,7 +15,7 @@
                 }
             };
             // The second part of the query needs to be enclosed between double commas, as SQL strings are enclosed by single ones
-            ajax_<%= id %>.open('GET', '/api/projects/<%= collection %>/5/' + offset_<%= id %> + "<%= '/' .. (username or '') %>?list=<%- list or '' %>&notes=<%- notes or '' %>", true);
+            ajax_<%= id %>.open('GET', '/api/projects/<%= collection %>/5/' + offset_<%= id %> + "<%= '/' .. (username or '') %>?list=<%= list or '' %>&notes=<%= notes or '' %>", true);
             ajax_<%= id %>.send();
         };
         function update<%= id %>() {

@@ -30,7 +30,7 @@
                 <a href="#" id="menuLink1" class="pure-menu-link"><%- session.username %></a>
                 <ul class="pure-menu-children pure-u-3-24">
                     <li class="pure-menu-item"><a class="pure-menu-link" href="/myprojects">My Projects</a></li>
-                    <li class="pure-menu-item"><a class="pure-menu-link" href="/users/<%- session.username %>">My Profile</a></li>
+                    <li class="pure-menu-item"><a class="pure-menu-link" href="/users/<%= session.username %>">My Profile</a></li>
                     <li class="pure-menu-item"><a class="pure-menu-link" href="/migration">Migration</a></li>
                     <li class="pure-menu-item"><a class="pure-menu-link" href="/logout">Log Out</a></li>
                 </ul>
