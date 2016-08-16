@@ -426,6 +426,14 @@ a.go-home:hover {
     background-color: #eaebeb;
 }
 
+.browser .project-item .yes {
+    color: #008000;
+}
+
+.browser .project-item .no {
+    color: #CE0F0F;
+}
+
 .browser .bottom-controls .pure-button {
     width: 90%;
 }

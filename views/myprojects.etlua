@@ -23,7 +23,7 @@
                     <div class="project-item pure-g clickable" onclick="selectProject('<%= project.projectname %>', this)">
                         <span class='pure-u-10-24 ellipsis'><%= project.projectname %></span>
                         <span class='pure-u-7-24' align="center"><%= dateString(project.updated) %></span>
-                        <span class='pure-u-7-24' align="center"><%= project.ispublic and '✔' or '✘' %></span>
+                        <span class='pure-u-7-24' align="center"><%- project.ispublic and '<i class="yes">✔</i>' or '<i class="no">✘</i>' %></span>
                     </div>
                 <script>thumbnails['<%= project.projectname %>'] = '<%= project.thumbnail %>'</script>
                 <% end %>
