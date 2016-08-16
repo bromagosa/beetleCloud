@@ -2,15 +2,26 @@
     <input
       type="text"
       name="search"
+      placeholder="Search..."
       oninput="search(this.value)"
       onchange="search(this.value)">
+    <ul id="search-results">
+    </ul>
 </div>
-<ul id="search-results">
-</ul>
 <script>
     var ajax = new XMLHttpRequest(),
+        searchDiv = document.getElementsByClassName('search')[0],
         resultsDiv = document.getElementById('search-results');
+
     function search (string) {
+
+        if (string.length < 3) { 
+            resultsDiv.innerHTML = '';
+            resultsDiv.style.display = 'none';
+            searchDiv.style.height = '100%';
+            return;
+        }
+
         ajax.onreadystatechange = function () {
             if (ajax.readyState == 4 && ajax.status == 200) {
                 showResults(JSON.parse(ajax.responseText));
@@ -32,8 +43,13 @@
                     function (previous, current) {
                         return previous + newResultEntry(
                                 current.username,
-                                '/users/' + encodeURIComponent(current.username));
-                    });
+                                '/users/' + encodeURIComponent(current.username),
+                                'user');
+                    },
+                    '');
+            if (projects[0]) {
+                resultsDiv.innerHTML += '<hr>'; 
+            }
         }
 
         if (projects[0]) {
@@ -41,12 +57,17 @@
                     function (previous, current) {
                         return previous + newResultEntry(
                                 current.projectname,
-                                '/users/' + encodeURIComponent(current.username) + '/projects/' + encodeURIComponent(current.projectname));
-                    });
+                                '/users/' + encodeURIComponent(current.username) + '/projects/' + encodeURIComponent(current.projectname),
+                                'bug');
+                    },
+                    '');
         }
+
+        resultsDiv.style.display = 'block';
+        searchDiv.style.height = 'auto';
     };
 
-    function newResultEntry (label, href) {
-        return '<li><a href="' + href + '">' + label + '</a></li>';
+    function newResultEntry (label, href, icon) {
+        return '<a href="' + href + '"><li><i class="fa fa-' + icon + '"></i> ' + label + '</li></a>';
     };
 </script>

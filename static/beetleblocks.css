@@ -171,20 +171,6 @@ a.go-home:hover {
     margin: 0 auto;
 }
 
-
-#top-bar .pure-menu ul.pure-menu-list input {
-    width: 95%;
-    border: none;
-    background: #64131a;
-    color: #fafafa;
-    box-sizing: border-box;
-    -moz-box-sizing:border-box;
-    -webkit-box-sizing:border-box;
-    padding: 0.1em 0.5em;
-    color: #b0afaf;
-    font-weight: bold;
-}
-
 #top-bar .pure-menu-link {
     padding: 0;
     text-align: center;
@@ -206,9 +192,53 @@ a.go-home:hover {
 
 /* Search */
 
+#top-bar .pure-menu ul.pure-menu-list input {
+    width: 100%;
+    border: none;
+    background: #64131a;
+    color: #fafafa;
+    box-sizing: border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    padding: 0.1em 0.5em;
+    color: #b0afaf;
+    font-weight: bold;
+}
+
+div.search {
+    height: 100%;
+    box-sizing: border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    border: 2px solid #ae272b;
+    border-top: none;
+    border-radius: 3px;
+}
+
 #search-results {
+    display: none;
+    letter-spacing: 0em;
+    background: #64131a;
+    margin-top: -2px;
+}
+
+#search-results li {
+    padding: 0 5px;
+}
+
+#search-results hr {
+    margin: 0;
+    border-color: #ae272b;
+}
+
+#search-results a {
+    color: #b0afaf;
     display: block;
-    position: absolute;
+}
+
+#search-results a:hover {
+    color: #fafafa;
+    background-color: #ae272b;
 }
 
 /* Footer */
