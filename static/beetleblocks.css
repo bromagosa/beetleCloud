@@ -205,7 +205,7 @@ a.go-home:hover {
     font-weight: bold;
 }
 
-div.search {
+#top-bar div.search {
     height: 100%;
     box-sizing: border-box;
     -moz-box-sizing:border-box;
