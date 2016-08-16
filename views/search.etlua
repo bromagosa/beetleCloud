@@ -68,6 +68,6 @@
     };
 
     function newResultEntry (label, href, icon) {
-        return '<a href="' + href + '"><li><i class="fa fa-' + icon + '"></i> ' + label + '</li></a>';
+        return '<a href="' + href + '"><li class="ellipsis"><i class="fa fa-' + icon + '"></i> ' + label + '</li></a>';
     };
 </script>
