@@ -136,21 +136,15 @@ h3 {
 /* Top Bar */
 
 .go-home {
-    /*
+    
     background: url("/static/tiny-logo.png");
     display: block;
-    width: 27px;
-    height: 26px;
-    */
-    font-size: 1.8em;
-    color: #fafafa;
+    width: 25px;
+    height: 24px;
 }
 
 .go-home:hover {
-    /* 
     background: url("/static/tiny-logo-hover.png"); 
-    */
-    color: #eee;
 }
 
 a.go-home:hover {
