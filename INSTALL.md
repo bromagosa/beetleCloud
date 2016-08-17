@@ -30,7 +30,7 @@ The BeetleCloud backend uses PostreSQL for storage, so you'll need to install it
 
 ## Cloning the repository and getting Lapis ready
 
-First of all, clone the BeetleClous repository into a local folder:
+First of all, clone the BeetleCloud repository into a local folder:
 
 ```
 $ git clone https://github.com/bromagosa/beetleCloud.git
@@ -92,9 +92,9 @@ If it all went well, you're now ready to fire up Lapis. While in development, ju
 $ lapis server
 ```
 
-You can now point your browser to `http://localhost:8080`
+You can now point your browser to `http://localhost:8080`.
 
-When deploying it, you need to add the `--production` flag to it, and if you're using port 80 you'll need to run Lapis from a user account with permission to do so:
+When deploying it, you'll need to add the `--production` flag to it, and if you're using port 80 you'll need to run Lapis from a user account with permission to do so:
 
 ```
 # lapis server --production
