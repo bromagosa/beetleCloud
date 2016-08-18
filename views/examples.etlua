@@ -1,6 +1,6 @@
 <span class="title-text">Examples</span>
 <%
-    shapeCollections = {'Randomness', 'Computational ideas', '3d objects', 'Drawing with boundaries', 'Rotational patterns and models', 'Grids', 'Simple geometric shapes', 'Sphere calculus with sin and cos', 'Miscellaneous'}
+    shapeCollections = {'Getting started', 'Randomness', 'Computational ideas', '3d objects', 'Drawing with boundaries', 'Rotational patterns and models', 'Grids', 'Simple geometric shapes', 'Sphere calculus with sin and cos', 'Miscellaneous'}
 
     for k, title in pairs(shapeCollections) do
         render("views/carousel", { collection = 'notes', title = title, username = 'Examples', notes = title })
