@@ -24,5 +24,5 @@
     onkeypress="checkKey_<%= id %>(event, this)">
 </span>
 <script>
-    document.getElementById('<%= id %>').innerHTML = "<%- string.gsub(content, '\n', '') %>";
+    document.getElementById('<%= id %>').innerHTML = "<%- content:gsub('\n', ''):gsub('"', '&quot;') %>";
 </script>
