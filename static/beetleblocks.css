@@ -482,6 +482,10 @@ span.notes-title {
     margin-top: 24px;
 }
 
+.notes pre {
+    font-family: sans-serif;
+}
+
 span.author {
     font-weight: bold;
 }

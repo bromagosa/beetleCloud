@@ -61,6 +61,6 @@
         ajax.send(); 
     };
 
-    document.getElementsByClassName('notes')[0].innerHTML = buildHyperlinks(document.getElementsByClassName('notes')[0].innerHTML);
+    document.getElementsByClassName('notes')[0].innerHTML = (buildHyperlinks(document.getElementsByClassName('notes')[0].innerHTML));
 
 </script>
