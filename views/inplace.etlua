@@ -7,11 +7,11 @@
             }
         };
         ajax_<%= id %>.open('POST', '/api/<%= path %>/update/<%= property %>');
-        ajax_<%= id %>.send(document.getElementById('<%= id %>').textContent); 
+        ajax_<%= id %>.send(document.getElementById('<%= id %>').innerHTML); 
     };
     function checkKey_<%= id %> (event, element) {
         var code = (event.keyCode ? event.keyCode : event.which);
-        if (code == 13) { document.getElementById('fake-input').focus(); }
+        if (code == 13 && !event.shiftKey) { document.getElementById('fake-input').focus(); }
     };
 </script>
 <div style="width: 0; height: 0; overflow: hidden;"><input id="fake-input" style="opacity:0; filter:alpha(opacity=0);"></input></div>
@@ -21,5 +21,8 @@
     contenteditable="true"
     onblur="update_<%= id %>()"
     onfocus="document.getElementById('<%= id %>').classList.remove('flash');"
-    onkeypress="checkKey_<%= id %>(event, this)"><%= content %>
+    onkeypress="checkKey_<%= id %>(event, this)">
 </span>
+<script>
+    document.getElementById('<%= id %>').innerHTML = "<%- string.gsub(content, '\n', '') %>";
+</script>
