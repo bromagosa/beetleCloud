@@ -484,6 +484,9 @@ span.notes-title {
 
 .notes pre {
     font-family: sans-serif;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow: hidden;
 }
 
 span.author {
