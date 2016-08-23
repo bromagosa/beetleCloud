@@ -29,7 +29,7 @@
                 <% if (project.username == session.username) then
                     render("views/inplace", { 
                             content = project.notes, 
-                            id = project.projectname:gsub('%s+', '') .. '_notes',
+                            id = project.projectname:gsub('%W','') .. '_notes',
                             path = 'users/' .. session.username .. '/projects/' .. project.projectname,
                             property = 'notes'
                     })
