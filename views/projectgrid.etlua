@@ -1,11 +1,24 @@
 <div class="grid">
 
-    <div class="title"><span class="title-text"><%= 'Projects' %></span></div>
+    <div class="title">
+        <span class="title-text">
+            <% 
+               local titleDict = { 
+                    newest = 'Newest Projects', 
+                    popular = 'Popular Projects',
+                    favorite = (username ~= 'Examples') and ('Projects liked by ' .. username) or ('Beetle Blocks team favorites'),
+                    shared = 'Projects shared by ' .. username,
+                    notes = notes
+                }
+            %>
+            <%= titleDict[collection] %>
+        </span>
+    </div>
 
     <div id="projects-grid" class="projects pure-g">
-        <div class="more">
-            <a onclick="if (projects.length == 24) { offset = offset + 24; getMore(); }"><i class="fa fa-arrow-circle-down"></i></a>
-        </div>
+    </div>
+    <div class="arrow">
+        <a onclick="if (projects.length == 24) { offset = offset + 24; getMore(); }"><i class="fa fa-arrow-circle-down"></i> Load more...</a>
     </div>
 
     <script>

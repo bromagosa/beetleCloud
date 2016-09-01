@@ -319,7 +319,7 @@ a.go-home:hover {
     margin-top: -1.5em;
 }
 
-/* Project carousel */
+/* Project grid and carousel */
 
 .carousel {
     margin-bottom: 1em;
@@ -339,13 +339,30 @@ a.go-home:hover {
     color: #dadbdb;
 }
 
+.grid .arrow {
+    margin-top: 2em;
+    width: 100%;
+    text-align: center;
+}
+
+.grid .arrow a {
+    font-size: 2em;
+    color: #dadbdb;
+}
+
+.grid .arrow a:hover,
 .carousel .arrow a:hover {
     color: #6f7274;
 }
 
+.grid .project,
 .carousel .project {
     position: relative;
     text-align: center;
+}
+
+.grid .project {
+    margin-bottom: 1em;
 }
 
 .grid .project .thumbnail,
@@ -356,6 +373,7 @@ a.go-home:hover {
     opacity: 0.9;
 }
 
+.grid .project .thumbnail:hover,
 .carousel .project .thumbnail:hover {
     box-shadow: 0px 0px 0px 2px #6f7274;
     opacity: 1;
@@ -365,10 +383,12 @@ a.go-home:hover {
     display: none;
 }
 
+.grid .project .name,
 .carousel .project .name {
     margin-top: 6px;
 }
 
+.grid .project .author,
 .carousel .project .author {
     display: block;
 }
