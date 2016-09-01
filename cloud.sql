@@ -2,16 +2,12 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.5.3
--- Dumped by pg_dump version 9.5.3
-
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
-SET row_security = off;
 
 --
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
@@ -44,7 +40,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: comments; Type: TABLE; Schema: public; Owner: beetle
+-- Name: comments; Type: TABLE; Schema: public; Owner: beetle; Tablespace: 
 --
 
 CREATE TABLE comments (
@@ -81,7 +77,7 @@ ALTER SEQUENCE comments_id_seq OWNED BY comments.id;
 
 
 --
--- Name: likes; Type: TABLE; Schema: public; Owner: beetle
+-- Name: likes; Type: TABLE; Schema: public; Owner: beetle; Tablespace: 
 --
 
 CREATE TABLE likes (
@@ -116,7 +112,7 @@ ALTER SEQUENCE likes_id_seq OWNED BY likes.id;
 
 
 --
--- Name: projects; Type: TABLE; Schema: public; Owner: beetle
+-- Name: projects; Type: TABLE; Schema: public; Owner: beetle; Tablespace: 
 --
 
 CREATE TABLE projects (
@@ -157,14 +153,17 @@ ALTER SEQUENCE projects_id_seq OWNED BY projects.id;
 
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: beetle
+-- Name: users; Type: TABLE; Schema: public; Owner: beetle; Tablespace: 
 --
 
 CREATE TABLE users (
     username dom_username NOT NULL,
     email text,
     password text,
-    id integer NOT NULL
+    id integer NOT NULL,
+    joined timestamp with time zone,
+    about text,
+    location text
 );
 
 
@@ -220,7 +219,7 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 
 
 --
--- Name: comments_pkey; Type: CONSTRAINT; Schema: public; Owner: beetle
+-- Name: comments_pkey; Type: CONSTRAINT; Schema: public; Owner: beetle; Tablespace: 
 --
 
 ALTER TABLE ONLY comments
@@ -228,7 +227,7 @@ ALTER TABLE ONLY comments
 
 
 --
--- Name: likes_pkey; Type: CONSTRAINT; Schema: public; Owner: beetle
+-- Name: likes_pkey; Type: CONSTRAINT; Schema: public; Owner: beetle; Tablespace: 
 --
 
 ALTER TABLE ONLY likes
@@ -236,7 +235,7 @@ ALTER TABLE ONLY likes
 
 
 --
--- Name: projects_pkey; Type: CONSTRAINT; Schema: public; Owner: beetle
+-- Name: projects_pkey; Type: CONSTRAINT; Schema: public; Owner: beetle; Tablespace: 
 --
 
 ALTER TABLE ONLY projects
@@ -244,7 +243,7 @@ ALTER TABLE ONLY projects
 
 
 --
--- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: beetle
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: beetle; Tablespace: 
 --
 
 ALTER TABLE ONLY users
