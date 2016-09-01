@@ -2,6 +2,16 @@
 
 ## Prereqs
 
+### Lua 5.1
+
+Lua is the language that powers the whole BeetleCloud. Under Debian/Ubuntu, you can install it by means of APT:
+
+```
+# apt-get install lua5.1
+```
+
+Please note that you need version 5.1 specifically.
+
 ### OpenResty
 
 The BeetleCloud system is built on top of [Lapis](http://leafo.net/lapis/), a server-side Lua (or MoonScript) web framework that runs on [OpenResty](http://openresty.org), a modified version of Nginx. First of all, you need to [download](http://openresty.org/#Download) and install OpenResty by following its [official install guide](http://openresty.org/#Installation).
@@ -17,7 +27,9 @@ Once OpenResty is ready, installing Lapis is just a matter of asking the LuaRock
 Additional Lua packages you need for the BeetleCloud to work properly are the Bcrypt module, used for secure password encryption, and the XML module, used to parse and build Snap<i>!</i> projects. You can use LuaRocks to install them all as root:
 
 ```
-# luarocks install lapis xml bcrypt
+# luarocks install lapis
+# luarocks install xml
+# luarocks install bcrypt
 ```
 
 ### PostgreSQL
