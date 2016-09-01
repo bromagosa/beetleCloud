@@ -34,7 +34,7 @@
                             property = 'notes'
                     })
                   else %>
-                      <%= project.notes ~= '' and project.notes or 'This project has no notes.' %>
+                      <pre class="proto-in-place"><%= project.notes ~= '' and project.notes or 'This project has no notes.' %></pre>
                 <% end %>
             </span>
             <a class="pure-button red-button" align="center" href="/run#present:Username=<%= util.escape(project.username) %>&ProjectName=<%= util.escape(project.projectname) %>">Open Project</a>

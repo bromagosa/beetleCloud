@@ -78,6 +78,14 @@ h3 {
     border: 2px dashed #dddddd;
 }
 
+pre.proto-in-place,
+pre.in-place {
+    font-family: sans-serif;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow: hidden;
+}
+
 .flash {
     animation: flasher 1s linear;
 }
@@ -482,11 +490,10 @@ span.notes-title {
     margin-top: 24px;
 }
 
-.notes pre {
-    font-family: sans-serif;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    overflow: hidden;
+span.notes {
+    height: 365px;
+    padding-right: 1em;
+    overflow-y: auto;
 }
 
 span.author {
