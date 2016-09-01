@@ -1,58 +1,45 @@
-<% local id = collection .. title:gsub('%s+','') %>
 <div class="grid">
+
+    <div class="title"><span class="title-text"><%= 'Projects' %></span></div>
+
+    <div id="projects-grid" class="projects pure-g">
+        <div class="more">
+            <a onclick="if (projects.length == 24) { offset = offset + 24; getMore(); }"><i class="fa fa-arrow-circle-down"></i></a>
+        </div>
+    </div>
+
     <script>
-        var ajax_<%= id %> = new XMLHttpRequest(),
-            offset_<%= id %> = 0,
-            gridDiv_<%= id %> = document.currentScript.parentElement,
-            projects_<%= id %>;
-        function get<%= id %>() {
-            ajax_<%= id %>.onreadystatechange = function () {
-                if (ajax_<%= id %>.readyState == 4 && ajax_<%= id %>.status == 200) {
-                    projects_<%= id %> =JSON.parse(ajax_<%= id %>.responseText);
-                    update<%= id %>();
+        var ajax = new XMLHttpRequest(),
+            offset = 0,
+            gridDiv = document.getElementById('projects-grid'),
+            projects;
+
+        function getMore () {
+            ajax.onreadystatechange = function () {
+                if (ajax.readyState == 4 && ajax.status == 200) {
+                    projects =JSON.parse(ajax.responseText);
+                    updateGrid();
                 }
             };
             // The second part of the query needs to be enclosed between double commas, as SQL strings are enclosed by single ones
-            ajax_<%= id %>.open('GET', '/api/projects/<%= collection %>/25/' + offset_<%= id %> + "<%= '/' .. (username or '') %>?list=<%= list or '' %>&notes=<%= notes or '' %>", true);
-            ajax_<%= id %>.send();
+            ajax.open('GET', '/api/projects/<%= collection %>/24/' + offset + "<%= '/' .. (username or '') %>?list=<%= list or '' %>&notes=<%= notes or '' %>", true);
+            ajax.send();
         };
-        function update<%= id %>() {
-            for (var i = 0; i < projects_<%= id %>.length; i ++) {
-                var div = document.getElementById('project-' + i + '-<%= id %>');
-                div.className = 'project pure-u-1-6';
-                div.children[0].href = '/users/' + encodeURIComponent(projects_<%= id %>[i].username) +
-                                        '/projects/' + encodeURIComponent(projects_<%= id %>[i].projectname);
-                div.children[0].children[0].src = projects_<%= id %>[i].thumbnail;
-                div.children[1].textContent = projects_<%= id %>[i].projectname;
-                div.children[1].href = div.children[0].href;
-                div.children[2].children[0].textContent = projects_<%= id %>[i].username;
-                div.children[2].children[0].href = '/users/' + encodeURIComponent(projects_<%= id %>[i].username);
-            }
-            for (var i = projects_<%= id %>.length || 0; i < 5; i ++) {
-                var div = document.getElementById('project-' + i + '-<%= id %>');
-                div.className = 'project pure-u-1-6 empty';
-                div.children[0].removeAttribute('href');
-                div.children[0].children[0].removeAttribute('src');
-                div.children[1].textContent = '';
-                div.children[1].removeAttribute('href');
-            }
+
+        function updateGrid () {
+            projects.forEach(
+                function (project) {
+                    var div = document.createElement('div'),
+                        projectHref= '/users/' + encodeURIComponent(project.username) + '/projects/' + encodeURIComponent(project.projectname);
+                    div.className = 'project pure-u-1-6';
+                    div.innerHTML = '<a target="_blank" href="' + projectHref + '"><img class="thumbnail" src="' + project.thumbnail +
+                                    '"></a> <a target="_blank" class="name ellipsis" href="' + projectHref + '">' + project.projectname +
+                                    '</a> <span class="author">by ' + project.username + '<a href="/users/' + encodeURIComponent(project.username) +'"></a></span>';
+                    gridDiv.appendChild(div);
+                });
         };
-    </script>
-    <div class="title"><span class="title-text"><%= title %></span></div>
-    <div class="projects pure-g">
-        <% for i = 1, 25, 1 do %>
-        <div id="project-<%= i - 1 %>-<%= id %>">
-            <a target="_blank"><img class="thumbnail" src=""></a>
-            <a target="_blank" class="name ellipsis"></a>
-            <span class="author">by <a href=""></a></span>
-        </div>
-        <% end %>
-        <div class="more">
-            <a onclick="if (projects_<%= id %>.length == 25) { offset_<%= id %> = offset_<%= id %> + 25; get<%= id %>(); }"><i class="fa fa-arrow-circle-down"></i></a>
-        </div>
-    </div>
-    <script>
-        get<%= id %>();
+
+        getMore();
     </script>
 </div>
 

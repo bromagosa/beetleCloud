@@ -348,6 +348,7 @@ a.go-home:hover {
     text-align: center;
 }
 
+.grid .project .thumbnail,
 .carousel .project .thumbnail {
     width: 160px;
     height: 120px;

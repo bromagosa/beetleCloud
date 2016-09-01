@@ -65,8 +65,10 @@ app:get('/users/:username', function(self)
     return { render = 'user' }
 end)
 
-app:get('/users/:username/projects/g/:list', function(self)
-    return 'projects by ' .. self.params.username
+app:get('/users/:username/projects/g/:collection', function(self)
+    self.collection = self.params.collection
+    self.username = self.params.username
+    return { render = 'projectgrid' }
 end)
 
 app:get('/users/:username/projects/:projectname', function(self)
