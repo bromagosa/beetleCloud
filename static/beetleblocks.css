@@ -127,6 +127,12 @@ pre.in-place {
     margin-left: 0.5em;
 }
 
+.show-all {
+    float: right;
+    margin-right: 1em;
+    margin-top: 1em;
+}
+
 .info-box .text,
 .carousel .projects {
     border-radius: 0 0 5px 5px;
@@ -461,7 +467,7 @@ a.go-home:hover {
 }
 
 .project span, .user span {
-    display: block;
+    display: inline-block;
 }
 
 .project .title-text, .user .title-text {

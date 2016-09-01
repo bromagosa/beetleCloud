@@ -65,7 +65,7 @@ app:get('/users/:username', function(self)
     return { render = 'user' }
 end)
 
-app:get('/users/:username/projects', function(self)
+app:get('/users/:username/projects/g/:list', function(self)
     return 'projects by ' .. self.params.username
 end)
 

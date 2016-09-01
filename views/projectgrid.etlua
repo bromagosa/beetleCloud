@@ -1,21 +1,19 @@
 <% local id = collection .. title:gsub('%s+','') %>
-<div class="carousel">
+<div class="grid">
     <script>
         var ajax_<%= id %> = new XMLHttpRequest(),
             offset_<%= id %> = 0,
-            carouselDiv_<%= id %> = document.currentScript.parentElement,
+            gridDiv_<%= id %> = document.currentScript.parentElement,
             projects_<%= id %>;
         function get<%= id %>() {
-            carouselDiv_<%= id %>.classList.add('fade');
             ajax_<%= id %>.onreadystatechange = function () {
                 if (ajax_<%= id %>.readyState == 4 && ajax_<%= id %>.status == 200) {
                     projects_<%= id %> =JSON.parse(ajax_<%= id %>.responseText);
                     update<%= id %>();
-                    carouselDiv_<%= id %>.classList.remove('fade');
                 }
             };
             // The second part of the query needs to be enclosed between double commas, as SQL strings are enclosed by single ones
-            ajax_<%= id %>.open('GET', '/api/projects/<%= collection %>/5/' + offset_<%= id %> + "<%= '/' .. (username or '') %>?list=<%= list or '' %>&notes=<%= notes or '' %>", true);
+            ajax_<%= id %>.open('GET', '/api/projects/<%= collection %>/25/' + offset_<%= id %> + "<%= '/' .. (username or '') %>?list=<%= list or '' %>&notes=<%= notes or '' %>", true);
             ajax_<%= id %>.send();
         };
         function update<%= id %>() {
@@ -40,28 +38,21 @@
             }
         };
     </script>
-
-    <div class="title">
-        <span class="title-text"><%= title %></span>
-        <span class="show-all"><a href="<%= (username and ('/users/' .. username) or '/') .. '/projects/g/' .. collection .. '/' .. (list or '') %>">Show all</a></span>
-    </div>
-
+    <div class="title"><span class="title-text"><%= title %></span></div>
     <div class="projects pure-g">
-        <div class="arrow pure-u-1-12">
-            <a onclick="if (offset_<%= id %> > 0) { offset_<%= id %> = offset_<%= id %> - 5; get<%= id %>(); }"><i class="fa fa-arrow-circle-left"></i></a>
-        </div>
-        <% for i = 1, 5, 1 do %>
+        <% for i = 1, 25, 1 do %>
         <div id="project-<%= i - 1 %>-<%= id %>">
             <a target="_blank"><img class="thumbnail" src=""></a>
             <a target="_blank" class="name ellipsis"></a>
             <span class="author">by <a href=""></a></span>
         </div>
         <% end %>
-        <div class="arrow pure-u-1-12">
-            <a onclick="if (projects_<%= id %>.length == 5) { offset_<%= id %> = offset_<%= id %> + 5; get<%= id %>(); }"><i class="fa fa-arrow-circle-right"></i></a>
+        <div class="more">
+            <a onclick="if (projects_<%= id %>.length == 25) { offset_<%= id %> = offset_<%= id %> + 25; get<%= id %>(); }"><i class="fa fa-arrow-circle-down"></i></a>
         </div>
     </div>
     <script>
         get<%= id %>();
     </script>
 </div>
+
