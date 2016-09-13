@@ -19,7 +19,7 @@
     </div>
     <div id="loading"><div class="vertical-centerer"><i class="fa-li fa fa-spinner fa-spin"></i></div></div>
     <div class="arrow">
-        <a onclick="if (projects.length == 24) { offset = offset + 24; getMore(); }"><i class="fa fa-arrow-circle-down"></i> Load more...</a>
+        <a id="loadmore" onclick="if (projects.length == 24) { offset = offset + 24; getMore(); }"><i class="fa fa-arrow-circle-down"></i> Load more...</a>
     </div>
 
     <script>
@@ -43,6 +43,11 @@
         };
 
         function updateGrid () {
+
+            if (projects.length < 24) {
+                document.getElementById('loadmore').remove();
+            }
+
             projects.forEach(
                 function (project) {
                     var div = document.createElement('div'),
@@ -53,6 +58,7 @@
                                     '</a> <span class="author">by <a href="/users/' + encodeURIComponent(project.username) +'">' + project.username + '</a></span>';
                     gridDiv.appendChild(div);
                 });
+
             loadingDiv.style.display = 'none';
         };
 
