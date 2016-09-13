@@ -17,7 +17,7 @@
 
     <div id="projects-grid" class="projects pure-g">
     </div>
-    <div id="loading" class="loading"><i class="fa-li fa fa-spinner fa-spin"></i></div>
+    <div id="loading"><div class="vertical-centerer"><i class="fa-li fa fa-spinner fa-spin"></i></div></div>
     <div class="arrow">
         <a onclick="if (projects.length == 24) { offset = offset + 24; getMore(); }"><i class="fa fa-arrow-circle-down"></i> Load more...</a>
     </div>
