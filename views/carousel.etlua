@@ -43,7 +43,7 @@
 
     <div class="title">
         <span class="title-text"><%= title %></span>
-        <span class="show-all"><a href="<%= (username and ('/users/' .. username) or '/') .. '/projects/g/' .. collection .. '/' .. (list or '') %>">Show all</a></span>
+        <span class="show-all"><a href="<%= (username and ('/users/' .. username) or '') .. 'projects/g/' .. collection .. '/' .. (list or '') %>">Show all</a></span>
     </div>
 
     <div class="projects pure-g">

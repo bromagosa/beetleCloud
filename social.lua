@@ -71,6 +71,12 @@ app:get('/users/:username/projects/g/:collection', function(self)
     return { render = 'projectgrid' }
 end)
 
+app:get('/projects/g/:collection', function(self)
+    self.collection = self.params.collection
+    self.username = ''
+    return { render = 'projectgrid' }
+end)
+
 app:get('/users/:username/projects/:projectname', function(self)
     self.project = Projects:find(self.params.username, self.params.projectname)
     if (self.project and
