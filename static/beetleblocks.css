@@ -99,6 +99,16 @@ pre.in-place {
     }
 }
 
+.loading {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.2);
+    left: 0;
+    top: 0;
+}
+
 /* Info boxes */
 
 .info-box {
@@ -150,7 +160,6 @@ pre.in-place {
 /* Top Bar */
 
 .go-home {
-    
     background: url("/static/tiny-logo.png");
     display: block;
     width: 25px;
@@ -491,11 +500,12 @@ a.go-home:hover {
     padding: 16px 40px 40px 40px;
 }
 
-.project span, .user span {
+.project span,
+.user span {
     display: block;
 }
 
-.carousel .project span {
+.carousel span {
     display: inline-block; /* except here... */
 }
 

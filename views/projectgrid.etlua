@@ -17,6 +17,7 @@
 
     <div id="projects-grid" class="projects pure-g">
     </div>
+    <div id="loading" class="loading"><i class="fa-li fa fa-spinner fa-spin"></i></div>
     <div class="arrow">
         <a onclick="if (projects.length == 24) { offset = offset + 24; getMore(); }"><i class="fa fa-arrow-circle-down"></i> Load more...</a>
     </div>
@@ -25,9 +26,11 @@
         var ajax = new XMLHttpRequest(),
             offset = 0,
             gridDiv = document.getElementById('projects-grid'),
+            loadingDiv = document.getElementById('loading'),
             projects;
 
         function getMore () {
+            loadingDiv.style.display = 'block';
             ajax.onreadystatechange = function () {
                 if (ajax.readyState == 4 && ajax.status == 200) {
                     projects =JSON.parse(ajax.responseText);
@@ -50,6 +53,7 @@
                                     '</a> <span class="author">by <a href="/users/' + encodeURIComponent(project.username) +'">' + project.username + '</a></span>';
                     gridDiv.appendChild(div);
                 });
+            loadingDiv.style.display = 'none';
         };
 
         getMore();
