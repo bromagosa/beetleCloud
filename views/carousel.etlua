@@ -29,6 +29,7 @@
                 div.children[1].href = div.children[0].href;
                 div.children[2].children[0].textContent = projects_<%= id %>[i].username;
                 div.children[2].children[0].href = '/users/' + encodeURIComponent(projects_<%= id %>[i].username);
+                div.style.visibility = 'visible';
             }
             for (var i = projects_<%= id %>.length || 0; i < 5; i ++) {
                 var div = document.getElementById('project-' + i + '-<%= id %>');
@@ -37,6 +38,7 @@
                 div.children[0].children[0].removeAttribute('src');
                 div.children[1].textContent = '';
                 div.children[1].removeAttribute('href');
+                div.style.visibility = 'visible';
             }
         };
     </script>
@@ -46,12 +48,12 @@
         <span class="show-all"><a href="<%= (username and ('/users/' .. username ..'/') or '') .. 'projects/g/' .. collection .. '/' .. (list or '') %>">Show all</a></span>
     </div>
 
-    <div class="projects pure-g">
+    <div class="projects pure-g" id="projects_<%= id %>">
         <div class="arrow pure-u-1-12">
             <a onclick="if (offset_<%= id %> > 0) { offset_<%= id %> = offset_<%= id %> - 5; get<%= id %>(); }"><i class="fa fa-arrow-circle-left"></i></a>
         </div>
         <% for i = 1, 5, 1 do %>
-        <div id="project-<%= i - 1 %>-<%= id %>">
+        <div id="project-<%= i - 1 %>-<%= id %>" style="visibility: hidden">
             <a target="_blank"><img class="thumbnail" src=""></a>
             <a target="_blank" class="name ellipsis"></a>
             <span class="author">by <a href=""></a></span>
