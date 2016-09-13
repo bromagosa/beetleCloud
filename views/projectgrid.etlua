@@ -47,7 +47,7 @@
                     div.className = 'project pure-u-1-6';
                     div.innerHTML = '<a target="_blank" href="' + projectHref + '"><img class="thumbnail" src="' + project.thumbnail +
                                     '"></a> <a target="_blank" class="name ellipsis" href="' + projectHref + '">' + project.projectname +
-                                    '</a> <span class="author">by ' + project.username + '<a href="/users/' + encodeURIComponent(project.username) +'"></a></span>';
+                                    '</a> <span class="author">by <a href="/users/' + encodeURIComponent(project.username) +'">' + project.username + '</a></span>';
                     gridDiv.appendChild(div);
                 });
         };

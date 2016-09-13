@@ -355,6 +355,10 @@ a.go-home:hover {
     color: #6f7274;
 }
 
+.grid .projects {
+    font-size: 0.9em;
+}
+
 .grid .project,
 .carousel .project {
     position: relative;
@@ -488,7 +492,7 @@ a.go-home:hover {
 }
 
 .project span, .user span {
-    display: inline-block;
+    display: block;
 }
 
 .project .title-text, .user .title-text {
