@@ -50,7 +50,7 @@
                     document.getElementById('likes').children[0].classList.remove('liked');
                     document.getElementById('likes').children[1].textContent =
                         Number(document.getElementById('likes').children[1].textContent) - 1;
-                } else {
+                } else if ((JSON.parse(ajax.responseText)).text.match('liked')) {
                     document.getElementById('likes').children[0].classList.add('liked');
                     document.getElementById('likes').children[1].textContent =
                         Number(document.getElementById('likes').children[1].textContent) + 1;

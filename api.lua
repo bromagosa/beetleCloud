@@ -425,6 +425,10 @@ app:match('toggle_like', '/api/users/:username/projects/:projectname/like', resp
             return errorResponse('you are not logged in')
         end
 
+        if (self.session.username == self.params.username) then
+            return jsonResponse({ text = 'of course you do, it\'s your own project! ;)'})
+        end
+
         local project = Projects:find(self.params.username, self.params.projectname)
 
         if (project) then
