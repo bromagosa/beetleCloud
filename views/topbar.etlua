@@ -1,11 +1,11 @@
 <div class="pure-menu-horizontal pure-menu">
     <ul class="pure-g pure-menu-list">
         <li class="pure-menu-item pure-u-1-24"><a class="go-home" href="/"></a></li>
-        <% for i, section in pairs({ 'Stories', 'Examples' }) do -- Forum section removed until we have one %> 
-            <li class="pure-menu-item pure-u-2-24"><a class="pure-menu-link" href="/<%= string.lower(section:gsub('%s+','')) %>"><%= section %></a></li>
-        <% end %>
+        <li class="pure-menu-item pure-u-2-24"><a class="pure-menu-link" href="/stories">Stories</a></li>
+        <li class="pure-menu-item pure-u-2-24"><a class="pure-menu-link" href="/examples">Examples</a></li>
+        <li class="pure-menu-item pure-u-2-24"><a class="pure-menu-link" href="http://forum.beetleblocks.com">Forum</a></li>
 
-        <i class="pure-u-4-24"></i>
+        <i class="pure-u-2-24"></i>
 
         <% render("views/search") %>
         
