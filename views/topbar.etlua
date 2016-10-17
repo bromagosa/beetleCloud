@@ -3,7 +3,7 @@
         <li class="pure-menu-item pure-u-1-24"><a class="go-home" href="/"></a></li>
         <li class="pure-menu-item pure-u-2-24"><a class="pure-menu-link" href="/stories">Stories</a></li>
         <li class="pure-menu-item pure-u-2-24"><a class="pure-menu-link" href="/examples">Examples</a></li>
-        <li class="pure-menu-item pure-u-2-24"><a class="pure-menu-link" href="http://forum.beetleblocks.com">Forum</a></li>
+        <li class="pure-menu-item pure-u-2-24"><a class="pure-menu-link" taget="_blank" href="http://forum.beetleblocks.com">Forum</a></li>
 
         <i class="pure-u-2-24"></i>
 

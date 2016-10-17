@@ -6,21 +6,23 @@
                 <%- project.projectname %>
             </span>
             <span class="author">by <a href="/users/<%= util.escape(project.username) %>"><%- project.username %></a></span>
-            <img class="big-thumbnail" src="<%= project.thumbnail %>">
-            <div class="stats pure-g">
-                <div class="pure-u-1-2">
-                    <span>Views: <%= project.views or 0 %></span>
-                    <span>Shared: <%= project.sharedString %></span>
-                </div>
-                <div class="pure-u-1-2">
-                    <span id="likes">
-                        <i <% if (session.username ~= '') then %> onclick="toggleLike()" <% end %> 
-                        class="clickable glyph fa fa-thumbs-o-up <%= project.likedByUser and 'liked' %>"
-                        <% if (project.likedByUser) then %> title="you like this project" <% end %> ></i>
-                        <i><%= project.likes %></i>
-                    </span>
-                    <span>Modified: <%= project.modifiedString %></span>
-                </div>
+            <div id="thumbs">
+                <span class="big-thumbnail <%= project.imageisfeatured and '' or 'featured' %>">
+                    <img src="<%= project.thumbnail %>">
+                    <div class="buttons">
+                        <a class="pure-button red-button feat-button" onclick="featureImage(false)">Feature me</a>
+                    </div>
+                </span>
+                <span class="big-thumbnail <%= project.imageisfeatured and 'featured' or '' %>">
+                    <div class="buttons">
+                        <a class="pure-button red-button feat-button" onclick="featureImage(true)">Feature me</a>
+                        <form class="fileinput">
+                            <input type="file" name="file" onchange="uploadImage(this.files[0])" id="file"/>
+                            <label for="file" class="pure-button red-button">Upload an image</label>
+                        </form>
+                    </div>
+                    <img src="<%= project.secondarythumbnail or '' %>">
+                </span>
             </div>
         </div>
         <div class="details pure-u-1-2">
@@ -38,6 +40,21 @@
                 <% end %>
             </span>
             <a class="pure-button red-button" align="center" href="/run#present:Username=<%= util.escape(project.username) %>&ProjectName=<%= util.escape(project.projectname) %>">Open Project</a>
+            <div class="stats pure-g">
+                <div class="pure-u-1-2">
+                    <span>Views: <%= project.views or 0 %></span>
+                    <span>Shared: <%= project.sharedString %></span>
+                </div>
+                <div class="pure-u-1-2">
+                    <span id="likes">
+                        <i <% if (session.username ~= '') then %> onclick="toggleLike()" <% end %> 
+                        class="clickable glyph fa fa-thumbs-o-up <%= project.likedByUser and 'liked' %>"
+                        <% if (project.likedByUser) then %> title="you like this project" <% end %> ></i>
+                        <i><%= project.likes %></i>
+                    </span>
+                    <span>Modified: <%= project.modifiedString %></span>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -61,6 +78,51 @@
         ajax.send(); 
     };
 
-    document.getElementsByClassName('notes')[0].innerHTML = (buildHyperlinks(document.getElementsByClassName('notes')[0].innerHTML));
+    function uploadImage (file) {
+        var ajax = new XMLHttpRequest();
 
+        ajax.open('POST', '/api' + window.location.pathname + '/image' , true);
+        ajax.onreadystatechange = function() {
+            if (ajax.readyState == 4 && ajax.status == 200) {
+                console.log(ajax.responseText);
+            }
+        };
+
+        console.log(file);
+
+        ajax.send(file);
+    };
+
+    function featureImage (doFeatureIt) {
+        var ajax = new XMLHttpRequest();
+        ajax.onreadystatechange = function () {
+            if (ajax.readyState == 4 && ajax.status == 200) {
+                toggleFeaturedClass();
+                sortThumbnails();
+            }
+        };
+        ajax.open('GET', '/api' + window.location.pathname + '/image?featureImage=' + doFeatureIt , true);
+        ajax.send(); 
+    };
+
+    function toggleFeaturedClass () {
+        var thumbs = document.getElementById('thumbs');
+        if (thumbs.children[0].classList.contains('featured')) {
+            thumbs.children[0].classList.remove('featured');
+            thumbs.children[1].classList.add('featured');
+        } else {
+            thumbs.children[0].classList.add('featured');
+            thumbs.children[1].classList.remove('featured');
+        }
+    };
+
+    function sortThumbnails () {
+        var thumbs = document.getElementById('thumbs');
+        if (thumbs.children[1].classList.contains('featured')) {
+            thumbs.appendChild(thumbs.children[0]);
+        }
+    };
+
+    sortThumbnails();
+    document.getElementsByClassName('notes')[0].innerHTML = (buildHyperlinks(document.getElementsByClassName('notes')[0].innerHTML));
 </script>

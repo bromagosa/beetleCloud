@@ -15,11 +15,11 @@ local xml = require('xml')
 
 -- Response generation
 
-errorResponse = function(errorText)
+errorResponse = function (errorText)
     return jsonResponse({ error = errorText })
 end
 
-jsonResponse = function(json)
+jsonResponse = function (json)
     return {
         layout = false, 
         status = 200, 
@@ -28,12 +28,18 @@ jsonResponse = function(json)
     }
 end
 
-cors_options = function(self)
+cors_options = function (self)
     self.res.headers['access-control-allow-headers'] = 'Content-Type'
     self.res.headers['access-control-allow-method'] = 'POST, GET, OPTIONS'
     return { status = 200, layout = false }
 end
 
+err = {
+    notLoggedIn = errorResponse('you are not logged in'),
+    auth = errorResponse('authentication error'),
+    nonexistentUser = errorResponse('no user with this username exists'),
+    nonexistentProject = errorResponse('this project does not exist, or you do not have permissions to access it')
+}
 
 -- Database abstractions
 
@@ -52,7 +58,7 @@ local Likes = Model:extend('likes', {
 
 -- Before filter
 
-app:before_filter(function(self)
+app:before_filter(function (self)
     -- unescape all parameters
     for k,v in pairs(self.params) do
         self.params[k] = util.unescape(v)
@@ -70,20 +76,20 @@ end)
 
 -- Data retrieval
 
-app:get('/api', function(self)
+app:get('/api', function (self)
     return { layout = false, 'Beetle Cloud API' }
 end)
 
-app:get('/api/users', function(self)
+app:get('/api/users', function (self)
     return jsonResponse(Users:select({ fields = 'username' }))
 end)
 
-app:get('/api/users/:username', function(self)
+app:get('/api/users/:username', function (self)
     -- find() doesn't allow for field filtering
     return jsonResponse(Users:select('where username = ?', self.params.username, { fields = 'username, location, about, joined' })[1])
 end)
 
-app:get('/api/projects/:selection/:limit/:offset(/:username)', function(self)
+app:get('/api/projects/:selection/:limit/:offset(/:username)', function (self)
 
     local username = self.params.username or 'Examples'
     local list = self.params.list or ''
@@ -107,7 +113,7 @@ end)
 
 app:match('project_list', '/api/users/:username/projects', respond_to({
     OPTIONS = cors_options,
-    GET = function(self)
+    GET = function (self)
         -- returns all projects by a user
 
         if (self.params.username == self.session.username) then
@@ -127,7 +133,7 @@ app:match('project_list', '/api/users/:username/projects', respond_to({
 
 app:match('fetch_project', '/api/users/:username/projects/:projectname', respond_to({
     OPTIONS = cors_options,
-    GET = function(self)
+    GET = function (self)
         local project = Projects:find(self.params.username, self.params.projectname)
 
         if (project and project.ispublic) then
@@ -135,12 +141,12 @@ app:match('fetch_project', '/api/users/:username/projects/:projectname', respond
         elseif (project and self.params.username == self.session.username) then
             return jsonResponse(project)
         else
-            return errorResponse('Project ' .. self.params.projectname .. ' is either nonexistent or private')
+            return err[nonexistentProject]
         end
     end
 }))
 
-app:get('/api/search/:query', function(self)
+app:get('/api/search/:query', function (self)
     local query = '.*' .. self.params.query .. '.*'
     local matchingUsers = Users:select('where username ~* ? or about ~* ? order by id desc limit 10', query, query, { fields = 'username' })
     local matchingProjects = Projects:select('where ispublic = \'true\' and projectname ~* ? or notes ~* ? order by id desc limit 10', query, query, { fields = 'projectname, username' })
@@ -151,7 +157,7 @@ end)
 
 app:match('login', '/api/users/login', respond_to({
     OPTIONS = cors_options,
-    GET = function(self)
+    GET = function (self)
         local user = Users:find(self.params.username)
         local comesFromWebClient = ngx.var.http_referer:match('/run') == nil
 
@@ -182,7 +188,7 @@ app:match('login', '/api/users/login', respond_to({
 
 app:match('logout', '/api/users/logout', respond_to({
     OPTIONS = cors_options,
-    GET = function(self)
+    GET = function (self)
         local username = self.session.username
         local comesFromWebClient = ngx.var.http_referer:match('/run') == nil
         self.session.username = ''
@@ -199,7 +205,7 @@ app:match('logout', '/api/users/logout', respond_to({
 app:match('current_user', '/api/user', respond_to({
     -- Gives back the currently logged user
     OPTIONS = cors_options,
-    GET = function(self)
+    GET = function (self)
         return jsonResponse({ username = self.session.username })
     end
 }))
@@ -209,7 +215,7 @@ app:match('current_user', '/api/user', respond_to({
 
 app:match('new_user', '/api/users/new', respond_to({
     OPTIONS = cors_options,
-    POST = function(self)
+    POST = function (self)
         local comesFromWebClient = ngx.var.http_referer:match('/run') == nil
 
         validate.assert_valid(self.params, {
@@ -247,15 +253,15 @@ app:match('new_user', '/api/users/new', respond_to({
 
 app:match('update_user', '/api/users/:username/update/:property', respond_to({
     OPTIONS = cors_options,
-    POST = function(self)
+    POST = function (self)
         local user = Users:find(self.params.username);
 
         if (not user) then
-            return errorResponse('no user with this username exists')
+            return err[nonexistentUser]
         end
 
         if (self.params.username ~= self.session.username) then
-            return errorResponse('authentication error')
+            return err[auth]
         end
 
         local options = {}
@@ -268,15 +274,15 @@ app:match('update_user', '/api/users/:username/update/:property', respond_to({
 
 app:match('update_project', '/api/users/:username/projects/:projectname/update/:property', respond_to({
     OPTIONS = cors_options,
-    POST = function(self)
+    POST = function (self)
         local project = Projects:find(self.params.username, self.params.projectname);
 
         if (not project) then
-            return errorResponse('this project does not exist')
+            return err[nonexistentProject]
         end
 
         if (self.params.username ~= self.session.username) then
-            return errorResponse('authentication error')
+            return err[auth]
         end
 
         local options = {}
@@ -296,7 +302,7 @@ app:match('update_project', '/api/users/:username/projects/:projectname/update/:
 
 app:match('save_project', '/api/projects/save', respond_to({
     OPTIONS = cors_options,
-    POST = function(self)
+    POST = function (self)
         -- can't use camel case because SQL doesn't care about case
 
         self.params.ispublic = (self.params.ispublic == 'true')
@@ -309,11 +315,11 @@ app:match('save_project', '/api/projects/save', respond_to({
         })
 
         if (not Users:find(self.params.username)) then
-            return errorResponse('no user with this username exists')
+            return err[nonexistentUser]
         end
 
         if (self.params.username ~= self.session.username) then
-            return errorResponse('authentication error')
+            return err[auth]
         end
 
         ngx.req.read_body()
@@ -361,14 +367,14 @@ app:match('save_project', '/api/projects/save', respond_to({
 
 app:match('set_visibility', '/api/users/:username/projects/:projectname/visibility', respond_to({
     OPTIONS = cors_options,
-    GET = function(self)
+    GET = function (self)
 
         if (not Users:find(self.params.username)) then
-            return errorResponse('no user with this username exists')
+            return err[nonexistentUser]
         end
 
         if (self.params.username ~= self.session.username) then
-            return errorResponse('authentication error')
+            return err[auth]
         end
 
         local project = Projects:find(self.params.username, self.params.projectname)
@@ -384,7 +390,7 @@ app:match('set_visibility', '/api/users/:username/projects/:projectname/visibili
                 (self.params.ispublic == 'true' and 'public' or 'private')
             })
         else
-            return errorResponse('project does not exist')
+            return err[nonexistentProject]
         end
         
     end
@@ -392,15 +398,15 @@ app:match('set_visibility', '/api/users/:username/projects/:projectname/visibili
 
 app:match('remove_project', '/api/users/:username/projects/:projectname/delete', respond_to({
     OPTIONS = cors_options,
-    GET = function(self)
+    GET = function (self)
         -- can't use camel case because SQL doesn't care about case
 
         if (not Users:find(self.params.username)) then
-            return errorResponse('no user with this username exists')
+            return err[nonexistentUser]
         end
 
         if (self.params.username ~= self.session.username) then
-            return errorResponse('authentication error')
+            return err[auth]
         end
 
         local project = Projects:find(self.params.username, self.params.projectname)
@@ -410,7 +416,7 @@ app:match('remove_project', '/api/users/:username/projects/:projectname/delete',
             project:delete()
             return jsonResponse({ text = 'project ' .. self.params.projectname .. ' removed' })
         else
-            return errorResponse('project does not exist')
+            return err[nonexistentProject]
         end
         
     end
@@ -418,11 +424,11 @@ app:match('remove_project', '/api/users/:username/projects/:projectname/delete',
 
 app:match('toggle_like', '/api/users/:username/projects/:projectname/like', respond_to({
     OPTIONS = cors_options,
-    GET = function(self)
+    GET = function (self)
         -- can't use camel case because SQL doesn't care about case
 
         if (not self.session.username) then
-            return errorResponse('you are not logged in')
+            return err[notLoggedIn]
         end
 
         if (self.session.username == self.params.username) then
@@ -456,7 +462,50 @@ app:match('toggle_like', '/api/users/:username/projects/:projectname/like', resp
             end
 
         else
-            return errorResponse('could not find project')
+            return err[nonexistentProject]
+        end
+    end
+}))
+
+app:match('set_project_image', '/api/users/:username/projects/:projectname/image', respond_to({
+    OPTIONS = cors_options,
+    GET = function (self)
+        if (not self.session.username) then
+            return err[notLoggedIn]
+        end
+
+        if (self.params.username ~= self.session.username) then
+            return err[auth]
+        end
+
+        local project = Projects:find(self.params.username, self.params.projectname)
+
+        if (project) then
+                project:update({ imageisfeatured = self.params.featureImage == 'true' })
+        else
+            return err[nonexistentProject]
+        end
+    end,
+    POST = function (self)
+        if (not self.session.username) then
+            return err[notLoggedIn]
+        end
+
+        if (self.params.username ~= self.session.username) then
+            return err[auth]
+        end
+
+        local project = Projects:find(self.params.username, self.params.projectname)
+
+        if (project) then
+            ngx.req.read_body();
+            image = ngx.req.get_body_data();
+            file = io.open('/tmp/test.png', 'w+')
+            file:write(image)
+            file:close()
+            return jsonResponse('image uploaded')
+        else
+            return err[nonexistentProject]
         end
     end
 }))

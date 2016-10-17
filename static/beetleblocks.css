@@ -125,6 +125,19 @@ pre.in-place {
     transform: translate(-50%, -50%);
 }
 
+.fileinput {
+    display: inline;
+}
+
+.fileinput input {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
 /* Info boxes */
 
 .info-box {
@@ -534,8 +547,6 @@ a.go-home:hover {
 }
 
 .project .details .pure-button {
-    position: absolute;
-    bottom: 0;
     width: 100%;
 }
 
@@ -543,6 +554,35 @@ a.go-home:hover {
     margin: 10px 0;
     width: 480px;
     height: 360px;
+    border: 2px solid #2e2c2c;
+    position: relative;
+}
+
+.big-thumbnail img {
+    box-sizing: border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+}
+
+.featured {
+    border: 2px solid #ae272b;
+}
+
+.featured .feat-button {
+    display: none;
+}
+
+.big-thumbnail .buttons {
+    position: absolute;
+    top: 0;
+    text-align: center;
+    width: 480px;
+    height: 360px;
+    line-height: 360px;
+    visibility: hidden;
+}
+.big-thumbnail:hover .buttons {
+    visibility: visible;
 }
 
 span.notes-title {
@@ -552,13 +592,17 @@ span.notes-title {
 }
 
 span.notes {
-    height: 365px;
+    height: 385px;
     padding-right: 1em;
     overflow-y: auto;
 }
 
 span.author {
     font-weight: bold;
+}
+
+.stats {
+    margin-top: 2em;
 }
 
 .stats span {
