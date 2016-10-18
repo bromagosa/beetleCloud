@@ -51,23 +51,22 @@
                 projects.forEach(
                         function (project) {
                             var imageLoader = new XMLHttpRequest(),
-                                div = document.createElement('div');
+                                div = document.createElement('div'),
+                                projectHref= '/users/' + 
+                                    encodeURIComponent(project.username) + '/projects/' + 
+                                    encodeURIComponent(project.projectname);
 
                             div.className = 'project pure-u-1-6';
                             gridDiv.appendChild(div);
+                            div.innerHTML = '<a target="_blank" href="' + projectHref +
+                                '"><img class="thumbnail" src="/static/no-thumb.png"></a> <a target="_blank" class="name ellipsis" href="' +
+                                projectHref + '">' + project.projectname + '</a> <span class="author">by <a href="/users/' +
+                                encodeURIComponent(project.username) +'">' + project.username + '</a></span>';
 
-                            imageLoader.project = project;
                             imageLoader.div = div;
                             imageLoader.onreadystatechange = function () {
                                 if (this.readyState == 4 && this.status == 200) {
-                                    var projectHref= '/users/' + 
-                                            encodeURIComponent(this.project.username) + '/projects/' + 
-                                            encodeURIComponent(this.project.projectname);
-
-                                    this.div.innerHTML = '<a target="_blank" href="' + projectHref + '"><img class="thumbnail" src="' + this.responseText +
-                                            '"></a> <a target="_blank" class="name ellipsis" href="' + projectHref + '">' + this.project.projectname +
-                                            '</a> <span class="author">by <a href="/users/' + encodeURIComponent(this.project.username) +'">' + 
-                                            this.project.username + '</a></span>';
+                                    this.div.children[0].children[0].src = this.responseText;
                                 }
                             };
 
