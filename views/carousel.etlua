@@ -20,16 +20,30 @@
         };
         function update<%= id %>() {
             for (var i = 0; i < projects_<%= id %>.length; i ++) {
-                var div = document.getElementById('project-' + i + '-<%= id %>');
+                var div = document.getElementById('project-' + i + '-<%= id %>'),
+                    imageLoader = new XMLHttpRequest();
+
                 div.className = 'project pure-u-1-6';
                 div.children[0].href = '/users/' + encodeURIComponent(projects_<%= id %>[i].username) +
                                         '/projects/' + encodeURIComponent(projects_<%= id %>[i].projectname);
-                div.children[0].children[0].src = projects_<%= id %>[i].thumbnail;
                 div.children[1].textContent = projects_<%= id %>[i].projectname;
                 div.children[1].href = div.children[0].href;
                 div.children[2].children[0].textContent = projects_<%= id %>[i].username;
                 div.children[2].children[0].href = '/users/' + encodeURIComponent(projects_<%= id %>[i].username);
                 div.style.visibility = 'visible';
+
+                imageLoader.div = div;
+                imageLoader.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        this.div.children[0].children[0].src = this.responseText;
+                    }
+                };
+
+                imageLoader.open('GET', '/api/users/' + encodeURIComponent(projects_<%= id %>[i].username) +
+                                        '/projects/' + encodeURIComponent(projects_<%= id %>[i].projectname) +
+                                        '/image', true);
+                imageLoader.send();
+
             }
             for (var i = projects_<%= id %>.length || 0; i < 5; i ++) {
                 var div = document.getElementById('project-' + i + '-<%= id %>');

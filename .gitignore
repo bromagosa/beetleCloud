@@ -12,3 +12,4 @@ config.lua
 .*.swp
 .*.swo
 static/run
+projects

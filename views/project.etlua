@@ -21,7 +21,7 @@
                             <label for="file" class="pure-button red-button">Upload an image</label>
                         </form>
                     </div>
-                    <img src="<%= project.secondarythumbnail or '' %>">
+                    <img class="alternate" src="">
                 </span>
             </div>
         </div>
@@ -58,71 +58,4 @@
         </div>
     </div>
 </div>
-<script>
-    function toggleLike () {
-        var ajax = new XMLHttpRequest();
-        ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
-                if ((JSON.parse(ajax.responseText)).text.match('unliked')) {
-                    document.getElementById('likes').children[0].classList.remove('liked');
-                    document.getElementById('likes').children[1].textContent =
-                        Number(document.getElementById('likes').children[1].textContent) - 1;
-                } else if ((JSON.parse(ajax.responseText)).text.match('liked')) {
-                    document.getElementById('likes').children[0].classList.add('liked');
-                    document.getElementById('likes').children[1].textContent =
-                        Number(document.getElementById('likes').children[1].textContent) + 1;
-                }
-            }
-        };
-        ajax.open('GET', '/api' + window.location.pathname + '/like' , true);
-        ajax.send(); 
-    };
-
-    function uploadImage (file) {
-        var ajax = new XMLHttpRequest();
-
-        ajax.open('POST', '/api' + window.location.pathname + '/image' , true);
-        ajax.onreadystatechange = function() {
-            if (ajax.readyState == 4 && ajax.status == 200) {
-                console.log(ajax.responseText);
-            }
-        };
-
-        console.log(file);
-
-        ajax.send(file);
-    };
-
-    function featureImage (doFeatureIt) {
-        var ajax = new XMLHttpRequest();
-        ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
-                toggleFeaturedClass();
-                sortThumbnails();
-            }
-        };
-        ajax.open('GET', '/api' + window.location.pathname + '/image?featureImage=' + doFeatureIt , true);
-        ajax.send(); 
-    };
-
-    function toggleFeaturedClass () {
-        var thumbs = document.getElementById('thumbs');
-        if (thumbs.children[0].classList.contains('featured')) {
-            thumbs.children[0].classList.remove('featured');
-            thumbs.children[1].classList.add('featured');
-        } else {
-            thumbs.children[0].classList.add('featured');
-            thumbs.children[1].classList.remove('featured');
-        }
-    };
-
-    function sortThumbnails () {
-        var thumbs = document.getElementById('thumbs');
-        if (thumbs.children[1].classList.contains('featured')) {
-            thumbs.appendChild(thumbs.children[0]);
-        }
-    };
-
-    sortThumbnails();
-    document.getElementsByClassName('notes')[0].innerHTML = (buildHyperlinks(document.getElementsByClassName('notes')[0].innerHTML));
-</script>
+<script src="/static/project.js"></script>

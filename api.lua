@@ -65,7 +65,7 @@ app:before_filter(function (self)
     end
 
     -- Set Access Control header
---    self.res.headers['Access-Control-Allow-Origin'] = 'http://localhost:8080'
+    self.res.headers['Access-Control-Allow-Origin'] = 'http://localhost:8080'
     self.res.headers['Access-Control-Allow-Credentials'] = 'true'
 
     if (not self.session.username) then
@@ -96,12 +96,12 @@ app:get('/api/projects/:selection/:limit/:offset(/:username)', function (self)
     local notes = self.params.notes or ''
 
     local query = { 
-        newest = 'projectName, username, thumbnail from projects where isPublic = true order by id desc',
-        popular = 'count(*) as likecount, projects.projectName, projects.username, projects.thumbnail from projects, likes where projects.isPublic = true and projects.projectName = likes.projectName and projects.username = likes.projectowner group by projects.projectname, projects.username order by likecount desc',
-        favorite = 'distinct projects.id, projects.projectName, projects.username, projects.thumbnail from projects, likes where projects.projectName = likes.projectName and projects.username = likes.projectowner and likes.liker = \'' .. username .. '\' group by projects.projectname, projects.username order by projects.id desc',
-        shared = 'projectName, username, thumbnail from projects where isPublic = true and username = \'' .. username .. '\' order by id desc',
-        notes = 'projectName, username, thumbnail from projects where isPublic = true and username = \'' .. username .. '\' and notes = \'' .. notes .. '\' order by id desc',
-        list = 'projectName, username, thumbnail from projects where isPublic = true and username = \'' .. username .. '\' and projectName in ' .. list ..  ' order by id desc'
+        newest = 'projectName, username from projects where isPublic = true order by id desc',
+        popular = 'count(*) as likecount, projects.projectName, projects.username from projects, likes where projects.isPublic = true and projects.projectName = likes.projectName and projects.username = likes.projectowner group by projects.projectname, projects.username order by likecount desc',
+        favorite = 'distinct projects.id, projects.projectName, projects.username from projects, likes where projects.projectName = likes.projectName and projects.username = likes.projectowner and likes.liker = \'' .. username .. '\' group by projects.projectname, projects.username order by projects.id desc',
+        shared = 'projectName, username from projects where isPublic = true and username = \'' .. username .. '\' order by id desc',
+        notes = 'projectName, username from projects where isPublic = true and username = \'' .. username .. '\' and notes = \'' .. notes .. '\' order by id desc',
+        list = 'projectName, username from projects where isPublic = true and username = \'' .. username .. '\' and projectName in ' .. list ..  ' order by id desc'
     }
 
     return jsonResponse(
@@ -109,6 +109,25 @@ app:get('/api/projects/:selection/:limit/:offset(/:username)', function (self)
             query[self.params.selection] ..' limit ? offset ?',
             self.params.limit or 5,
             self.params.offset or 0))
+end)
+
+app:get('/api/users/:username/projects/:projectname/image', function (self)
+    local project = Projects:find(self.params.username, self.params.projectname)
+
+    if (project) then
+        if (project.imageisfeatured) then
+            return altImageFor(project)
+        else
+            return {
+                layout = false, 
+                status = 200, 
+                readyState = 4,
+                project.thumbnail
+            }
+        end
+    else
+        return err[nonexistentProject]
+    end
 end)
 
 app:match('project_list', '/api/users/:username/projects', respond_to({
@@ -136,9 +155,7 @@ app:match('fetch_project', '/api/users/:username/projects/:projectname', respond
     GET = function (self)
         local project = Projects:find(self.params.username, self.params.projectname)
 
-        if (project and project.ispublic) then
-            return jsonResponse(project)
-        elseif (project and self.params.username == self.session.username) then
+        if (project and (project.ispublic or self.params.username == self.session.username)) then
             return jsonResponse(project)
         else
             return err[nonexistentProject]
@@ -467,23 +484,32 @@ app:match('toggle_like', '/api/users/:username/projects/:projectname/like', resp
     end
 }))
 
-app:match('set_project_image', '/api/users/:username/projects/:projectname/image', respond_to({
+app:match('alternate_image', '/api/users/:username/projects/:projectname/altimage', respond_to({
     OPTIONS = cors_options,
     GET = function (self)
-        if (not self.session.username) then
-            return err[notLoggedIn]
-        end
-
-        if (self.params.username ~= self.session.username) then
-            return err[auth]
-        end
 
         local project = Projects:find(self.params.username, self.params.projectname)
 
-        if (project) then
-                project:update({ imageisfeatured = self.params.featureImage == 'true' })
-        else
+        if (not project) then
             return err[nonexistentProject]
+        end
+
+        if (self.params.featureImage) then 
+            -- we got the featureImage parameter, meaning we want to change the featured image
+            -- for this project
+
+            if (not self.session.username) then
+                return err[notLoggedIn]
+            end
+
+            if (self.params.username ~= self.session.username) then
+                return err[auth]
+            end
+
+            project:update({ imageisfeatured = self.params.featureImage == 'true' })
+        else
+            -- we are just asking for the alternate image for this project
+            return altImageFor(project)
         end
     end,
     POST = function (self)
@@ -500,7 +526,9 @@ app:match('set_project_image', '/api/users/:username/projects/:projectname/image
         if (project) then
             ngx.req.read_body();
             image = ngx.req.get_body_data();
-            file = io.open('/tmp/test.png', 'w+')
+            local dir = 'projects/' .. math.floor(project.id / 1000) .. '/' .. project.id -- we store max 1000 projects per dir
+            os.execute('mkdir -p ' .. dir)
+            local file = io.open(dir .. '/image.png', 'w+')
             file:write(image)
             file:close()
             return jsonResponse('image uploaded')
@@ -509,3 +537,25 @@ app:match('set_project_image', '/api/users/:username/projects/:projectname/image
         end
     end
 }))
+
+function altImageFor (aProject, wantsRaw) 
+    local dir = 'projects/' .. math.floor(aProject.id / 1000) .. '/' .. aProject.id -- we store max 1000 projects per dir
+    local file = io.open(dir .. '/image.png', 'r')
+    if (file) then
+        local image = file:read("*all")
+        file:close()
+        return {
+            layout = false, 
+            status = 200, 
+            readyState = 4,
+            image
+        }
+    else
+        return {
+            layout = false, 
+            status = 200, 
+            readyState = 4,
+            '/static/no-image.png'
+        }
+    end
+end
