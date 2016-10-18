@@ -26,6 +26,7 @@
                 div.className = 'project pure-u-1-6';
                 div.children[0].href = '/users/' + encodeURIComponent(projects_<%= id %>[i].username) +
                                         '/projects/' + encodeURIComponent(projects_<%= id %>[i].projectname);
+                div.children[0].children[0].src = '';
                 div.children[1].textContent = projects_<%= id %>[i].projectname;
                 div.children[1].href = div.children[0].href;
                 div.children[2].children[0].textContent = projects_<%= id %>[i].username;
