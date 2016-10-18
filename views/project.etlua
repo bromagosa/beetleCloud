@@ -9,18 +9,22 @@
             <div id="thumbs">
                 <span class="big-thumbnail <%= project.imageisfeatured and '' or 'featured' %>">
                     <img src="<%= project.thumbnail %>">
-                    <div class="buttons">
-                        <a class="pure-button red-button feat-button" onclick="featureImage(false)">Feature me</a>
-                    </div>
+                    <% if (project.username == session.username) then %>
+                        <div class="buttons">
+                            <a class="pure-button red-button feat-button" onclick="featureImage(false)">Feature me</a>
+                        </div>
+                    <% end %>
                 </span>
                 <span class="big-thumbnail <%= project.imageisfeatured and 'featured' or '' %>">
-                    <div class="buttons">
-                        <a class="pure-button red-button feat-button" onclick="featureImage(true)">Feature me</a>
-                        <form class="fileinput">
-                            <input type="file" name="file" onchange="uploadImage(this.files[0])" id="file"/>
-                            <label for="file" class="pure-button red-button">Upload an image</label>
-                        </form>
-                    </div>
+                    <% if (project.username == session.username) then %>
+                        <div class="buttons">
+                            <a class="pure-button red-button feat-button" onclick="featureImage(true)">Feature me</a>
+                            <form class="fileinput">
+                                <input type="file" name="file" onchange="uploadImage(this.files[0])" id="file"/>
+                                <label for="file" class="pure-button red-button">Upload an image</label>
+                            </form>
+                        </div>
+                    <% end %>
                     <img class="alternate" src="">
                 </span>
             </div>
