@@ -33,7 +33,7 @@ CREATE DOMAIN dom_username AS text
 	CONSTRAINT dom_username_check CHECK (((length(VALUE) > 3) AND (length(VALUE) < 200)));
 
 
-ALTER DOMAIN dom_username OWNER TO beetle;
+ALTER DOMAIN public.dom_username OWNER TO beetle;
 
 SET default_tablespace = '';
 
@@ -53,7 +53,7 @@ CREATE TABLE comments (
 );
 
 
-ALTER TABLE comments OWNER TO beetle;
+ALTER TABLE public.comments OWNER TO beetle;
 
 --
 -- Name: comments_id_seq; Type: SEQUENCE; Schema: public; Owner: beetle
@@ -67,7 +67,7 @@ CREATE SEQUENCE comments_id_seq
     CACHE 1;
 
 
-ALTER TABLE comments_id_seq OWNER TO beetle;
+ALTER TABLE public.comments_id_seq OWNER TO beetle;
 
 --
 -- Name: comments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: beetle
@@ -88,7 +88,7 @@ CREATE TABLE likes (
 );
 
 
-ALTER TABLE likes OWNER TO beetle;
+ALTER TABLE public.likes OWNER TO beetle;
 
 --
 -- Name: likes_id_seq; Type: SEQUENCE; Schema: public; Owner: beetle
@@ -102,7 +102,7 @@ CREATE SEQUENCE likes_id_seq
     CACHE 1;
 
 
-ALTER TABLE likes_id_seq OWNER TO beetle;
+ALTER TABLE public.likes_id_seq OWNER TO beetle;
 
 --
 -- Name: likes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: beetle
@@ -125,11 +125,12 @@ CREATE TABLE projects (
     username dom_username NOT NULL,
     id integer NOT NULL,
     shared timestamp with time zone,
-    views integer
+    views integer,
+    imageisfeatured boolean
 );
 
 
-ALTER TABLE projects OWNER TO beetle;
+ALTER TABLE public.projects OWNER TO beetle;
 
 --
 -- Name: projects_id_seq; Type: SEQUENCE; Schema: public; Owner: beetle
@@ -143,7 +144,7 @@ CREATE SEQUENCE projects_id_seq
     CACHE 1;
 
 
-ALTER TABLE projects_id_seq OWNER TO beetle;
+ALTER TABLE public.projects_id_seq OWNER TO beetle;
 
 --
 -- Name: projects_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: beetle
@@ -167,7 +168,7 @@ CREATE TABLE users (
 );
 
 
-ALTER TABLE users OWNER TO beetle;
+ALTER TABLE public.users OWNER TO beetle;
 
 --
 -- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: beetle
@@ -181,7 +182,7 @@ CREATE SEQUENCE users_id_seq
     CACHE 1;
 
 
-ALTER TABLE users_id_seq OWNER TO beetle;
+ALTER TABLE public.users_id_seq OWNER TO beetle;
 
 --
 -- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: beetle
