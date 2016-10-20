@@ -12,14 +12,14 @@ Parallel cloud for Beetle Blocks, plus its sharing site
 
 ### Style
 * [Eric Meyer](http://meyerweb.com/)'s [reset.css](http://meyerweb.com/eric/tools/css/reset/index.html) stylesheet cleans the mess that browsers make - [[ public domain ](https://wiki.creativecommons.org/wiki/Public_domain)]
-* [Yahoo](https://github.com/yahoo)'s [pure.css](http://purecss.io/) framework helps you to position and align elements without racking your brains, and also gives you nice-looking buttons and menus for free - [[ Yahoo! Inc. BSD license ](https://raw.githubusercontent.com/yahoo/pure/master/LICENSE.md)]
+* [Yahoo](https://github.com/yahoo)'s [pure.css](http://purecss.io/) framework helps you position and align elements without racking your brains, and also gives you nice-looking buttons and menus for free - [[ Yahoo! Inc. BSD license ](https://raw.githubusercontent.com/yahoo/pure/master/LICENSE.md)]
 * [Dave Gandy](https://github.com/davegandy)'s [FontAwesome](http://fontawesome.io/) font is a very comprehensive collection of icons that everybody uses these days - [[ SIL OFL](http://fontawesome.io/),[ MIT ](http://opensource.org/licenses/mit-license.html)]
 
 ### Widgets
 * [Philippe Assis](https://github.com/PhilippeAssis)'s [custom-alert](https://github.com/PhilippeAssis/custom-alert) module generates nice pop-ups for warnings and info boxes - [[ ISC ](https://opensource.org/licenses/ISC)]
 
 ### Did we forget to mention your stuff?
-Sorry about that! Please file an issue stating what we forgot, or just send a pull request modifying this [README](https://github.com/bromagosa/beetleCloud/edit/master/README.md).
+Sorry about that! Please file an issue stating what we forgot, or just send us a pull request modifying this [README](https://github.com/bromagosa/beetleCloud/edit/master/README.md).
 
 ## Live version
 Don't tell anyone, but you can test the Beetle Cloud live at [beetleblocks.com/beta](http://beetleblocks.com/beta). The official launch should happen any time soon. Please file an issue if you happen to find a bug.
