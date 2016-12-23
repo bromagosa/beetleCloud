@@ -21,7 +21,7 @@
                 <% content_for("inner") %>
             </div>
             <footer class="footer">
-                <small>The Beetle Cloud is free software released under the <a target="_blank" href="http://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License v3 (GPLv3)</a>. Please visit our <a target="_blank" href="https://github.com/bromagosa/beetleCloud">GitHub repository</a> to access its source code and report bugs, improvements, or feature requests.<% if session.username ~= '' then %><br>You are logged in as <a href="/users/<%= session.username %>/"><%= session.username %></a><% end %></small>
+                <small>The Beetle Cloud is free software released under the <a target="_blank" href="http://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License v3 (GPLv3)</a>. Please visit our <a target="_blank" href="https://github.com/bromagosa/beetleCloud">GitHub repository</a> to access its source code and report bugs, improvements, or feature requests. <a href='/about'>About Beetle Blocks</a>.<% if session.username ~= '' then %><br>You are logged in as <a href="/users/<%= session.username %>/"><%= session.username %></a><% end %></small>
             </footer>
         </div>
         <script>

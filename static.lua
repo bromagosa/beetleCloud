@@ -15,3 +15,6 @@ app:get('/examples', function(self)
     return { render = 'examples' }
 end)
 
+app:get('/about', function(self)
+    return { render = 'about' }
+end)

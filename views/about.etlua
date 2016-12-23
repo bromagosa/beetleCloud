@@ -1,0 +1,9 @@
+<div id="bb-title"><i class="logo"></i><span>Beetle Blocks</span></div>
+<span id="bb-subtitle">Visual Code for 3D Design</span>
+<br>
+<br>
+<p>Beetle Blocks is a project by <a href="http://ericrosenbaum.com" target="_blank">Eric Rosenbaum</a>, <a href="http://architecture.pratt.edu/?p=4545" target="_blank">Duks Koschitz</a>, and <a href="https://github.com/bromagosa" target="_blank">Bernat Romagosa</a>, with additional software development by <a href="https://github.com/jmoenig" target="_blank">Jens Mönig</a>.</p>
+<p>Beetle Blocks is based on <a href="http://scratch.mit.edu" target="_blank">Scratch</a> and implemented using <a href="http://snap.berkeley.edu" target="_blank">Snap!</a> and <a href="http://threejs.org" target="_blank">ThreeJS</a>.</p>
+<p>This project has been partially sponsored by the <a target="_blank" href="https://www.pratt.edu/">Pratt Institute</a>, <a target="_bank" href="http://citilab.eu">Citilab - Cornellà</a> and <a target="_blank" href="http://arduino.org">Arduino.org</a>.</p>
+<p><b>Please note:</b> Beetle Blocks is alpha software, currently in development. Only the <a href="http://www.google.com/chrome" target="_blank">Chrome</a> browser is currently supported, although latest versions of other browsers can run it just fine too.</p>
+</p>We'd love to hear your feature requests and bug reports on <a href="https://github.com/ericrosenbaum/BeetleBlocks" target="_blank">GitHub</a>.</p> 

@@ -179,7 +179,6 @@ pre.in-place {
     border-top: none;
     padding: 12px;
     font-size: 0.9em;
-    height: 160px;
 }
 
 .info-box .text p {
@@ -344,17 +343,61 @@ a.go-home:hover {
     color: #6f7274;
 }
 
+.info-box.landing .text {
+    border-top: 1px solid #dfdedd;
+    border-radius: 5px;
+}
+
+.info-box.landing p {
+    text-align: center;
+    margin-top: 1em;
+    font-size: 1.3em;
+    color: #6f7274;
+}
+
+.landing img {
+    display: block;
+    margin: 0 auto;
+    height: 200px;
+}
+
+.info-box.landing {
+    margin-bottom: 2em;
+}
+
+.subheader {
+    position: relative;
+}
+
 #run {
-    margin: 5em 0;
+    position: absolute;
+    right: 0;
+    top: 1em;
 }
 
 #run .pure-button {
-    margin: 0 auto;
+    position: absolute;
+    right: 3.5em;
+    top: 1.5em;
+    width: 300px;
+    height: 100px;
+    color: #ae272b;
+    text-align: left;
+}
+
+#run .pure-button .text {
+    position: absolute;
+    bottom: 1em;
+    left: 1em;
+    font-size: 1em;
+    line-height: 1em;
 }
 
 .beetle {
+    pointer-events: none;
     position: absolute;
-    margin-top: -1.5em;
+    top: -1em;
+    right: 0;
 }
 
 /* Project grid and carousel */
