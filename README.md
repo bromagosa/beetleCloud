@@ -22,4 +22,4 @@ Parallel cloud for Beetle Blocks, plus its sharing site
 Sorry about that! Please file an issue stating what we forgot, or just send us a pull request modifying this [README](https://github.com/bromagosa/beetleCloud/edit/master/README.md).
 
 ## Live version
-Don't tell anyone, but you can test the Beetle Cloud live at [beetleblocks.com/beta](http://beetleblocks.com/beta). The official launch should happen any time soon. Please file an issue if you happen to find a bug.
+The Beetle Cloud was released on December 2016 at [beetleblocks.com](http://beetleblocks.com). Enjoy sharing your creations with the rest of the community! :)
