@@ -38,7 +38,7 @@
 </div>
 
 <%
+    render("views/carousel", { collection = 'favorite', title = 'Beetle Blocks Team Favorites' })
     render("views/carousel", { collection = 'newest', title = 'Newest Projects' })
     render("views/carousel", { collection = 'popular', title = 'Popular Projects' })
-    render("views/carousel", { collection = 'favorite', title = 'Beetle Blocks Team Favorites' })
 %>
