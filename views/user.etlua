@@ -32,6 +32,11 @@
                   <%- user.location or 'Planet Earth' %> 
                 <% end %>
             </span>
+            <% if visitor and visitor.isadmin then %>
+                <span class="email">
+                    <a mailto="<%- user.email -%>"><%- user.email -%></a>
+                </span>
+            <% end %>
         </div>
     </div>
     <%

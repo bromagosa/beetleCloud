@@ -154,8 +154,9 @@ app:match('fetch_project', '/api/users/:username/projects/:projectname', respond
     OPTIONS = cors_options,
     GET = function (self)
         local project = Projects:find(self.params.username, self.params.projectname)
+        local visitor = Users:find(self.session.username)
 
-        if (project and (project.ispublic or self.params.username == self.session.username)) then
+        if (project and (project.ispublic or (visitor and visitor.isadmin) or self.params.username == self.session.username)) then
             return jsonResponse(project)
         else
             return err[nonexistentProject]
@@ -257,6 +258,7 @@ app:match('new_user', '/api/users/new', respond_to({
             username = self.params.username,
             password = bcrypt.digest(self.params.password, 11),
             email = self.params.email,
+            isadmin = false,
             joined = db.format_date()
         })
 
@@ -385,12 +387,13 @@ app:match('save_project', '/api/projects/save', respond_to({
 app:match('set_visibility', '/api/users/:username/projects/:projectname/visibility', respond_to({
     OPTIONS = cors_options,
     GET = function (self)
+        local visitor = Users:find(self.session.username)
 
         if (not Users:find(self.params.username)) then
             return err[nonexistentUser]
         end
 
-        if (self.params.username ~= self.session.username) then
+        if (self.params.username ~= self.session.username and not (visitor or visitor.isadmin)) then
             return err[auth]
         end
 
@@ -417,12 +420,13 @@ app:match('remove_project', '/api/users/:username/projects/:projectname/delete',
     OPTIONS = cors_options,
     GET = function (self)
         -- can't use camel case because SQL doesn't care about case
+        local visitor = Users:find(self.session.username)
 
         if (not Users:find(self.params.username)) then
             return err[nonexistentUser]
         end
 
-        if (self.params.username ~= self.session.username) then
+        if (self.params.username ~= self.session.username and not (visitor or visitor.isadmin)) then
             return err[auth]
         end
 

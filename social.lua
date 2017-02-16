@@ -62,6 +62,7 @@ end)
 app:get('/users/:username', function(self)
     self.user = Users:find(self.params.username)
     self.user.joinedString = dateString(self.user.joined)
+    self.visitor = Users:find(self.session.username)
     return { render = 'user' }
 end)
 
@@ -78,9 +79,11 @@ app:get('/projects/g/:collection', function(self)
 end)
 
 app:get('/users/:username/projects/:projectname', function(self)
+    self.visitor = Users:find(self.session.username)
     self.project = Projects:find(self.params.username, self.params.projectname)
+
     if (self.project and
-        (self.project.ispublic or
+        (self.project.ispublic or (self.visitor and self.visitor.isadmin) or
             self.session.username == self.project.username)) then
         self.project.modifiedString = dateString(self.project.updated)
         self.project.sharedString = self.project.ispublic and dateString(self.project.shared) or '-'

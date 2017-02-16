@@ -759,3 +759,12 @@ span.author {
 .tos li {
     margin: 0.5em;
 }
+
+/* Admin */
+.admin {
+    padding: 2em;
+    margin: 2em 0;
+    border: 2px solid #ac2029;
+    border-radius: 4px;
+    background: rgba(255,0,0,0.1);
+}
