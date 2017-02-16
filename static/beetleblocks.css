@@ -749,3 +749,13 @@ span.author {
     padding: 1em;
     background: #f8f8f8;
 }
+
+/* TOS */
+.tos ul {
+    margin: 1.5em;
+    list-style: circle;
+}
+
+.tos li {
+    margin: 0.5em;
+}
