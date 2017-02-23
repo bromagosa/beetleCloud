@@ -12,6 +12,7 @@ local util = require('lapis.util')
 local respond_to = require('lapis.application').respond_to
 local xml = require('xml')
 
+require 'backend_utils'
 
 -- Response generation
 
@@ -542,24 +543,11 @@ app:match('alternate_image', '/api/users/:username/projects/:projectname/altimag
     end
 }))
 
-function altImageFor (aProject, wantsRaw) 
-    local dir = 'projects/' .. math.floor(aProject.id / 1000) .. '/' .. aProject.id -- we store max 1000 projects per dir
-    local file = io.open(dir .. '/image.png', 'r')
-    if (file) then
-        local image = file:read("*all")
-        file:close()
-        return {
-            layout = false, 
-            status = 200, 
-            readyState = 4,
-            image
-        }
-    else
-        return {
-            layout = false, 
-            status = 200, 
-            readyState = 4,
-            '/static/no-image.png'
-        }
-    end
-end
+-- Stats
+
+app:match('stats', '/api/stats', respond_to({
+    OPTIONS = cors_options,
+    GET = function (self)
+        return jsonResponse(getStats())
+    end 
+}))

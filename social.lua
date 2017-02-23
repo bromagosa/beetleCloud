@@ -23,10 +23,6 @@ local Likes = Model:extend('likes', {
 
 -- Endpoints
 
-app:get('/forum', function(self)
-    return { render = 'notready' }
-end)
-
 app:get('/signup', function(self)
     self.fail = self.params.fail
     self.reason = self.params.reason
