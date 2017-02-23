@@ -12,4 +12,5 @@ config.lua
 .*.swp
 .*.swo
 static/run
+static/alpha
 projects
