@@ -33,6 +33,12 @@ hr {
     border: 1px solid #eee;
 }
 
+h2 {
+    font-size: 1.4em;
+    font-weight: bold;
+    line-height: 2.5em;
+}
+
 h3 {
     font-size: 1.2em;
     font-weight: bold;
@@ -767,4 +773,12 @@ span.author {
     border: 2px solid #ac2029;
     border-radius: 4px;
     background: rgba(255,0,0,0.1);
+}
+
+/* Stats */
+
+.stats {
+    width: 50%;
+    padding-left: 3em;
+    margin: 0;
 }
