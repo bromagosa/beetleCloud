@@ -164,7 +164,8 @@ CREATE TABLE users (
     id integer NOT NULL,
     joined timestamp with time zone,
     about text,
-    location text
+    location text,
+    isadmin boolean
 );
 
 
