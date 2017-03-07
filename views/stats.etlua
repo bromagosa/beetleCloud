@@ -10,30 +10,35 @@
 %>
 
 <h1>Beetle Cloud Stats</h1>
-<h2>Users</h2>
-<%- statsDiv('Total users', stats.users.total) %>
-<%- statsDiv('Admins', stats.users.admins) %>
-<%- statsDiv('Users with a description', stats.users.haveDescription) %>
-<%- statsDiv('Users with a location', stats.users.haveLocation) %>
-<h3>Users joined since</h3>
-<%- statsDiv('A year ago', stats.users.joinedDuring.thisYear) %>
-<%- statsDiv('A month ago', stats.users.joinedDuring.thisMonth) %>
-<%- statsDiv('A week ago', stats.users.joinedDuring.thisWeek) %>
-<%- statsDiv('Yesterday', stats.users.joinedDuring.today) %>
-
-<h2>Projects</h2>
-<%- statsDiv('Total projects', stats.projects.total) %>
-<%- statsDiv('Public projects', stats.projects.public) %>
-<%- statsDiv('Projects with notes', stats.projects.haveNotes) %>
-<%- statsDiv('Total project views', stats.projects.views) %>
-<%- statsDiv('Total project likes', stats.projects.likes) %>
-<h3>Projects updated since</h3>
-<%- statsDiv('A year ago', stats.projects.updatedDuring.thisYear) %>
-<%- statsDiv('A month ago', stats.projects.updatedDuring.thisMonth) %>
-<%- statsDiv('A week ago', stats.projects.updatedDuring.thisWeek) %>
-<%- statsDiv('Yesterday', stats.projects.updatedDuring.today) %>
-<h3>Projects shared since</h3>
-<%- statsDiv('A year ago', stats.projects.sharedDuring.thisYear) %>
-<%- statsDiv('A month ago', stats.projects.sharedDuring.thisMonth) %>
-<%- statsDiv('A week ago', stats.projects.sharedDuring.thisWeek) %>
-<%- statsDiv('Yesterday', stats.projects.sharedDuring.today) %>
+<div class="pure-g">
+    <div class="pure-u-1-2">
+        <h2>Projects</h2>
+        <%- statsDiv('Total projects', stats.projects.total) %>
+        <%- statsDiv('Public projects', stats.projects.public) %>
+        <%- statsDiv('Projects with notes', stats.projects.haveNotes) %>
+        <%- statsDiv('Total project views', stats.projects.views) %>
+        <%- statsDiv('Total project likes', stats.projects.likes) %>
+        <h3>Projects updated since</h3>
+        <%- statsDiv('A year ago', stats.projects.updatedDuring.thisYear) %>
+        <%- statsDiv('A month ago', stats.projects.updatedDuring.thisMonth) %>
+        <%- statsDiv('A week ago', stats.projects.updatedDuring.thisWeek) %>
+        <%- statsDiv('Yesterday', stats.projects.updatedDuring.today) %>
+        <h3>Projects shared since</h3>
+        <%- statsDiv('A year ago', stats.projects.sharedDuring.thisYear) %>
+        <%- statsDiv('A month ago', stats.projects.sharedDuring.thisMonth) %>
+        <%- statsDiv('A week ago', stats.projects.sharedDuring.thisWeek) %>
+        <%- statsDiv('Yesterday', stats.projects.sharedDuring.today) %>
+    </div>
+    <div class="pure-u-1-2">
+        <h2>Users</h2>
+        <%- statsDiv('Total users', stats.users.total) %>
+        <%- statsDiv('Admins', stats.users.admins) %>
+        <%- statsDiv('Users with a description', stats.users.haveDescription) %>
+        <%- statsDiv('Users with a location', stats.users.haveLocation) %>
+        <h3>Users joined since</h3>
+        <%- statsDiv('A year ago', stats.users.joinedDuring.thisYear) %>
+        <%- statsDiv('A month ago', stats.users.joinedDuring.thisMonth) %>
+        <%- statsDiv('A week ago', stats.users.joinedDuring.thisWeek) %>
+        <%- statsDiv('Yesterday', stats.users.joinedDuring.today) %>
+    </div>
+</div>

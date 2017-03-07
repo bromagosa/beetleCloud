@@ -778,7 +778,6 @@ span.author {
 /* Stats */
 
 .stats {
-    width: 50%;
-    padding-left: 3em;
+    padding-left: 2em;
     margin: 0;
 }
