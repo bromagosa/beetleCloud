@@ -90,6 +90,17 @@ app:get('/api/users/:username', function (self)
     return jsonResponse(Users:select('where username = ?', self.params.username, { fields = 'username, location, about, joined' })[1])
 end)
 
+app:get('/api/users/:username/become', function (self)
+    local visitor = Users:find(self.session.username)
+
+    if (visitor and visitor.isadmin) then
+        self.session.username = self.params.username
+        return jsonResponse({ text = visitor.username .. ' became ' .. self.params.username })
+    else 
+        return err.auth
+    end
+end)
+
 app:get('/api/projects/:selection/:limit/:offset(/:username)', function (self)
 
     local username = self.params.username or 'Examples'
@@ -127,7 +138,7 @@ app:get('/api/users/:username/projects/:projectname/image', function (self)
             }
         end
     else
-        return err[nonexistentProject]
+        return err.nonexistentProject
     end
 end)
 
@@ -160,7 +171,7 @@ app:match('fetch_project', '/api/users/:username/projects/:projectname', respond
         if (project and (project.ispublic or (visitor and visitor.isadmin) or self.params.username == self.session.username)) then
             return jsonResponse(project)
         else
-            return err[nonexistentProject]
+            return err.nonexistentProject
         end
     end
 }))
@@ -277,11 +288,11 @@ app:match('update_user', '/api/users/:username/update/:property', respond_to({
         local user = Users:find(self.params.username);
 
         if (not user) then
-            return err[nonexistentUser]
+            return err.nonexistentUser
         end
 
         if (self.params.username ~= self.session.username) then
-            return err[auth]
+            return err.auth
         end
 
         local options = {}
@@ -298,11 +309,11 @@ app:match('update_project', '/api/users/:username/projects/:projectname/update/:
         local project = Projects:find(self.params.username, self.params.projectname);
 
         if (not project) then
-            return err[nonexistentProject]
+            return err.nonexistentProject
         end
 
         if (self.params.username ~= self.session.username) then
-            return err[auth]
+            return err.auth
         end
 
         local options = {}
@@ -335,11 +346,11 @@ app:match('save_project', '/api/projects/save', respond_to({
         })
 
         if (not Users:find(self.params.username)) then
-            return err[nonexistentUser]
+            return err.nonexistentUser
         end
 
         if (self.params.username ~= self.session.username) then
-            return err[auth]
+            return err.auth
         end
 
         ngx.req.read_body()
@@ -391,11 +402,11 @@ app:match('set_visibility', '/api/users/:username/projects/:projectname/visibili
         local visitor = Users:find(self.session.username)
 
         if (not Users:find(self.params.username)) then
-            return err[nonexistentUser]
+            return err.nonexistentUser
         end
 
         if (self.params.username ~= self.session.username and not (visitor or visitor.isadmin)) then
-            return err[auth]
+            return err.auth
         end
 
         local project = Projects:find(self.params.username, self.params.projectname)
@@ -411,7 +422,7 @@ app:match('set_visibility', '/api/users/:username/projects/:projectname/visibili
                 (self.params.ispublic == 'true' and 'public' or 'private')
             })
         else
-            return err[nonexistentProject]
+            return err.nonexistentProject
         end
         
     end
@@ -424,11 +435,11 @@ app:match('remove_project', '/api/users/:username/projects/:projectname/delete',
         local visitor = Users:find(self.session.username)
 
         if (not Users:find(self.params.username)) then
-            return err[nonexistentUser]
+            return err.nonexistentUser
         end
 
         if (self.params.username ~= self.session.username and not (visitor or visitor.isadmin)) then
-            return err[auth]
+            return err.auth
         end
 
         local project = Projects:find(self.params.username, self.params.projectname)
@@ -438,7 +449,7 @@ app:match('remove_project', '/api/users/:username/projects/:projectname/delete',
             project:delete()
             return jsonResponse({ text = 'project ' .. self.params.projectname .. ' removed' })
         else
-            return err[nonexistentProject]
+            return err.nonexistentProject
         end
         
     end
@@ -450,7 +461,7 @@ app:match('toggle_like', '/api/users/:username/projects/:projectname/like', resp
         -- can't use camel case because SQL doesn't care about case
 
         if (not self.session.username) then
-            return err[notLoggedIn]
+            return err.notLoggedIn
         end
 
         if (self.session.username == self.params.username) then
@@ -484,7 +495,7 @@ app:match('toggle_like', '/api/users/:username/projects/:projectname/like', resp
             end
 
         else
-            return err[nonexistentProject]
+            return err.nonexistentProject
         end
     end
 }))
@@ -496,7 +507,7 @@ app:match('alternate_image', '/api/users/:username/projects/:projectname/altimag
         local project = Projects:find(self.params.username, self.params.projectname)
 
         if (not project) then
-            return err[nonexistentProject]
+            return err.nonexistentProject
         end
 
         if (self.params.featureImage) then 
@@ -504,11 +515,11 @@ app:match('alternate_image', '/api/users/:username/projects/:projectname/altimag
             -- for this project
 
             if (not self.session.username) then
-                return err[notLoggedIn]
+                return err.notLoggedIn
             end
 
             if (self.params.username ~= self.session.username) then
-                return err[auth]
+                return err.auth
             end
 
             project:update({ imageisfeatured = self.params.featureImage == 'true' })
@@ -519,11 +530,11 @@ app:match('alternate_image', '/api/users/:username/projects/:projectname/altimag
     end,
     POST = function (self)
         if (not self.session.username) then
-            return err[notLoggedIn]
+            return err.notLoggedIn
         end
 
         if (self.params.username ~= self.session.username) then
-            return err[auth]
+            return err.auth
         end
 
         local project = Projects:find(self.params.username, self.params.projectname)
@@ -538,7 +549,7 @@ app:match('alternate_image', '/api/users/:username/projects/:projectname/altimag
             file:close()
             return jsonResponse('image uploaded')
         else
-            return err[nonexistentProject]
+            return err.nonexistentProject
         end
     end
 }))
