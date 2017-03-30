@@ -109,5 +109,5 @@ You can now point your browser to `http://localhost:8080`.
 When deploying it, you'll need to add the `--production` flag to it, and if you're using port 80 you'll need to run Lapis from a user account with permission to do so:
 
 ```
-# lapis server --production
+$ lapis server --production
 ```
