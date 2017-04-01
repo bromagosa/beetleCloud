@@ -3,7 +3,7 @@
 	<div class="spacer">&nbsp;</div>
 	<div class="row">
 		
-		<div class="col-md-5">
+		<div class="col-md-4">
 			<div class="spacer">&nbsp;</div>
 			<div id="thumbs">
 			
@@ -38,8 +38,8 @@
 				</div>
 			</div>
 		</div>
-			<div class="col-md-1"></div>
-		<div class="col-md-6">
+		<div class="col-md-1"></div>
+		<div class="col-md-7">
 
              <h2><%- project.projectname %></h2>
             
@@ -88,11 +88,11 @@
             <% if visitor and visitor.isadmin then %>
                 <div class="admin">
                     <span align="center">
-                        <a class="btn btn-primary" align="center" onclick="deleteProject()">Delete</a>
+                        <a class="btn btn-danger" align="center" onclick="deleteProject()">Delete</a>
                     </span>
                     <i></i>
                     <span align="center">
-                        <a class="btn btn-primary" align="center" onclick="shareProject()"><%= project.ispublic and "Unshare" or "Share" %></a>
+                        <a class="btn btn-danger" align="center" onclick="shareProject()"><%= project.ispublic and "Unshare" or "Share" %></a>
                     </span>
                 </div>
             <% end %>

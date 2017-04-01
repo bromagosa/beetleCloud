@@ -20,8 +20,10 @@
     
     <div id="loading"><div class="vertical-centerer"><i class="fa-li fa fa-spinner fa-spin"></i></div></div>
     
-    <div class="arrow">
-        <a id="loadmore" onclick="if (projects.length == 24) { offset = offset + 24; getMore(); }"><i class="fa fa-arrow-circle-down"></i> Load more...</a>
+    <div class="arrow" align="center">
+		<div class="spacer">&nbsp;</div>
+        <a id="loadmore" class="btn btn-primary center" onclick="if (projects.length == 16) { offset = offset + 16; getMore(); }">
+			<i class="fa fa-arrow-circle-down"></i> Load more...</a>
     </div>
     
     <div class="spacer">&nbsp;</div>
@@ -43,13 +45,13 @@
                 }
             };
             // The second part of the query needs to be enclosed between double commas, as SQL strings are enclosed by single ones
-            ajax.open('GET', '/api/projects/<%= collection %>/24/' + offset + "<%= '/' .. (username or '') %>?list=<%= list or '' %>&notes=<%= notes or '' %>", true);
+            ajax.open('GET', '/api/projects/<%= collection %>/16/' + offset + "<%= '/' .. (username or '') %>?list=<%= list or '' %>&notes=<%= notes or '' %>", true);
             ajax.send();
         };
 
         function updateGrid () {
 
-            if (projects.length < 24 || !projects.length) {
+            if (projects.length < 16 || !projects.length) {
                 document.getElementById('loadmore').remove();
             }
 
@@ -64,8 +66,8 @@
 
                             div.className = 'col-sm-3';
                             gridDiv.appendChild(div);
-                            div.innerHTML = '<a target="_blank" href="' + projectHref +
-                                '"><img class="thumbnail fluid" src="/static/no-thumb.png"></a> <a target="_blank" class="name ellipsis" href="' +
+                            div.innerHTML = '<a href="' + projectHref +
+                                '"><img class="thumbnail fluid" src="/static/img/no-thumb.png"></a> <a class="name ellipsis" href="' +
                                 projectHref + '">' + project.projectname + '</a> <span class="author">by <a href="/users/' +
                                 encodeURIComponent(project.username) +'">' + project.username + '</a></span>';
 

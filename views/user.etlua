@@ -43,7 +43,7 @@
 				</div>
 				<div class="admin">
 					<div align="center">
-						<a class="btn btn-primary" align="center" onclick="becomeUser()">Become this user</a>
+						<a class="btn btn-danger" align="center" onclick="becomeUser()">Become this user</a>
 					</div>
 				</div>
 			<% end %>
