@@ -1,6 +1,6 @@
 <div class="grid">
     <div class="title">
-        <span class="title-text">
+        <h1>
             <% 
                local titleDict = { 
                     newest = 'Newest Projects', 
@@ -11,15 +11,21 @@
                 }
             %>
             <%= titleDict[collection] %>
-        </span>
+        </h1>
     </div>
 
-    <div id="projects-grid" class="projects pure-g">
+	<div class="row">
+    <div id="projects-grid" class="projects">  </div>
     </div>
+    
     <div id="loading"><div class="vertical-centerer"><i class="fa-li fa fa-spinner fa-spin"></i></div></div>
+    
     <div class="arrow">
         <a id="loadmore" onclick="if (projects.length == 24) { offset = offset + 24; getMore(); }"><i class="fa fa-arrow-circle-down"></i> Load more...</a>
     </div>
+    
+    <div class="spacer">&nbsp;</div>
+    <div class="spacer">&nbsp;</div>
 
     <script>
         var ajax = new XMLHttpRequest(),
@@ -56,10 +62,10 @@
                                     encodeURIComponent(project.username) + '/projects/' + 
                                     encodeURIComponent(project.projectname);
 
-                            div.className = 'project pure-u-1-6';
+                            div.className = 'col-sm-3';
                             gridDiv.appendChild(div);
                             div.innerHTML = '<a target="_blank" href="' + projectHref +
-                                '"><img class="thumbnail" src="/static/no-thumb.png"></a> <a target="_blank" class="name ellipsis" href="' +
+                                '"><img class="thumbnail fluid" src="/static/no-thumb.png"></a> <a target="_blank" class="name ellipsis" href="' +
                                 projectHref + '">' + project.projectname + '</a> <span class="author">by <a href="/users/' +
                                 encodeURIComponent(project.username) +'">' + project.username + '</a></span>';
 

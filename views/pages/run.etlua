@@ -1,0 +1,28 @@
+
+
+<div class="run">
+	<iframe id="iframe" src="/static/run" border="0"></iframe>
+</div>
+
+
+<div class="loading">
+	<div class="">
+		<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+		<span class="sr-only">Loading...</span>
+	</div>
+</div>
+
+
+<script>
+
+
+$(document).ready(function(){
+	$(".footer").hide();
+	$("iframe").on("load", function() {
+		$(".loading").hide();
+	});
+	$("html").css("overflow","hidden");
+});
+</script>
+
+

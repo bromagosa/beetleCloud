@@ -17,7 +17,7 @@ function altImageFor (aProject, wantsRaw)
             layout = false, 
             status = 200, 
             readyState = 4,
-            '/static/no-image.png'
+            '/static/img/no-image.png'
         }
     end
 end

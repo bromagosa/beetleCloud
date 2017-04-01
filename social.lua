@@ -34,7 +34,7 @@ app:get('/user_created', function(self)
 end)
 
 app:get('/tos', function(self)
-    return { render = 'tos' }
+    return { render = 'pages/tos' }
 end)
 
 app:get('/myprojects', function(self)

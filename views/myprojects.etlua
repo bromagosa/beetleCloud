@@ -1,55 +1,67 @@
 <script>var thumbnails = {};</script>
+
 <div class="myprojects">
-    <span class="title-text">My Projects</span>
-    <div class="browser pure-g">
-        <div class="left-pane pure-u-13-24">
+
+    <h1>My Projects</h1>
+    <div class="row browser">
+		
+        <div class="col-sm-6 left-pane">
             <div class="search">
-                <input type="text" name="search" placeholder="Search..." oninput="searchProject(this.value)" onchange="searchProject(this.value)">
+                <input class="form-control search" type="text" name="search" placeholder="Search..." oninput="searchProject(this.value)" onchange="searchProject(this.value)">
             </div>
-            <div class="top-controls pure-g">
-                <span class="pure-u-10-24">
-                    <a class="pure-button" onclick="sortBy('projectname')" align="center">Project name <i class="fa fa-sort"></i></a>
-                </span>
-                <span align="center" class="pure-u-7-24">
-                    <a class="pure-button" onclick="sortBy('date')">Date <i class="fa fa-sort"></i></a>
-                </span>
-                <span align="center" class="pure-u-7-24">
-                    <a class="pure-button" onclick="sortBy('shared')">Shared <i class="fa fa-sort"></i></a>
-                </span>
-            </div>
+            
+			<div class="row top-controls">
+				<div class="col-sm-4">
+					<a class="clickable" onclick="sortBy('projectname')" align="center">Project name <i class="fa fa-sort"></i></a>
+				</div>
+				<div align="center" class="col-sm-4">
+					<a class="clickable" onclick="sortBy('date')">Date <i class="fa fa-sort"></i></a>
+				</div>
+				<div align="center" class="col-sm-4">
+					<a class="clickable" onclick="sortBy('shared')">Shared <i class="fa fa-sort"></i></a>
+				</div>
+			</div>
 
             <div class="project-list">
                 <% for k, project in pairs(projects) do %>
-                    <div class="project-item pure-g clickable" onclick="selectProject('<%= project.projectname %>', this)">
-                        <span class='pure-u-10-24 ellipsis'><%= project.projectname %></span>
-                        <span class='pure-u-7-24' align="center"><%= dateString(project.updated) %></span>
-                        <span class='pure-u-7-24' align="center"><%- project.ispublic and '<i class="yes">✔</i>' or '<i class="no">✘</i>' %></span>
+                    <div class="row project-item clickable" onclick="selectProject('<%= project.projectname %>', this)">
+                        <div class='col-sm-4 ellipsis'><%= project.projectname %></div>
+                        <div class='col-sm-4' align="center"><%= dateString(project.updated) %></div>
+                        <div class='col-sm-4' align="center"><%- project.ispublic and '<i class="yes">✔</i>' or '<i class="no">✘</i>' %></div>
                     </div>
                 <script>thumbnails['<%= project.projectname %>'] = '<%= project.thumbnail %>'</script>
                 <% end %>
             </div>
 
-            <div class="bottom-controls pure-g">
-                <span align="center" class="pure-u-1-3">
-                    <a class="pure-button" id="open-button" align="center" target="_blank">Open</a>
-                </span>
-                <span align="center" class="pure-u-1-3">
-                    <a class="pure-button" id="delete-button" align="center" onclick="deleteProject()">Delete</a>
-                </span>
-                <span align="center" class="pure-u-1-3">
-                    <a class="pure-button" id="share-button" align="center" onclick="shareProject()">Share</a>
-                </span>
+            <div class="row bottom-controls">
+                <div align="center" class="col-sm-4">
+                    <a class="btn btn-primary" id="open-button" align="center" target="_blank">
+						<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Open</a>
+                </div>
+                <div align="center" class="col-sm-4">
+                    <a class="btn btn-primary" id="delete-button" align="center" onclick="deleteProject()">
+                    <i class="fa fa-remove" aria-hidden="true"></i> Delete</a>
+                </div>
+                <div align="center" class="col-sm-4">
+                    <a class="btn btn-primary" id="share-button" align="center" onclick="shareProject()">
+                    <i class="fa fa-share" aria-hidden="true"></i> Share</a>
+                </div>
             </div>
         </div>
-        <div align="center" class="right-pane pure-u-11-24">
+        <div class="col-sm-3 right-pane">
             <img class="big-thumbnail"></img>
         </div>
     </div>
+    
+    <div class="spacer">&nbsp;</div>
+    
     <%
         render("views/carousel", { collection = 'shared', title = 'Shared Projects', username = session.username })
         render("views/carousel", { collection = 'favorite', title = 'Liked Projects', username = session.username })
     %>
 </div>
+
+<div class="spacer">&nbsp;</div>
 
 <script>
     var projectListDiv = document.getElementsByClassName('project-list')[0],
@@ -81,7 +93,9 @@
         element.classList.add('selected');
 
         document.getElementById('open-button').href = "/users/<%= session.username %>/projects/" + encodeURIComponent(projectName);
-        document.getElementById('share-button').innerHTML = element.children[2].textContent == '✔' ? 'Unshare' : 'Share';
+        document.getElementById('share-button').innerHTML = element.children[2].textContent == '✔' ? '<i class="fa fa-share" aria-hidden="true"></i> Share' : '<i class="fa fa-remove" aria-hidden="true"></i> Share';
+                        
+
     };
 
     function getColumnContent (element, column) {
@@ -146,7 +160,7 @@
         ajax.onreadystatechange = function () {
             if (ajax.readyState == 4 && ajax.status == 200) {
                 element.children[2].innerHTML = isPublic ? '✘' : '✔';
-                document.getElementById('share-button').innerHTML = isPublic ? 'Share' : 'Unshare';
+                document.getElementById('share-button').innerHTML = isPublic ? '<i class="fa fa-share" aria-hidden="true"></i> Share!' : '<i class="fa fa-remove" aria-hidden="true"></i> Share';
             }
         };
 

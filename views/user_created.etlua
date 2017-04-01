@@ -1,2 +1,11 @@
-<h2>User account created.</h2>
-<span>You can now <a href="/login">log in</a>.</span>
+
+<div class="row not-found">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-6">
+			<h2>User account created.</h2>
+			<span>You can now <a href="/login">log in</a>.</span>
+    </div>
+</div>
+
+
+

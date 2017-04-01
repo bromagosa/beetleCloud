@@ -1,56 +1,69 @@
-<div class="user">
-    <span class="title-text"><%- user.username %></span>
-    <div class="info pure-g">
-        <div class="pure-u-5-8">
-            <span class="title-text">About me</span>
-            <div class="pure-g">
-                <span class="about pure-u-3-4">
-                    <% if (user.username == session.username) then
-                        render("views/inplace", { 
-                                content = user.about or 'Click to edit your description.', 
-                                id = user.username:gsub('%s+', '') .. '_about',
-                                path = 'users/' .. user.username,
-                                property = 'about'
-                        })
-                      else %>
-                        <%- user.about or 'This user has not provided any description.' %> 
-                    <% end %>
-                </span>
-            </div>
-        </div>
-        <div class="details pure-u-3-8">
-            <span class="joined"><strong>Joined:</strong> <%= user.joinedString %></span>
-            <span class="location">
-                <% if (user.username == session.username) then
-                    render("views/inplace", { 
-                            content = user.location or 'Click to edit your location.',
-                            id = user.username:gsub('%s+', '') .. '_location',
-                            path = 'users/' .. user.username,
-                            property = 'location'
-                        })
-                else %>
-                  <%- user.location or 'Planet Earth' %> 
-                <% end %>
-            </span>
-            <% if visitor and visitor.isadmin then %>
-                <span class="email">
-                    <a mailto="<%- user.email -%>"><%- user.email -%></a>
-                </span>
-                <div class="admin pure-g">
-                    <i class="pure-u-1-4"></i>
-                    <span align="center" class="pure-u-1-2">
-                        <a class="pure-button red-button" align="center" onclick="becomeUser()">Become this user</a>
-                    </span>
-                    <i class="pure-u-1-4"></i>
-                </div>
-            <% end %>
-        </div>
+
+<div class="row">
+	<div class="col-sm-2">
+		<p style="text-align:right;padding-top:10px;">
+			<script>document.write("<img class='gravatar' src='" + get_gravatar('<%- session.email %>', 64) + "' />");</script></p>
+	</div>
+	<div class="col-sm-6">
+		<h1><%- user.username %></h1>
+		<h2>About me</h2>
+		<div class="info">
+			<div class="about">
+				<% if (user.username == session.username) then
+					render("views/inplace", { 
+							content = user.about or 'Click to edit your description.', 
+							id = user.username:gsub('%s+', '') .. '_about',
+							path = 'users/' .. user.username,
+							property = 'about'
+					})
+				  else %>
+					<p><%- user.about or 'This user has not provided any description.' %></p>
+				<% end %>
+			</div>
+		</div>
+
+		<div class="details">
+			<div class="joined"><p><strong>Joined:</strong> <%= user.joinedString %></p></div>
+			<div class="location">
+				<% if (user.username == session.username) then
+					render("views/inplace", { 
+							content = user.location or 'Click to edit your location.',
+							id = user.username:gsub('%s+', '') .. '_location',
+							path = 'users/' .. user.username,
+							property = 'location'
+						})
+				else %>
+				  <p><%- user.location or 'Planet Earth' %></p>
+				<% end %>
+			
+			</div>
+			<% if visitor and visitor.isadmin then %>
+				<div class="email">
+					<a mailto="<%- user.email -%>"><%- user.email -%></a>
+				</div>
+				<div class="admin">
+					<div align="center">
+						<a class="btn btn-primary" align="center" onclick="becomeUser()">Become this user</a>
+					</div>
+				</div>
+			<% end %>
+		</div>
     </div>
+ </div>
+ 
+
+<div class="spacer">&nbsp;</div>
+
+
+<hr />
+
+<div class="spacer">&nbsp;</div>
+  
+  <div class="row">
     <%
         render("views/carousel", { collection = 'shared', title = 'Shared Projects', username = user.username })
         render("views/carousel", { collection = 'favorite', title = 'Liked Projects', username = user.username })
     %>
-</div>
 
 <script>
     document.getElementsByClassName('location')[0].innerHTML = buildHyperlinks(document.getElementsByClassName('location')[0].innerHTML);
@@ -75,3 +88,5 @@
         };
     </script>
 <% end %>
+
+</div>

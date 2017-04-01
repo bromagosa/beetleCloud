@@ -1,18 +1,8 @@
-<span class="title-text">Examples</span>
+<h1>Examples</h1>
 <%
-    shapeCollections = {'Getting started', 'Randomness', 'Computational ideas', '3d objects', 'Drawing with boundaries', 'Rotational patterns and models', 'Grids', 'Simple geometric shapes', 'Sphere calculus with sin and cos', 'Miscellaneous'}
+    shapeCollections = {'Getting started', 'Randomness', 'Computational ideas', 'Drawing with boundaries', 'Simple geometric shapes', 'Sphere calculus with sin and cos', 'Miscellaneous'}
 
     for k, title in pairs(shapeCollections) do
         render("views/carousel", { collection = 'notes', title = title, username = 'Examples', notes = title })
     end
 %>
-
-<hr>
-
-<div class="primer">
-    <span class="title-text">Comprehensive Collection of Examples</span>
-    <a href="/static/bb-primer.pdf">
-        <img src="/static/primer.jpg">
-        <span>Download a collection of examples</span>
-    </a>
-</div>

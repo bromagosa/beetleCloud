@@ -1,26 +1,55 @@
 <% if (params.fail) then %>
 <h1 class="fail"><i class="glyph fa fa-thumbs-o-down"></i> Failed login</h1>
 <% else %>
-<h1>Log into Beetle Blocks</h1>
+<h1>Log in</h1>
 <% end %>
-<form class="pure-form pure-form-aligned" method="GET" action="/api/users/login">
-    <fieldset>
-        <div class="pure-control-group">
-            <label for="username">Username</label>
-            <input id="username" name="username" type="text" placeholder="Username">
-        </div>
 
-        <div class="pure-control-group">
-            <label for="password">Password</label>
-            <input id="password" name="password" type="password" placeholder="Password">
-        </div>
 
-        <div class="pure-controls">
-            <label for="cb" class="pure-checkbox">
-                <input id="cb" name="staylogged" type="checkbox"> keep me logged in
-            </label>
+<form class="form-horizontal" method="GET" action="/api/users/login">
+  <div class="form-group">
+	<div class="col-md-3">
+	  <div class="input-group">
+		<div class="input-group-addon">
+		  <span class="glyphicon glyphicon-user"></span>
+		</div>
+		<input type="text" required class="form-control" name="username" id="username" placeholder="Username" autofocus />
+	  </div>
 
-            <button type="submit" class="pure-button red-button">Sign in</button>
-        </div>
-    </fieldset>
+	  <div class="input-group">
+		<div class="input-group-addon">
+		  <span class="glyphicon glyphicon-lock"></span>
+		</div>
+		<input type="password" required class="form-control" name="password" id="password" placeholder="Password" />
+	  </div>
+	</div> 
+  </div>
+  
+  <div class="form-group">
+	<div class="col-md-3">  
+	   <div class="btn-group">    
+		<button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>     
+	  </div> 
+	</div>
+  </div>
+ 
+  <p><a href="/forgot_password">Forgot your Password?</a></p>
 </form>
+
+
+<script>
+	$(document).ready(function() {
+		$("input").keyup(function () {
+			var formGroup = $(this).parents(".form-group");
+			var glyphicon = formGroup.find(".glyphicon");
+			
+			if (this.checkValidity()) {
+				formGroup.addClass("has-success").removeClass("has-error");
+				glyphicon.addClass("glyphicon-ok").removeClass("glyphicon-remove");
+			} else {
+				formGroup.addClass("has-error").removeClass("has-success");
+				glyphicon.addClass("glyphicon-remove").removeClass("glyphicon-ok");
+			}
+			
+	});
+});		
+</script>

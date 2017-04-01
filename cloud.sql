@@ -15,7 +15,7 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 SET search_path = public, pg_catalog;
 
 CREATE DOMAIN dom_username AS text
-	CONSTRAINT dom_username_check CHECK (((length(VALUE) > 3) AND (length(VALUE) < 200)));
+	CONSTRAINT dom_username_check CHECK (((length(VALUE) >= 3) AND (length(VALUE) < 200)));
 
 SET default_tablespace = '';
 SET default_with_oids = false;

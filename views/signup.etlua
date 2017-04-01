@@ -1,36 +1,112 @@
 <% if (params.fail) then %>
     <h1 class="fail"><i class="glyph fa fa-thumbs-o-down"></i> Account creation failed: <%= params.reason %></h1>
 <% else %>
-    <h1>Create a Beetle Blocks account</h1>
+    <h1>Create an account</h1>
 <% end %>
-<form class="pure-form pure-form-aligned" method="POST" action="/api/users/new">
-    <fieldset>
-        <div class="pure-control-group">
-            <label for="username">Username</label>
-            <input id="username" name="username" type="text" placeholder="Username">
-        </div>
 
-        <div class="pure-control-group">
-            <label for="password">Password</label>
-            <input id="password" name="password" type="password" placeholder="Password">
-        </div>
 
-        <div class="pure-control-group">
-            <label for="password_repeat">Repeat password</label>
-            <input id="password_repeat" name="password_repeat" type="password" placeholder="Repeat password">
-        </div>
+<h3 class="form-signup-heading">Sign up</h3> 
 
-        <div class="pure-control-group">
-            <label for="email">Email adress</label>
-            <input id="email" name="email" type="email" placeholder="Email address">
-        </div>
 
-        <div class="pure-controls">
-            <label for="tos" class="pure-checkbox">
-                <input id="tos" name="tos" type="checkbox"> I have read and agree to the <a target="_blank" href="/tos">Terms of Service</a>
-            </label>
 
-            <button type="submit" class="pure-button red-button">Sign up</button>
-        </div>
-    </fieldset>
+<form id="signupForm" class="form-horizontal" method="POST" action="/api/users/new">
+
+	<div class="col-md-5">
+	
+	<div class="form-group has-feedback">
+	  <label for="username" class="control-label col-md-3">Username:</label>
+	  <div class="input-group">
+		<div class="input-group-addon">
+		  <span class="glyphicon glyphicon-user"></span>
+		</div>
+		<input type="text" required class="form-control" name="username" id="username" placeholder="Username" value="" 
+			pattern="\w{3,15}" autofocus />
+		<span class="glyphicion form-control-feedback"></span>
+	  </div>
+	 </div>	  
+
+	<div class="form-group has-feedback">
+	  <label for="email" class="control-label col-md-3">E-Mail:</label>
+	  <div class="input-group">
+		<div class="input-group-addon">
+		  <span class="glyphicon glyphicon-envelope"></span>
+		</div>
+		<input type="email" required class="form-control" name="email" id="email" placeholder="E-Mail" value=""/>
+		<span class="glyphicion form-control-feedback"></span>
+	  </div>
+	</div>	 	  
+	 	  
+	<div class="form-group has-feedback">  
+	  <label for="password" class="control-label col-md-3">Password:</label>
+	  <div class="input-group">
+		<div class="input-group-addon">
+		  <span class="glyphicon glyphicon-lock"></span>
+		</div>
+		<input type="password" required class="form-control" name="password" id="password" placeholder="Password" />
+		<span class="glyphicion form-control-feedback"></span>
+	  </div>
+	</div> 
+	
+	<div class="form-group has-feedback">	  
+	  <label for="confirm_password" class="control-label col-md-3">Password:</label>
+	  <div class="input-group">
+		<div class="input-group-addon">
+		  <span class="glyphicon glyphicon-lock"></span>
+		</div>
+		<input type="password" required class="form-control" name="confirm_password" id="confirm_password" placeholder="Confirm Password" />
+		<span class="glyphicion form-control-feedback"></span>
+	  </div>	  
+	</div> 
+	
+	<div class="form-group has-feedback">
+	<label for="tos" class="control-label col-md-3"></label>	  
+	  <div class="input-group">
+		 
+		<input id="tos" name="tos" type="checkbox" required > I have read and agree to the <a target="_blank" href="/tos">Terms of Service</a>
+		<span class="glyphicion form-control-feedback"></span>
+	  </div>	  
+	</div> 
+
+  <div class="form-group">
+	<div class="col-md-4">  
+	   <div class="btn-group">    
+		<button class="btn btn-lg btn-primary btn-block" type="submit" id="signup">Sign up</button>     
+	  </div> 
+	</div>
+  </div>
+  
+  
+  </div>
+    
+ 
 </form>
+</div>
+
+
+<script>
+	$(document).ready(function() {
+		$("input").keyup(function () {
+			var formGroup = $(this).parents(".form-group");
+			var glyphicon = formGroup.find(".glyphicon");
+			
+			if (this.checkValidity()) {
+				formGroup.addClass("has-success").removeClass("has-error");
+				glyphicon.addClass("glyphicon-ok").removeClass("glyphicon-remove");
+			} else {
+				formGroup.addClass("has-error").removeClass("has-success");
+				glyphicon.addClass("glyphicon-remove").removeClass("glyphicon-ok");
+			}
+			
+			if ($(this).attr('id')=="confirm_password") {
+				if ($(this).val() ==  $("#password").val()) {
+					formGroup.addClass("has-success").removeClass("has-error");
+					glyphicon.addClass("glyphicon-ok").removeClass("glyphicon-remove");
+				} else {
+					formGroup.addClass("has-error").removeClass("has-success");
+					glyphicon.addClass("glyphicon-remove").removeClass("glyphicon-ok");
+				}
+			}
+	});
+});		
+</script>
+

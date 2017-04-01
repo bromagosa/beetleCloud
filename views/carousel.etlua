@@ -1,5 +1,6 @@
 <% local id = collection .. title:gsub('%s+','') %>
-<div class="carousel">
+
+<div class="jumbotron mini-carousel">
     <script>
         var ajax_<%= id %> = new XMLHttpRequest(),
             offset_<%= id %> = 0,
@@ -23,15 +24,14 @@
                 var div = document.getElementById('project-' + i + '-<%= id %>'),
                     imageLoader = new XMLHttpRequest();
 
-                div.className = 'project pure-u-1-6';
+				$('#project-' + i + '-<%= id %>').removeClass('empty');
                 div.children[0].href = '/users/' + encodeURIComponent(projects_<%= id %>[i].username) +
                                         '/projects/' + encodeURIComponent(projects_<%= id %>[i].projectname);
-                div.children[0].children[0].src = '/static/no-thumb.png';
+                div.children[0].children[0].src = '/static/img/no-thumb.png';
                 div.children[1].textContent = projects_<%= id %>[i].projectname;
                 div.children[1].href = div.children[0].href;
                 div.children[2].children[0].textContent = projects_<%= id %>[i].username;
                 div.children[2].children[0].href = '/users/' + encodeURIComponent(projects_<%= id %>[i].username);
-                div.style.visibility = 'visible';
 
                 imageLoader.div = div;
                 imageLoader.onreadystatechange = function () {
@@ -46,15 +46,18 @@
                 imageLoader.send();
 
             }
-            for (var i = projects_<%= id %>.length || 0; i < 5; i ++) {
+            for (var i = projects_<%= id %>.length || 0; i < 10; i ++) {
                 var div = document.getElementById('project-' + i + '-<%= id %>');
-                div.className = 'project pure-u-1-6 empty';
+                $('#project-' + i + '-<%= id %>').addClass('empty');
                 div.children[0].removeAttribute('href');
-                div.children[0].children[0].removeAttribute('src');
+                div.children[0].children[0].src = '/static/img/no-thumb.png';
+                //div.children[0].children[0].removeAttribute('src');
                 div.children[1].textContent = '';
                 div.children[1].removeAttribute('href');
-                div.style.visibility = 'visible';
+                div.children[2].textContent = '';
             }
+            
+            
         };
     </script>
 
@@ -63,22 +66,58 @@
         <span class="show-all"><a href="<%= (username and ('/users/' .. username ..'/') or '') .. 'projects/g/' .. collection .. '/' .. (list or '') %>">Show all</a></span>
     </div>
 
-    <div class="projects pure-g" id="projects_<%= id %>">
-        <div class="arrow pure-u-1-12">
-            <a onclick="if (offset_<%= id %> > 0) { offset_<%= id %> = offset_<%= id %> - 5; get<%= id %>(); }"><i class="fa fa-arrow-circle-left"></i></a>
-        </div>
-        <% for i = 1, 5, 1 do %>
-        <div id="project-<%= i - 1 %>-<%= id %>" style="visibility: hidden">
-            <a target="_blank"><img class="thumbnail" src=""></a>
+    <div class="projects slider projects_<%= id %>" id="projects_<%= id %>">
+        <% for i = 1, 10, 1 do %>
+        <div class="project empty" id="project-<%= i - 1 %>-<%= id %>">
+            <a target="_blank"><img class="thumbnail" alt="" src="/static/img/no-thumb.png" /></a>
             <a target="_blank" class="name ellipsis"></a>
             <span class="author">by <a href=""></a></span>
         </div>
         <% end %>
-        <div class="arrow pure-u-1-12">
-            <a onclick="if (projects_<%= id %>.length == 5) { offset_<%= id %> = offset_<%= id %> + 5; get<%= id %>(); }"><i class="fa fa-arrow-circle-right"></i></a>
-        </div>
+
     </div>
+    
+    
     <script>
-        get<%= id %>();
+		$(document).ready(function(){
+		
+			get<%= id %>();
+			
+			$('.projects_<%= id %>').slick({
+				dots: false,
+				infinite: true,
+				speed: 300,
+				slidesToShow: 5,
+				slidesToScroll: 5,
+				responsive: [
+					{
+					  breakpoint: 1024,
+					  settings: {
+						slidesToShow: 3,
+						slidesToScroll: 3,
+						infinite: true,
+						dots: true
+					  }
+					},
+					{
+					  breakpoint: 600,
+					  settings: {
+						slidesToShow: 2,
+						slidesToScroll: 2
+					  }
+					},
+					{
+					  breakpoint: 480,
+					  settings: {
+						slidesToShow: 1,
+						slidesToScroll: 1
+					  }
+					}
+				]
+			});
+	
+		});
+               
     </script>
+
 </div>

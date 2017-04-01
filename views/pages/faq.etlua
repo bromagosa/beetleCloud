@@ -1,0 +1,164 @@
+<div class="row">
+	<div class="col-sm-2"></div>
+	<div class="col-sm-6">
+		<h1>Turtlestitch: FAQ</h1>
+		<br>
+		
+		<h4>General:</h4>
+		<a href="#whatis">What is turtlestitch?</a>
+		<br><br>
+		
+		<h4>Using turtlestitch</h4>
+		<a href="#startdes">What do I need to start designing?</a> <br>
+		<a href="#keepm">What to keep in mind when designing?</a><br>
+		<a href="#jumpst">What is a jump stitch?</a><br>
+		<a href="#wmachine">What embroidery machine do I need?</a><br>
+		<a href="#noaccess">I want to embroider my pattern(s) but don't have access to a machine.</a>
+		<br>	<br>
+		
+		<h4>Communication</h4>
+		<a href="#mailli">Can somebody help out? The Mailinglist!</a><br>
+		<a href="#feedb">We need Feedback!</a><br>
+		<a href="#socm">Turtlestitch Blogs, Wiki, Tweets and more!</a><br>
+		
+		<h4>Workshops</h4>
+		<a href="#offerws">Do you offer workshops?</a><br>
+		<a href="#wsreq">Workshop Requirements</a>
+		<br><br>
+		
+		<h4>Open source: Code and Designs</h4>
+		<a href="#desos">Are the designs open source?</a><br>
+		<a href="#scode">Where can I get the turtlestitch source code?</a>
+		<br><br>
+		
+		<h4>Credits</h4>
+		<a href="#whois">Who is turtlestitch?</a><br>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-sm-2"></div>
+	<div class="col-sm-6">
+		<br><br>
+		<hr />
+		<br>
+		
+		<a name="whatis"><h3>What is turtlestitch?</h3></a>
+		A platform to generate patterns for embroidery machines. Technically, it's based on Snap!, a browser-based educational programming language. It is easy to use, requires no prior knowledge in programming, yet powerful tool to create novel patterns for embroidery. It is useful for designers for experimenting with generative aesthetics and precision embroidery, as well as tool for innovative workshops combining an introduction to programing with haptic output. 
+		<br><br><br>
+		
+		
+		
+		<h3>Using turtlestitch</h3>
+		<a name="startdes"><h3>What do I need to start designing?</h3></a> 
+		All you need is Internet access and a modern browser. We like Firefox, because it's Free Software, but Chrome, Safari work as well. 
+		<br><br>
+		
+		
+		<a name="keepm"><h3>What to keep in mind when designing?</h3></a>
+		<br>
+		<b>Getting started.</b> We are using the “pen function” of Snap! to define the line. For an introduction to Snap! see the <a href="http://snap.berkeley.edu/SnapManual.pdf" target="_blank">Snap! User Manual</a> (pdf, 3,4MB). To learn form others who already programmed patterns, go to the <a href="http://www.turtlestitch.org/gallery" target="_blank">gallery</a> and look for a pattern you might want to modify.<br><br>
+		<b>Size of the stitches.</b> The line the turtle traces will eventually be embroidered. The results tend to be best, if the turtle moves in units of 8-12 steps. This number of steps determines the size of the individual stitch. Below 8, the stitches become rather small and the embroidery rather dense, above 12, the stitches become rather larger and loose. These are recommended values, feel free to experiment.<br><br>
+		<b>Crossing lines.</b> The lines should not cross each other too often, otherwise there is danger of damaging the fabric on which you embroider. If you use regular sewing machines, you already know this. <br><br>
+		<b>Scaling the pattern.</b> The maximum size of your pattern is determined by the size of the embroidery frame of your machine. To make sure you are working on the right scale, you can define the “Stage size”. Go to settings (       ), choose “Stage size ...” and define sizes of your “stage” on which you design. The values are given in pixels and 50 pixels = 1cm. So, if you want to design for pattern with a maximum size of 15cm x 15cm, choose the values for “Stage width” and “Stage height” each 750.<br><br>
+		To get more detailed views of the size of your design, you can activate different grid backgrounds. Go to file (      ), choose one from “Backgrounds”.
+		<br><br>
+		
+		
+		<a name="jumpst"><h3>What is a jump stitch?</h3></a>
+		<br>
+		A jump stitch is not a stitch at all, but a loose thread that is created when the turtle jumps from the end of one line to the beginning of a new line. It enables you to make non-continuous patterns. Normally, these threads are removed by hand at the end, but you can also treat them as a design feature and leave them in. Just try it out.
+		<br><br>
+		<a name="wmachine"><h3>What embroidery machine do I need?</h3></a>
+		<br>
+		If you want to materialize your designs, you need an embroidery machine. The machine needs to read the .exp or .dst embroidery file formats. These are quite standard, but still, not all machines read them. 
+		<br><br>
+		If you have a machine that reads only other formats, you can use the free program <a href="http://embroidermodder.org/">Embroidermodder</a>  for conversion, but the results are not always perfect.
+		<br><br>
+		You need also to be able to get your design into the machine. This is done easily, if your machine is able to read files from an USB stick.
+		<br><br>
+		Even rather basic consumer machines stitch quite well. We have used, for example, an Brother Innov-is 750, which costs new around €850.  It's generally not advisable to buy a machine that combines sewing and stitching, the mechanics are too complicated and error-prone. 
+		<br><br>
+		Machines differ in the size of the embroidery frame and more expensive types offer more “post-production”  features (i.e. scaling, adjusting stitch size etc). If you follow the design guide lines you don't need to make this to use turtlestitch.
+		<br><br>
+		
+		
+		<a name="noaccess"><h3>I want to embroider my pattern(s) but don't have access to a machine.</h3></a>
+		<br>
+		If you have project you want to realize, you can contact us. We do offer our services for unique productions or small series. We don't do mass production. Prices vary depending on the complexity of your project.
+		<br><br>
+		If you want to do it yourself, you might contact your local Fab Lab / Maker Space. Quite a few have such machines available.
+		<br><br><br>
+		
+		
+		
+		<h3>Communication</h3>
+		
+		
+		<a name="mailli"><h3>Can somebody help out? The Mailinglist!</h3></a><br>
+		We have set up a collaborative list for those who are actively<a href="http://turtlestitch.org/mm/listinfo/practice" target="_blank"> practicing Turtlestitch </a>. After you have read this FAQs you can ask questions about practical issues. We still have got to work on documentation and usability on the tool, so this list might help you to find answers on questions we did not address in any documentation so far.<br><br>
+		
+		
+		<a name="feedb"><h3>We need Feedback!</h3></a><br>
+		Please don't be shy and send us <a href="http://www.stitchcode.com/kontakt/" target="_blank">feedback</a>. We are happy to hear about your experiences. Let us know where we can improve the usabilty. This allready starts by pointing out typos in the FAQs :)
+		<br><br>
+		
+		
+		<a name="socm"><h3>Turtlestitch Blogs, Wiki, Tweets and more!</h3></a><br>
+		Check out Jennifer Lins weekly Blog about her experiences with Turtlestitch: <p><a href="http://steamct.blogspot.co.at/" target="_blank" >STEAM Coding / TurtleStitch</a><br>
+		We set up a new wiki for turtlestitch which will get filled with ressources and infos. <br><a href="http://wiki.turtlestitch.org/" target="_blank" >wiki.turtlestitch.org</a>
+		<br><br><br>
+		
+		
+		
+		<h3>Workshops</h3>
+		
+		
+		<a name="offerws"><h3>Do you offer workshops?</h3></a>
+		Yes, we do. In fact, we love to and Turtlestitch was designed as a tool for workshops. 
+		<br><br>
+		Workshops are a great way to teach people about programming and about pattern design. We are based on Vienna, Austria have done quite a few workshops in public schools (children ranging from 10-14 years), design schools, festivals and conferences. If you are interesting in us coming to your place, or want to explore other possibilities, please <a href="http://www.stitchcode.com/kontakt/">contact us</a>.
+		<br><br>
+		
+		
+		<a name="wsreq"><h3>Workshop Requirements</h3></a>
+		<br>
+		A bright large room.<br>
+		Laptops and Internet access.<br>
+		Embroidery machine(s) (we can provide them)<br>
+		Number of participants: 10 people per group<br>
+		Duration: One full day, or several shorter sessions.<br>
+		<br><br>
+		
+		
+		
+		<h3>Open source: Code and Designs</h3>
+		
+		
+		<a name="desos"><h3>Are the designs open source?</h3></a>
+		<br>
+		Yes. As a default, all finished designs are uploaded to the gallery and made available to others in various formats, including the embroidery file and the the “source code” that others can use to develop their design based on yours.
+		<br><br>
+		
+		
+		<a name="scode"><h3>Where can I get the turtlestitch source code?</h3></a>
+		<br>
+		All code is published under the “GNU Affero General Public License”.<br>
+		<a href="https://github.com/backface/turtlestitch">https://github.com/backface/turtlestitch</a><br>
+		<a href="https://github.com/backface/turtlestitch-web-app">https://github.com/backface/turtlestitch-web-app</a><br>
+		<a href="https://github.com/backface/stitchcode">https://github.com/backface/stitchcode</a><br>
+		<br><br>
+		
+		
+		
+		<h3>Credits</h3>
+		
+		
+		<a name="whois"><h3>Who is turtlestitch?</h3></a>
+		<br>
+		<a href="http://www.stitchcode.com/kontakt/">Andrea Mayr-Stalder</a> (Artist, Educator, Project Lead)<br />
+		<a href="http://m.ash.to/">Michael Aschauer</a> (Artist, Lead Developer)<br />
+		With financial support of: <a href="http://www.netidee.at">netidee.at</a>
+
+	</div>
+</div>

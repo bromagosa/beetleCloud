@@ -1,36 +1,53 @@
 <% local util = require 'lapis.util' %>
-<div class="project-container">
-    <div class="project pure-g">
-        <div class="postcard pure-u-1-2">
-            <span class="title-text">
-                <%- project.projectname %>
-            </span>
+
+	<div class="spacer">&nbsp;</div>
+	<div class="row">
+		
+		<div class="col-md-5">
+			<div class="spacer">&nbsp;</div>
+			<div id="thumbs">
+			
+				<div class="big-thumbnail <%= project.imageisfeatured and '' or 'featured' %>">
+					<img src="<%= project.thumbnail %>">
+					<div class="buttons text-center">
+					<% if (project.username == session.username) then %>
+							<a class="btn" role="button" onclick="featureImage(false)">Feature me</a>
+					<% end %>
+					</div>
+				</div>
+				
+				<div class="big-thumbnail <%= project.imageisfeatured and 'featured' or '' %>">
+					<img class="alternate" src="">
+					<% if (project.username == session.username) then %>
+						<div class="buttons text-center alt">
+							<a class="btn" role="button" onclick="featureImage(true)">Feature me</a><br />
+						</div>
+						<div class="fileinput">
+							<form class="fileinput">
+								<div class="form-group has-feedback">
+									<label for="file" class="">Upload an image</label>
+									<div class="input-group">
+										<input  type="file" name="file" onchange="uploadImage(this.files[0])" id="file"/>
+									</div>
+								</div>
+							</form>
+						</div>
+					<% end %>
+					
+					
+				</div>
+			</div>
+		</div>
+			<div class="col-md-1"></div>
+		<div class="col-md-6">
+
+             <h2><%- project.projectname %></h2>
+            
             <span class="author">by <a href="/users/<%= util.escape(project.username) %>"><%- project.username %></a></span>
-            <div id="thumbs">
-                <span class="big-thumbnail <%= project.imageisfeatured and '' or 'featured' %>">
-                    <img src="<%= project.thumbnail %>">
-                    <% if (project.username == session.username) then %>
-                        <div class="buttons">
-                            <a class="pure-button red-button feat-button" onclick="featureImage(false)">Feature me</a>
-                        </div>
-                    <% end %>
-                </span>
-                <span class="big-thumbnail <%= project.imageisfeatured and 'featured' or '' %>">
-                    <% if (project.username == session.username) then %>
-                        <div class="buttons">
-                            <a class="pure-button red-button feat-button" onclick="featureImage(true)">Feature me</a>
-                            <form class="fileinput">
-                                <input type="file" name="file" onchange="uploadImage(this.files[0])" id="file"/>
-                                <label for="file" class="pure-button red-button">Upload an image</label>
-                            </form>
-                        </div>
-                    <% end %>
-                    <img class="alternate" src="">
-                </span>
-            </div>
-        </div>
-        <div class="details pure-u-1-2">
-            <span class="notes-title">Project notes</span>
+ 
+
+            <h3>Project notes</h3>
+            
             <span class="notes">
                 <% if (project.username == session.username) then
                     render("views/inplace", { 
@@ -43,31 +60,39 @@
                       <pre class="proto-in-place"><%= project.notes ~= '' and project.notes or 'This project has no notes.' %></pre>
                 <% end %>
             </span>
-            <a class="pure-button red-button" align="center" href="/run#present:Username=<%= util.escape(project.username) %>&ProjectName=<%= util.escape(project.projectname) %>">Open Project</a>
-            <div class="stats pure-g">
-                <div class="pure-u-1-2">
-                    <span>Views: <%= project.views or 0 %></span>
-                    <span>Shared: <%= project.sharedString %></span>
-                </div>
-                <div class="pure-u-1-2">
-                    <span id="likes">
-                        <i <% if (session.username ~= '') then %> onclick="toggleLike()" <% end %> 
-                        class="clickable glyph fa fa-thumbs-o-up <%= project.likedByUser and 'liked' %>"
-                        <% if (project.likedByUser) then %> title="you like this project" <% end %> ></i>
-                        <i><%= project.likes %></i>
-                    </span>
-                    <span>Modified: <%= project.modifiedString %></span>
-                </div>
+            <br />
+            
+            <a class="btn btn-primary" align="center" href="/run#present:Username=<%= util.escape(project.username) %>&ProjectName=<%= util.escape(project.projectname) %>">Open Project</a>
+            
+            
+            <hr />
+            <div class="row stats">
+				<div class="col-sm-1">
+
+					<span id="likes">
+						<i <% if (session.username ~= '') then %> onclick="toggleLike()" <% end %> 
+						class="clickable glyph fa fa-thumbs-o-up fa-3x <%= project.likedByUser and 'liked' %>"
+						<% if (project.likedByUser) then %> title="you like this project" <% end %> ></i>
+						<i><%= project.likes %></i>
+					</span>
+				</div>
+				<div class="col-sm-6">
+					<span>Views: <%= project.views or 0 %></span><br />
+					<span>Shared: <%= project.sharedString %></span><br />
+					<span>Modified: <%= project.modifiedString %></span><br />				
+				</div>
             </div>
+            
+            <div class="spacer">&nbsp;</div>
 
             <% if visitor and visitor.isadmin then %>
-                <div class="pure-g admin">
-                    <span align="center" class="pure-u-11-24">
-                        <a class="pure-button red-button" align="center" onclick="deleteProject()">Delete</a>
+                <div class="admin">
+                    <span align="center">
+                        <a class="btn btn-primary" align="center" onclick="deleteProject()">Delete</a>
                     </span>
-                    <i class="pure-u-1-12"></i>
-                    <span align="center" class="pure-u-11-24">
-                        <a class="pure-button red-button" align="center" onclick="shareProject()"><%= project.ispublic and "Unshare" or "Share" %></a>
+                    <i></i>
+                    <span align="center">
+                        <a class="btn btn-primary" align="center" onclick="shareProject()"><%= project.ispublic and "Unshare" or "Share" %></a>
                     </span>
                 </div>
             <% end %>
@@ -75,7 +100,10 @@
     </div>
 </div>
 
-<script src="/static/project.js"></script>
+
+<div class="spacer">&nbsp;</div>
+
+<script src="/static/js/project.js"></script>
 
 <% if visitor and visitor.isadmin then %>
     <script>

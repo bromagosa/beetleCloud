@@ -1,0 +1,56 @@
+<div class="row">
+	<div class="col-sm-2"></div>
+	<div class="col-sm-6 dlink">
+
+		<h1>Turtlestitch - Coded embroidery</h1>
+
+		<p>Turtlestitch is based on a browser-based educational programming language (Snap!) to
+		generate patterns for embroidery machines. It is easy to use, requiring no
+		prior knowledge in programming, yet powerful in creating nowels patterns
+		for embroidery. It is usefull for designers to experiment with
+		generative aesthetics and precision embroidery as well as tool for
+		innovative workshops combining an introduction to programing with haptic
+		output. </p>
+
+		<p>Turtlestitch uses Snap!s "pen module" which it interprets as a needle
+		and transforms its output into widely-used embroidery file formats.</p>
+
+		<p>&nbsp;</p>
+		
+		<h2>About Snap!</h2> 
+
+		<p>Snap!  is a visual, drag-and-drop programming language that allows
+		students to create interactive stories, animations, games, and more,
+		while learning about mathematical and computational ideas. Snap! was
+		inspired by Scratch, but also targets both novice and more advanced
+		students by including and expanding Scratch's features.</p>
+
+		<p>Snap! is developed by the University of California, Berkeley with the
+		support from the National Science Foundation, MioSoft, and the
+		CommunicationDesign Group at SAP Labs.<br />
+		The design of Snap! is influenced and inspired by Scratch, from Lifelong
+		Kindergarten group at the MIT Media Lab. For more information see<br />
+		<a href="http://snap.berkeley.edu">http://snap.berkeley.edu</a> and <a href="http://scratch.mit.edu">http://scratch.mit.edu</a> </p>
+
+		<p>Snap 4.0 (beta) Copyright (C) 2015 by Jens Mönig and Brian Harvey</p>
+		<p><a href="http://snap.berkeley.edu"><img src="/static/img/snap.png" width="210" /></a></p>
+	
+		<p>&nbsp;</p>
+
+		<h2>Credits Turtlestitch</h2>
+		<p>
+		Projekt Lead: <a href="http://www.stitchcode.com/kontakt/">Andrea Mayr-Stalder</a><br />
+		Lead Developer: <a href="http://m.ash.to/">Michael Aschauer</a><br />
+		With financial support of: <a href="http://www.netidee.at">netidee.at</a>
+		</p>
+		<p><a href="http://www.netidee.at"><img src="/static/img/netidee.jpg" /></a>
+		</p>
+		<p>
+		Find the source code @ <a href="https://github.com/backface/turtlestitch">github</a><br />
+		</p>
+
+
+		<p>&nbsp;</p>
+			
+	</div>
+</div>
