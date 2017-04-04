@@ -12,6 +12,9 @@ local util = require('lapis.util')
 local respond_to = require('lapis.application').respond_to
 local xml = require('xml')
 
+local unistd = require "posix.unistd"
+salt = "21"
+
 require 'backend_utils'
 
 -- Response generation
@@ -197,7 +200,8 @@ app:match('login', '/api/users/login', respond_to({
             else
                 return errorResponse('invalid username')
             end
-        elseif (bcrypt.verify(self.params.password, user.password)) then
+        --elseif (bcrypt.verify(self.params.password, user.password)) then
+        elseif (unistd.crypt(self.params.password, salt) == user.password) then
             self.session.username = user.username
             self.session.email = user.email
             if comesFromWebClient then
@@ -269,7 +273,8 @@ app:match('new_user', '/api/users/new', respond_to({
 
         Users:create({
             username = self.params.username,
-            password = bcrypt.digest(self.params.password, 11),
+            --password = bcrypt.digest(self.params.password, 11),
+            password = unistd.crypt(self.params.password, salt),
             email = self.params.email,
             isadmin = false,
             joined = db.format_date()
