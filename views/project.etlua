@@ -1,23 +1,29 @@
 <% local util = require 'lapis.util' %>
 
 	<div class="spacer">&nbsp;</div>
+
 	<div class="row">
-		
+		<div class="col-md-4"></div>
+		<div class="col-md-8">
+             <h2><%- project.projectname %></h2>
+		</div>
+	</div>
+	<div class="row">
+
 		<div class="col-md-4">
-			<div class="spacer">&nbsp;</div>
 			<div id="thumbs">
-			
+
 				<div class="big-thumbnail <%= project.imageisfeatured and '' or 'featured' %>">
-					<img src="<%= project.thumbnail %>">
+					<img src="<%= project.thumbnail %>" class="fluid pull-right">
 					<div class="buttons text-center">
 					<% if (project.username == session.username) then %>
 							<a class="btn" role="button" onclick="featureImage(false)">Feature me</a>
 					<% end %>
 					</div>
 				</div>
-				
+
 				<div class="big-thumbnail <%= project.imageisfeatured and 'featured' or '' %>">
-					<img class="alternate" src="">
+					<img class="alternate fluid" src="">
 					<% if (project.username == session.username) then %>
 						<div class="buttons text-center alt">
 							<a class="btn" role="button" onclick="featureImage(true)">Feature me</a><br />
@@ -33,25 +39,20 @@
 							</form>
 						</div>
 					<% end %>
-					
-					
+
+
 				</div>
 			</div>
 		</div>
-		<div class="col-md-1"></div>
-		<div class="col-md-7">
-
-             <h2><%- project.projectname %></h2>
-            
+		<div class="col-md-8">
             <span class="author">by <a href="/users/<%= util.escape(project.username) %>"><%- project.username %></a></span>
- 
 
             <h3>Project notes</h3>
-            
+
             <span class="notes">
                 <% if (project.username == session.username) then
-                    render("views/inplace", { 
-                            content = project.notes, 
+                    render("views/inplace", {
+                            content = project.notes,
                             id = project.projectname:gsub('%W','') .. '_notes',
                             path = 'users/' .. session.username .. '/projects/' .. project.projectname,
                             property = 'notes'
@@ -61,16 +62,16 @@
                 <% end %>
             </span>
             <br />
-            
-            <a class="btn btn-primary" align="center" href="/run#present:Username=<%= util.escape(project.username) %>&ProjectName=<%= util.escape(project.projectname) %>">Open Project</a>
-            
-            
+
+            <a class="btn btn-primary" align="center" href="/run#cloud:Username=<%= util.escape(project.username) %>&ProjectName=<%= util.escape(project.projectname) %>">Open Project</a>
+
+
             <hr />
             <div class="row stats">
 				<div class="col-sm-1">
 
 					<span id="likes">
-						<i <% if (session.username ~= '') then %> onclick="toggleLike()" <% end %> 
+						<i <% if (session.username ~= '') then %> onclick="toggleLike()" <% end %>
 						class="clickable glyph fa fa-thumbs-o-up fa-3x <%= project.likedByUser and 'liked' %>"
 						<% if (project.likedByUser) then %> title="you like this project" <% end %> ></i>
 						<i><%= project.likes %></i>
@@ -79,10 +80,10 @@
 				<div class="col-sm-6">
 					<span>Views: <%= project.views or 0 %></span><br />
 					<span>Shared: <%= project.sharedString %></span><br />
-					<span>Modified: <%= project.modifiedString %></span><br />				
+					<span>Modified: <%= project.modifiedString %></span><br />
 				</div>
             </div>
-            
+
             <div class="spacer">&nbsp;</div>
 
             <% if visitor and visitor.isadmin then %>

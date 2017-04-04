@@ -1,8 +1,8 @@
 
 <div class="row">
 	<div class="col-sm-2">
-		<p style="text-align:right;padding-top:10px;">
-			<script>document.write("<img class='gravatar' src='" + get_gravatar('<%- session.email %>', 64) + "' />");</script></p>
+		<p style="text-align:right;padding-top:32px;">
+			<script>document.write("<img class='gravatar' src='" + get_gravatar('<%- user.email %>', 96) + "' />");</script></p>
 	</div>
 	<div class="col-sm-6">
 		<h1><%- user.username %></h1>
@@ -10,8 +10,8 @@
 		<div class="info">
 			<div class="about">
 				<% if (user.username == session.username) then
-					render("views/inplace", { 
-							content = user.about or 'Click to edit your description.', 
+					render("views/inplace", {
+							content = user.about or 'Click to edit your description.',
 							id = user.username:gsub('%s+', '') .. '_about',
 							path = 'users/' .. user.username,
 							property = 'about'
@@ -26,7 +26,7 @@
 			<div class="joined"><p><strong>Joined:</strong> <%= user.joinedString %></p></div>
 			<div class="location">
 				<% if (user.username == session.username) then
-					render("views/inplace", { 
+					render("views/inplace", {
 							content = user.location or 'Click to edit your location.',
 							id = user.username:gsub('%s+', '') .. '_location',
 							path = 'users/' .. user.username,
@@ -35,14 +35,14 @@
 				else %>
 				  <p><%- user.location or 'Planet Earth' %></p>
 				<% end %>
-			
+
 			</div>
 			<% if visitor and visitor.isadmin then %>
 				<div class="email">
-					<a mailto="<%- user.email -%>"><%- user.email -%></a>
+					<p><a mailto="<%- user.email -%>"><%- user.email -%></a></p>
 				</div>
 				<div class="admin">
-					<div align="center">
+					<div>
 						<a class="btn btn-danger" align="center" onclick="becomeUser()">Become this user</a>
 					</div>
 				</div>
@@ -50,7 +50,7 @@
 		</div>
     </div>
  </div>
- 
+
 
 <div class="spacer">&nbsp;</div>
 
@@ -58,7 +58,7 @@
 <hr />
 
 <div class="spacer">&nbsp;</div>
-  
+
   <div class="row">
     <%
         render("views/carousel", { collection = 'shared', title = 'Shared Projects', username = user.username })

@@ -4,12 +4,12 @@
 
     <h1>My Projects</h1>
     <div class="row browser">
-		
+
         <div class="col-sm-6 left-pane">
-            <div class="search">
+            <div class="row search">
                 <input class="form-control search" type="text" name="search" placeholder="Search..." oninput="searchProject(this.value)" onchange="searchProject(this.value)">
             </div>
-            
+
 			<div class="row top-controls">
 				<div class="col-sm-4">
 					<a class="clickable" onclick="sortBy('projectname')" align="center">Project name <i class="fa fa-sort"></i></a>
@@ -22,7 +22,7 @@
 				</div>
 			</div>
 
-            <div class="project-list">
+            <div class="row project-list">
                 <% for k, project in pairs(projects) do %>
                     <div class="row project-item clickable" onclick="selectProject('<%= project.projectname %>', this)">
                         <div class='col-sm-4 ellipsis'><%= project.projectname %></div>
@@ -47,14 +47,16 @@
                     <i class="fa fa-share" aria-hidden="true"></i> Share</a>
                 </div>
             </div>
+
         </div>
-        <div class="col-sm-3 right-pane">
-            <img class="big-thumbnail"></img>
+
+        <div class="col-sm-5 right-pane">
+            <img class="big-thumbnail fluid" />
         </div>
     </div>
-    
+
     <div class="spacer">&nbsp;</div>
-    
+
     <%
         render("views/carousel", { collection = 'shared', title = 'Shared Projects', username = session.username })
         render("views/carousel", { collection = 'favorite', title = 'Liked Projects', username = session.username })
@@ -94,7 +96,7 @@
 
         document.getElementById('open-button').href = "/users/<%= session.username %>/projects/" + encodeURIComponent(projectName);
         document.getElementById('share-button').innerHTML = element.children[2].textContent == '✔' ? '<i class="fa fa-share" aria-hidden="true"></i> Share' : '<i class="fa fa-remove" aria-hidden="true"></i> Share';
-                        
+
 
     };
 
@@ -168,4 +170,3 @@
         ajax.send();
     };
 </script>
-

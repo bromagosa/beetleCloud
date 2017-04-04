@@ -33,11 +33,13 @@ html {
 }
 
 body {
-	padding-top: 90px;
-	padding-bottom: 210px;
+	padding-top: 70px;
 	font-family: Roboto;
 	color:#333;
+	min-height: 100%;
 }
+
+div.content {min-height:66%}
 
 pre {
     white-space: pre-wrap;       /* Since CSS 2.1 */
@@ -52,7 +54,7 @@ a:hover {color:darkgreen}
 .row a {text-decoration:underline}
 a.btn {text-decoration:none}
 p {margin-bottom:20px}
-h1,h2,h3,h4 {margin-bottom:20px;}
+h1,h2,h3,h4 {margin-bottom:20px;line-height:1.4em;}
 
 .btn-primary {background:green;}
 .btn-primary:hover, .btn-primary:active {background:darkgreen}
@@ -60,12 +62,7 @@ h1,h2,h3,h4 {margin-bottom:20px;}
 .btn-run {background:#333;color:white;box-shadow: 5px 3px 6px rgba(0,0,0,0.75);}
 .btn-run:hover, .btn-run:active {background:#fff;color:#222}
 
-.index-run {width:100%;margin-top:30px;text-align:center;z-index:10000;position:relative}
-.index-run-rot {
-	  transform: rotate(45deg);
-	  margin-top:-35px;
-	  margin-left:-20px;
-	  text-align:right;z-index:10000;position:absolute}
+.index-run {width:100%;margin-top:0px;text-align:center;}
 
 
 .navbar input.form-control {
@@ -217,10 +214,11 @@ border-radius: 4px;
 }
 
 .footer {
-  position:absolute;
-  bottom: 0px;
+  /*position:absolute;
+  bottom: 0px;*/
   width: 100%;
-  padding:40px 0px;
+  margin-top:80px;
+  padding:40px 0px 40px 0px;
   line-height:1.7em;
   background-color: #f5f5f5;
 
@@ -255,7 +253,7 @@ border-radius: 4px;
     margin-bottom: 1em;
 	border: 1px solid #eee;
 	border-radius: 4px;
-	box-shadow: 1px 1px rgba(0,0,0,0.15);       
+	box-shadow: 1px 1px rgba(0,0,0,0.15);
 }
 
 .browser .search input {
@@ -276,7 +274,7 @@ border-radius: 4px;
     overflow-y: scroll;
 }
 
-.browser .project-item {
+.browser .project-item bv{
     padding: 0.1em 0 0.1em 0.5em;
     margin-right: 0.5em;
     line-height: 1.5em;
@@ -307,11 +305,11 @@ border-radius: 4px;
     margin-top: 4em;
 	border: 1px solid #eee;
 	border-radius: 4px;
-	box-shadow: 1px 1px rgba(0,0,0,0.15);    
+	box-shadow: 1px 1px rgba(0,0,0,0.15);
 }
 
 /* custom additions */
-.run {position:absolute;top:0px;left:0px;width:100%;height:100%;margin-top:55px }
+.run {height:100%;margin-top:0px }
 .run iframe {height:100%;width:100%;border:0;padding-top:2px}
 .gravatar {padding-right:10px}
 .spacer {height:20px}
@@ -321,11 +319,13 @@ border-radius: 4px;
 
 
 img.fluid {
-    width:100%;margin:5px 0px;
+    width:100%;margin:5px 0px 10px 0px;
     /* box-shadow: 10px 6px 12px rgba(0,0,0,0.35); */
 }
 
-.alternate.empty {    
+
+
+.alternate.empty {
 	border: 2px dashed #dddddd;
     border-radius: 5px;
 }
@@ -344,7 +344,7 @@ img.fluid {
 	display: flex;
     justify-content: center;
     align-items: center;
-	
+
 }
 
 @media(max-width:768px) {
@@ -352,4 +352,12 @@ img.fluid {
 	.navbar .search {margin-left:15px}
 	.navbar .search-results {margin-left:0}
 	.navbar-collapse{ max-height:520px !important}
+	h1 {font-size:1.8em }
+	h2 {font-size:1.6em }
+	h3 {font-size:1.4em }
+	h4 {font-size:1.2em }
+	.slider {
+		width: 90%;
+		margin: 15px auto;
+	}
 }
