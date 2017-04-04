@@ -17,13 +17,14 @@
 			<img src="http://www.stitchcode.com/wp_sec_su/wp-content/uploads/2014/05/dragoncurve_800.jpg"
 				alt="Dragon Curve">
 			<h2>Turtlestitch is in the classroom @ ERHS in NYC </h2>
-				<p>STEAM Coding/TurtleStitch is a project-based, hands-on course that explores coding for digital embroidery using SNAP and TurtleStitch. This course challenges students to use core mathematical principles and programming to design for digital embroidery.</p>
-				<a href="#">read more</a>
+				<p>STEAM Coding/TurtleStitch is a project-based, hands-on course that explores coding for digital embroidery using SNAP and TurtleStitch. This course challenges students to use core mathematical principles and programming to design for digital embroidery.<br />
+				<a href="#">Read more</a>
+				</p>
 		</div>
 
 		<div class="slide text-center">
-			<img src="https://pbs.twimg.com/media/C68_6PAW0AAlDRX.jpg" />
-			<h2>Stitching climate change:<br /> A 1000yr Temperature time series on a T-shirt </h2>
+			<img src="/static/img/C68_6PAW0AAlDRX.jpg" />
+			<h2>Stitching climate change</h2>
 			<p>A 1000yr Temperature time series on a T-shirt<br />
 			 <a href="https://t.co/403bV9m3uT">http://www.turtlestitch.org/view/1489572728257</a></p>
 		</div>
@@ -41,7 +42,7 @@
 			speed: 300,
 			slidesToShow: 1,
 			slidesToScroll: 1,
-			adaptiveHeight: true,
+			adaptiveHeight: false,
 		  centerMode: true,
 		  centerPadding: '10px',
 		  fade: true,
@@ -112,5 +113,7 @@
 
 <%
     render("views/carousel", { collection = 'newest', title = 'Newest Projects' })
-    render("views/carousel", { collection = 'newest', title = 'Featured Projects' })
+	render("views/carousel", { collection = 'popular', title = 'Popular Projects' })
+	render("views/carousel", { collection = 'favorite', title = 'Featured Projects' })
+
 %>

@@ -1,8 +1,8 @@
 
 <div class="row">
 	<div class="col-sm-2">
-		<p style="text-align:right;padding-top:32px;">
-			<script>document.write("<img class='gravatar' src='" + get_gravatar('<%- user.email %>', 96) + "' />");</script></p>
+		<p style="text-align:right;padding-top:10px;">
+			<script>document.write("<img class='gravatar' src='" + get_gravatar('<%- session.email %>', 64) + "' />");</script></p>
 	</div>
 	<div class="col-sm-6">
 		<h1><%- user.username %></h1>
@@ -39,10 +39,10 @@
 			</div>
 			<% if visitor and visitor.isadmin then %>
 				<div class="email">
-					<p><a mailto="<%- user.email -%>"><%- user.email -%></a></p>
+					<a mailto="<%- user.email -%>"><%- user.email -%></a>
 				</div>
 				<div class="admin">
-					<div>
+					<div align="center">
 						<a class="btn btn-danger" align="center" onclick="becomeUser()">Become this user</a>
 					</div>
 				</div>

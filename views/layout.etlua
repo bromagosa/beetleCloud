@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title><%= page_title or "TurtleStitch - Coded embroidery" %></title>
 
-	<link rel="shortcut icon" href=""/static/img/favicon.ico">
+	<link rel="shortcut icon" href="/static/img/favicon.ico" />
 	<link rel="icon" href="/static/img/favicon.png" type="image/png">
 	<meta name="description" content="Turtlestitch is based on a browser-based
 	educational programming language (Snap!) to generate patterns for embroidery
@@ -119,7 +119,7 @@
 		<div class="col-sm-2">
 			<h5>FIND US ..</h5>
 			<a href="/contact">Contact</a><br />
-			<a href="/contact"><i class="fa fa-twitter fa-2x fa-fw"></i></a><br />
+			<a href="https://twitter.com/turtlestitch"><i class="fa fa-twitter fa-2x fa-fw"></i></a><br />
 			<br />
 		</div>
 	</div>

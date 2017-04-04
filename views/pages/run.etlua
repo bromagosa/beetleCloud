@@ -1,4 +1,5 @@
 
+</div>
 
 <div class="run">
 	<iframe id="iframe" src="/static/run" border="0"></iframe>
@@ -14,8 +15,6 @@
 
 
 <script>
-
-
 $(document).ready(function(){
 	$(".footer").hide();
 	$("iframe").on("load", function() {
@@ -24,5 +23,3 @@ $(document).ready(function(){
 	$("html").css("overflow","hidden");
 });
 </script>
-
-
