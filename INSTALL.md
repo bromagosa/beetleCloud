@@ -93,7 +93,7 @@ Of course, the BeetleCloud makes no sense without Beetle Blocks. You should clon
 
 ```
 $ git clone https://github.com/ericrosenbaum/BeetleBlocks.git /tmp/BeetleBlocks
-$ cp -r /tmp/BeetleBlocks/run [path-to-beetleCloud]/static
+$ cp -r /tmp/BeetleBlocks [path-to-beetleCloud]/static/run
 ```
 
 ## Running the BeetleCloud
