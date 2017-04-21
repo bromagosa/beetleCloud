@@ -73,18 +73,17 @@
 <% if visitor and visitor.isadmin then %>
     <script>
         function becomeUser () {
-            confirm('You are about to become user "<%= user.username %>"<br/><br/>' +
-                    'Do you want to continue?',
-                    function (data) {
-                        if (data) {
-                            ajax.onreadystatechange = function () {
-                                alert('You are now <%= user.username %>.', function () { window.location = '/' });
-                            };
-                            ajax.open('GET', '/api/users/<%= user.username %>/become', true);
-                            ajax.send();
-                        }
-                    },
-                    { return: true });
+            t = confirm('You are about to become user "<%= user.username %>". ' +
+                    'Do you want to continue?');
+            if (t)  {
+				ajax.onreadystatechange = function () {
+					alert('You are now <%= user.username %>.')
+					window.location.reload(true);
+					//window.location = "/users/<%= user.username %>/";
+				};
+				ajax.open('GET', '/api/users/<%= user.username %>/become', true);
+				ajax.send();
+			}
         };
     </script>
 <% end %>

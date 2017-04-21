@@ -1,9 +1,9 @@
 <div class="grid">
     <div class="title">
         <h1>
-            <% 
-               local titleDict = { 
-                    newest = 'Newest Projects', 
+            <%
+               local titleDict = {
+                    newest = 'Newest Projects',
                     popular = 'Popular Projects',
                     favorite = (username ~= 'Examples') and ('Projects liked by ' .. username) or ('Beetle Blocks team favorites'),
                     shared = 'Projects shared by ' .. username,
@@ -14,18 +14,16 @@
         </h1>
     </div>
 
-	<div class="row">
-    <div id="projects-grid" class="projects">  </div>
-    </div>
-    
+    <div id="projects-grid" class="row auto-clear projects">  </div>
+
     <div id="loading"><div class="vertical-centerer"><i class="fa-li fa fa-spinner fa-spin"></i></div></div>
-    
+
     <div class="arrow" align="center">
 		<div class="spacer">&nbsp;</div>
         <a id="loadmore" class="btn btn-primary center" onclick="if (projects.length == 16) { offset = offset + 16; getMore(); }">
 			<i class="fa fa-arrow-circle-down"></i> Load more...</a>
     </div>
-    
+
     <div class="spacer">&nbsp;</div>
     <div class="spacer">&nbsp;</div>
 
@@ -60,11 +58,11 @@
                         function (project) {
                             var imageLoader = new XMLHttpRequest(),
                                 div = document.createElement('div'),
-                                projectHref= '/users/' + 
-                                    encodeURIComponent(project.username) + '/projects/' + 
+                                projectHref= '/users/' +
+                                    encodeURIComponent(project.username) + '/projects/' +
                                     encodeURIComponent(project.projectname);
 
-                            div.className = 'col-sm-3';
+                            div.className = 'col-sm-4 col-md-3 col-lg-2';
                             gridDiv.appendChild(div);
                             div.innerHTML = '<a href="' + projectHref +
                                 '"><img class="thumbnail fluid" src="/static/img/no-thumb.png"></a> <a class="name ellipsis" href="' +
@@ -91,4 +89,3 @@
         getMore();
     </script>
 </div>
-

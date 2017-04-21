@@ -4,7 +4,7 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title><%= page_title or "TurtleStitch - Coded embroidery" %></title>
+	<title><%= page_title or "TurtleStitch - Coded Embroidery" %></title>
 
 	<link rel="shortcut icon" href="/static/img/favicon.ico" />
 	<link rel="icon" href="/static/img/favicon.png" type="image/png">
@@ -30,66 +30,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container">
-	<div class="navbar-header">
-	  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-		<span class="sr-only">Toggle navigation</span>
-		<span class="icon-bar"></span>
-		<span class="icon-bar"></span>
-		<span class="icon-bar"></span>
-	  </button>
-
-	<span class="navbar-brand">
-		<a href="/"><img alt="TurtleStitch" src="/static/img/turtle-logo.png" class="logo"></a>
-	</span>
-
-	</div>
-	<div id="navbar" class="navbar-collapse collapse">
-	  <ul class="nav navbar-nav">
-		<li><a href="/about">About</a></li>
-		<li><a href="/projects/g/newest">Projects</a></li>
-		<li><a href="/faq">FAQ</a></li>
-		<li><a href="/contact">Contact</a></li>
-		<li><a href="http://www.stitchcode.com/category/turtlestitch/">Blog</a></li>
-
-		<% render("views/search") %>
-
-
-	  </ul>
-	  <ul class="nav navbar-nav navbar-right">
-		<li><a href="/run">Run</a></li>
-        <%
-            if (session.username == '') then
-        %>
-
-			<li><a href="/signup">Sign Up</a></li>
-			<li><a href="/login">Log In</a></li>
-        <%
-            else
-        %>
-
-			<li class="dropdown">
-				  <a href="#" class="dropdown-toggle"
-					data-toggle="dropdown" role="button"
-					aria-haspopup="true" aria-expanded="false">
-					<script>document.write("<img class='gravatar' src='" + get_gravatar('<%- session.email %>', 24) + "' />");</script>
-					  as <%- session.username %>
-						<span class="caret"></span></a>
-				  <ul class="dropdown-menu">
-                    <li><a href="/myprojects">My Projects</a></li>
-                    <li><a href="/users/<%= session.username %>">My Profile</a></li>
-                    <li><a href="/logout">Log Out</a></li>
-				  </ul>
-			</li>
-        <% end %>
-
-
-	  </ul>
-	</div>
-
-  </div>
-</nav>
+<% render("views/navbar") %>
 
 <div class="content">
 	<div class="container">
@@ -98,33 +39,9 @@
 </div>
 
 
-<footer class="footer">
-	<div class="container">
-	<div class="row">
-		<div class="col-sm-1"></div>
-		<div class="col-sm-4">
-			<h5>TURTLESTITCH</h5>
-			<a href="/about">About</a><br />
-			<a href="/faq">FAQ</a><br />
-			<a href="http://www.stitchcode.com/category/turtlestitch/">Blog</a><br />
-			<a href="/tos">Terms of Service</a><br />
-			<br />
-		</div>
-		<div class="col-sm-4">
-			<h5>RESOURCES</h5>
-			<a href="/projects/g/newest">Projects</a><br />
-			<a href="/examples">Examples</a><br />
-			<br />
-		</div>
-		<div class="col-sm-2">
-			<h5>FIND US ..</h5>
-			<a href="/contact">Contact</a><br />
-			<a href="https://twitter.com/turtlestitch"><i class="fa fa-twitter fa-2x fa-fw"></i></a><br />
-			<br />
-		</div>
-	</div>
-	</div>
- </footer>
+
+<% render("views/footer") %>
+
 
 </body>
 </html>

@@ -62,7 +62,7 @@ h1,h2,h3,h4 {margin-bottom:20px;line-height:1.4em;}
 .btn-run {background:#333;color:white;box-shadow: 5px 3px 6px rgba(0,0,0,0.75);}
 .btn-run:hover, .btn-run:active {background:#fff;color:#222}
 
-.index-run {width:100%;margin-top:0px;text-align:center;}
+.index-run {width:100%;margin-top:50px;text-align:center;}
 
 
 .navbar input.form-control {
@@ -79,7 +79,7 @@ input.form-control:focus, textarea.form-control:focus, .news-input:focus {
 }
 
 .navbar .search {margin-left:40px;margin-top:3px}
-.navbar .search-results {margin-left:15px;width:200px;}
+.navbar .search-results {margin-left:15px;min-width:200px;}
 .navbar .search-results a {color:green}
 .navbar .search-results a:hover {color:darkgreen;background:none}
 
@@ -372,4 +372,33 @@ img.fluid {
 		width: 90%;
 		margin: 15px auto;
 	}
+}
+
+@media (min-width:1200px){
+    .auto-clear .col-lg-1:nth-child(12n+1){clear:left;}
+    .auto-clear .col-lg-2:nth-child(6n+1){clear:left;}
+    .auto-clear .col-lg-3:nth-child(4n+1){clear:left;}
+    .auto-clear .col-lg-4:nth-child(3n+1){clear:left;}
+    .auto-clear .col-lg-6:nth-child(odd){clear:left;}
+}
+@media (min-width:992px) and (max-width:1199px){
+    .auto-clear .col-md-1:nth-child(12n+1){clear:left;}
+    .auto-clear .col-md-2:nth-child(6n+1){clear:left;}
+    .auto-clear .col-md-3:nth-child(4n+1){clear:left;}
+    .auto-clear .col-md-4:nth-child(3n+1){clear:left;}
+    .auto-clear .col-md-6:nth-child(odd){clear:left;}
+}
+@media (min-width:768px) and (max-width:991px){
+    .auto-clear .col-sm-1:nth-child(12n+1){clear:left;}
+    .auto-clear .col-sm-2:nth-child(6n+1){clear:left;}
+    .auto-clear .col-sm-3:nth-child(4n+1){clear:left;}
+    .auto-clear .col-sm-4:nth-child(3n+1){clear:left;}
+    .auto-clear .col-sm-6:nth-child(odd){clear:left;}
+}
+@media (max-width:767px){
+    .auto-clear .col-xs-1:nth-child(12n+1){clear:left;}
+    .auto-clear .col-xs-2:nth-child(6n+1){clear:left;}
+    .auto-clear .col-xs-3:nth-child(4n+1){clear:left;}
+    .auto-clear .col-xs-4:nth-child(3n+1){clear:left;}
+    .auto-clear .col-xs-6:nth-child(odd){clear:left;}
 }

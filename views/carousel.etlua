@@ -56,8 +56,8 @@
                 div.children[1].removeAttribute('href');
                 div.children[2].textContent = '';
             }
-            
-            
+
+
         };
     </script>
 
@@ -76,19 +76,21 @@
         <% end %>
 
     </div>
-    
-    
+
+
     <script>
 		$(document).ready(function(){
-		
+
 			get<%= id %>();
-			
+
 			$('.projects_<%= id %>').slick({
 				dots: false,
 				infinite: true,
 				speed: 300,
 				slidesToShow: 5,
-				slidesToScroll: 5,
+				slidesToScroll: 0,
+				prevArrow: '<div class="slick-prev" onclick="if (offset_<%= id %> > 0) { offset_<%= id %> = offset_<%= id %> - 5; get<%= id %>(); }"><i class="fa fa-angle-left" aria-hidden="true"></i></div>',
+				nextArrow: '<div class="slick-next" onclick="if (projects_<%= id %>.length == 5) { offset_<%= id %> = offset_<%= id %> + 5; get<%= id %>(); }"><i class="fa fa-arrow-circle-right"></i></div>',
 				responsive: [
 					{
 					  breakpoint: 1024,
@@ -115,9 +117,9 @@
 					}
 				]
 			});
-	
+
 		});
-               
+
     </script>
 
 </div>

@@ -1,5 +1,26 @@
 # BeetleCloud Install Guide
 
+
+## Temporary TurtleCloud Upfates
+
+just in brief notes, more later...
+
+### lua modules
+
+ ```
+ # luarocks install luaposix
+ ```
+### posgres
+
+changed to turtle
+
+ ```
+cloud=> alter domain dom_username drop CONSTRAINT dom_username_check;
+cloud=> Alter domain dom_username add CONSTRAINT dom_username_check CHECK (((length(VALUE) >= 3) AND (length(VALUE) < 200)));
+ ```
+
+
+
 ## Prereqs
 
 ### Lua 5.1

@@ -2,7 +2,7 @@
 	<div class="col-sm-2"></div>
 	<div class="col-sm-6 dlink">
 
-		<h1>Turtlestitch - Coded embroidery</h1>
+		<h1>Turtlestitch - Coded Embroidery</h1>
 
 		<p>Turtlestitch is based on a browser-based educational programming language (Snap!) to
 		generate patterns for embroidery machines. It is easy to use, requiring no
@@ -45,8 +45,13 @@
 		</p>
 		<p><a href="http://www.netidee.at"><img src="/static/img/netidee.jpg" /></a>
 		</p>
+		
+		<p>&nbsp;</p>
+		
+		<h2>Source Code</h2>
 		<p>
-		Find the source code @ <a href="https://github.com/backface/turtlestitch">github</a><br />
+		Turlestitch is Free Software. Find its source code on <a href="https://github.com/backface/turtlestitch">github</a><br />
+		Cloud platform: <a href="https://github.com/backface/turtleCloud">turtleCloud</a>  - based on <a href="https://github.com/bromagosa/beetleCloud">beetleCloud</a>
 		</p>
 
 
