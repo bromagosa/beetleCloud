@@ -2,7 +2,7 @@
 </div>
 
 <div class="run">
-	<iframe id="iframe" src="/static/run" border="0"></iframe>
+	<iframe id="iframe" src="" border="0"></iframe>
 </div>
 
 
@@ -17,6 +17,7 @@
 <script>
 $(document).ready(function(){
 	$(".footer").hide();
+	$("#iframe").attr("src", "/static/run" + window.location.hash);
 	$("iframe").on("load", function() {
 		$(".loading").hide();
 	});

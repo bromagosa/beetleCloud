@@ -27,12 +27,13 @@ app:get('/examples', function(self)
     return { render = 'examples' }
 end)
 
-app:get('/turtlestitch', function(self)
+app:get('/run', function(self)
+	
     return { render = 'pages/run' }
 end)
 
-app:get('/run', function(self)
-    return { render = 'pages/run' }
-end)
+--app:get('/run', function(self)
+--    return { render = 'pages/run' }
+--end)
 
 
