@@ -27,6 +27,7 @@ local Likes = Model:extend('likes', {
 app:get('/signup', function(self)
     self.fail = self.params.fail
     self.reason = self.params.reason
+    self.page_title = "Sign Up"
     return { render = 'signup' }
 end)
 
@@ -35,6 +36,7 @@ app:get('/user_created', function(self)
 end)
 
 app:get('/tos', function(self)
+	self.page_title = "Terms of Services"
     return { render = 'pages/tos' }
 end)
 
@@ -45,6 +47,7 @@ end)
 
 app:get('/login', function(self)
     self.fail = self.params.fail
+    self.page_title = "Login"
     return { render = 'login' }
 end)
 
@@ -61,12 +64,14 @@ app:get('/users/:username', function(self)
     self.user.joinedString = dateString(self.user.joined)
     self.visitor = Users:find(self.session.username)
     self.gravatar = md5.sumhexa(self.user.email)
+    self.page_title = "User " .. self.params.username 
     return { render = 'user' }
 end)
 
 app:get('/users/:username/projects/g/:collection', function(self)
     self.collection = self.params.collection
     self.username = self.params.username
+    self.page_title = "from User:" .. self.username
     
     return { render = 'projectgrid' }
 end)
@@ -74,6 +79,7 @@ end)
 app:get('/projects/g/:collection', function(self)
     self.collection = self.params.collection
     self.username = ''
+    self.page_title =  self.params.collection .. " Projects"
     return { render = 'projectgrid' }
 end)
 
@@ -99,7 +105,9 @@ app:get('/users/:username/projects/:projectname', function(self)
         self.project:update({
             views = (self.project.views or 0) + 1
         })
-
+		
+		self.page_title =  self.params.projectname
+		
         return { render = 'project' }
     else
         return { render = 'notfound' }

@@ -12,23 +12,27 @@ local app = require 'app'
 --end)
 
 app:get('/faq', function(self)
+	self.page_title = "FAQ"
     return { render = 'pages/faq' }
 end)
 
 app:get('/about', function(self)
+    self.page_title = "About"
     return { render = 'pages/about' }
 end)
 
 app:get('/contact', function(self)
+	self.page_title = "Contact"
     return { render = 'pages/contact' }
 end)
 
 app:get('/examples', function(self)
+	self.page_title = "Examples"
     return { render = 'examples' }
 end)
 
 app:get('/run', function(self)
-	
+	self.page_title = "Run"
     return { render = 'pages/run' }
 end)
 

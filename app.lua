@@ -22,7 +22,8 @@ app:get('/', function(self)
 end)
 
 app.handle_404 = function(self)
-  return { status = 404, render = '404' }
+	self.page_title = "Not found!"
+	return { status = 404, render = '404' }
 end
 
 -- Other application aspects are spread over several modules

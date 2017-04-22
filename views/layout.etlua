@@ -4,7 +4,7 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title><%= page_title or "TurtleStitch - Coded Embroidery" %></title>
+	<title><%= page_title or "" %> <% if (page_title) then %> - <% end %>  TurtleStitch - Coded Embroidery   </title>
 
 	<link rel="shortcut icon" href="/static/img/favicon.ico" />
 	<link rel="icon" href="/static/img/favicon.png" type="image/png">
@@ -30,6 +30,8 @@
 </head>
 <body>
 
+
+ 
 <% render("views/navbar") %>
 
 <div class="content">
