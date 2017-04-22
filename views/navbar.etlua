@@ -1,0 +1,61 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+	<div class="navbar-header">
+	  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+		<span class="sr-only">Toggle navigation</span>
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+	  </button>
+
+	<span class="navbar-brand">
+		<a href="/"><img alt="TurtleStitch" src="/static/img/turtle-logo.png" class="logo"></a>
+	</span>
+
+	</div>
+	<div id="navbar" class="navbar-collapse collapse">
+	  <ul class="nav navbar-nav">
+		<li><a href="/about">About</a></li>
+		<li><a href="/projects/g/newest">Projects</a></li>
+		<li><a href="/faq">FAQ</a></li>
+		<li><a href="/contact">Contact</a></li>
+		<li><a href="http://www.stitchcode.com/category/turtlestitch/">Blog</a></li>
+
+		<% render("views/search") %>
+
+
+	  </ul>
+	  <ul class="nav navbar-nav navbar-right">
+		<li><a href="/run">Run</a></li>
+        <%
+            if (session.username == '') then
+        %>
+
+			<li><a href="/signup">Sign Up</a></li>
+			<li><a href="/login">Log In</a></li>
+        <%
+            else
+        %>
+
+			<li class="dropdown">
+				  <a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button"
+					aria-haspopup="true" aria-expanded="false">
+					<img width='24' height='24' class="gravatar" 
+						src="http://www.gravatar.com/avatar/<%- session.gravatar %>?s=24&d=http%3A%2F%2Fbeta.turtlestitch.org%2Fstatic%2Fimg%2Fturtle.png" />
+					  as <%- session.username %>
+						<span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+                    <li><a href="/myprojects">My Projects</a></li>
+                    <li><a href="/users/<%= session.username %>">My Profile</a></li>
+                    <li><a href="/logout">Log Out</a></li>
+				  </ul>
+			</li>
+        <% end %>
+
+
+	  </ul>
+	</div>
+
+  </div>
+</nav>

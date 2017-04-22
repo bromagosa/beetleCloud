@@ -1,0 +1,27 @@
+<footer class="footer">
+	<div class="container">
+	<div class="row">
+		<div class="col-sm-1"></div>
+		<div class="col-sm-4">
+			<h5>TURTLESTITCH</h5>
+			<a href="/about">About</a><br />
+			<a href="/faq">FAQ</a><br />
+			<a href="http://www.stitchcode.com/category/turtlestitch/">Blog</a><br />
+			<a href="/tos">Terms of Service</a><br />
+			<br />
+		</div>
+		<div class="col-sm-4">
+			<h5>RESOURCES</h5>
+			<a href="/projects/g/newest">Projects</a><br />
+			<a href="/examples">Examples</a><br />
+			<br />
+		</div>
+		<div class="col-sm-2">
+			<h5>FIND US ..</h5>
+			<a href="/contact">Contact</a><br />
+			<a href="https://twitter.com/turtlestitch"><i class="fa fa-twitter fa-2x fa-fw"></i></a><br />
+			<br />
+		</div>
+	</div>
+	</div>
+ </footer>
