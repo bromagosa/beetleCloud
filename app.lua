@@ -21,6 +21,10 @@ app:get('/', function(self)
     return { render = 'index' }
 end)
 
+app.handle_404 = function(self)
+  return { status = 404, render = '404' }
+end
+
 -- Other application aspects are spread over several modules
 require 'api'
 require 'social'

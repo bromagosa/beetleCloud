@@ -1,0 +1,8 @@
+<div class="row not-found">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-6">
+        <h1>Not found!</h1>
+        <p>I've flown all over the site but couldn't find what you requested.</p>
+        <br>
+    </div>
+</div>
