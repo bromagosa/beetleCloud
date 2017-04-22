@@ -5,6 +5,7 @@
 local app = require 'app'
 local app_helpers = require 'lapis.application'
 local validate = require 'lapis.validate'
+local md5 = require 'md5'
 local bcrypt = require 'bcrypt'
 local db = require 'lapis.db' 
 local Model = require('lapis.db.model').Model
@@ -204,6 +205,7 @@ app:match('login', '/api/users/login', respond_to({
         elseif (unistd.crypt(self.params.password, salt) == user.password) then
             self.session.username = user.username
             self.session.email = user.email
+            self.session.gravatar = md5.sumhexa(user.email)
             if comesFromWebClient then
                 return { redirect_to = '/' }
             else

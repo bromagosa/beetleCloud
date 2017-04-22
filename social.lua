@@ -5,6 +5,7 @@
 
 local app = require 'app'
 local db = require 'lapis.db' 
+local md5 = require 'md5'
 local Model = require('lapis.db.model').Model
 
 -- Database abstractions
@@ -59,12 +60,14 @@ app:get('/users/:username', function(self)
     self.user = Users:find(self.params.username)
     self.user.joinedString = dateString(self.user.joined)
     self.visitor = Users:find(self.session.username)
+    self.gravatar = md5.sumhexa(self.user.email)
     return { render = 'user' }
 end)
 
 app:get('/users/:username/projects/g/:collection', function(self)
     self.collection = self.params.collection
     self.username = self.params.username
+    
     return { render = 'projectgrid' }
 end)
 
