@@ -1,16 +1,17 @@
-# BeetleCloud Install Guide
+# BeetleCloud/TurtleCloud Install Guide
 
 
-## Temporary TurtleCloud Upfates
+## TurtleCloud Updates/Changes
 
 just in brief notes, more later...
 
-### lua modules
+### Additional lua modules
 
  ```
  # luarocks install luaposix
+ # luarocks install md5
  ```
-### posgres
+### Changes fo Postgresql scheme
 
 changed to turtle
 
