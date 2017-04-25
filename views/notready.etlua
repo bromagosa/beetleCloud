@@ -1,11 +1,6 @@
-<div class="not-found pure-g">
-    <div class="pure-u-1-2">
-        <img src="/static/super_beetle.png">
-    </div>
-    <div class="pure-u-1-2">
-        <h1>I'm sorry.</h1>
-        <p>This section is not ready yet.</p>
-        <br>
-        <p>I'm working hard on it though, so please come back soon and check again!</p>
-    </div>
+<div class="not-found">
+    <h1>I'm sorry.</h1>
+    <p>This section is not ready yet.</p>
+    <br>
+    <p>I'm working hard on it though, so please come back soon and check again!</p>
 </div>

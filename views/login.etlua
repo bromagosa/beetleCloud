@@ -1,7 +1,7 @@
 <% if (params.fail) then %>
 <h1 class="fail"><i class="glyph fa fa-thumbs-o-down"></i> Failed login</h1>
 <% else %>
-<h1>Log into Beetle Blocks</h1>
+<h1>Log into This Snap<i>!</i> Mod</h1>
 <% end %>
 <form class="pure-form pure-form-aligned" method="GET" action="/api/users/login">
     <fieldset>

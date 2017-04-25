@@ -3,7 +3,7 @@
         <li class="pure-menu-item pure-u-1-24"><a class="go-home" href="/"></a></li>
         <li class="pure-menu-item pure-u-2-24"><a class="pure-menu-link" href="/stories">Stories</a></li>
         <li class="pure-menu-item pure-u-2-24"><a class="pure-menu-link" href="/examples">Examples</a></li>
-        <li class="pure-menu-item pure-u-2-24"><a class="pure-menu-link" taget="_blank" href="http://forum.beetleblocks.com">Forum</a></li>
+        <li class="pure-menu-item pure-u-2-24"><a class="pure-menu-link" taget="_blank" href="">Forum</a></li>
 
         <i class="pure-u-2-24"></i>
 
@@ -11,11 +11,11 @@
         
         <i class="pure-u-2-24"></i>
 
-        <li class="pure-menu-item pure-u-3-24"><a class="pure-menu-link" href="/run">Run Beetle Blocks</a></li>
+        <li class="pure-menu-item pure-u-3-24"><a class="pure-menu-link" href="/run">Run this Snap<i>!</i> Mod</a></li>
         <% 
             if (session.username == '') then
         %>
-                <li class="pure-menu-item pure-u-3-24"><a class="pure-menu-link" href="/signup">Join Beetle Blocks</a></li>
+                <li class="pure-menu-item pure-u-3-24"><a class="pure-menu-link" href="/signup">Sign Up</a></li>
                 <li class="pure-menu-item pure-u-3-24"><a class="pure-menu-link" href="/login">Log In</a></li>
         <%
             else

@@ -1,12 +1,7 @@
-<div class="not-found pure-g">
-    <div class="pure-u-1-2">
-        <img src="/static/super_beetle.png">
-    </div>
-    <div class="pure-u-1-2">
-        <h1>I'm sorry.</h1>
-        <p>I've flown all over the site but couldn't find this project.</p>
-        <br>
-        <p>If it's your own, make sure you're logged in.</p>
-        <p>Otherwise, make sure it's a public project.</p>
-    </div>
+<div class="not-found">
+    <h1>I'm sorry.</h1>
+    <p>I couldn't find this project.</p>
+    <br>
+    <p>If it's your own, make sure you're logged in.</p>
+    <p>Otherwise, make sure it's a public project.</p>
 </div>

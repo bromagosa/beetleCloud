@@ -1,7 +1,7 @@
 <% if (params.fail) then %>
     <h1 class="fail"><i class="glyph fa fa-thumbs-o-down"></i> Account creation failed: <%= params.reason %></h1>
 <% else %>
-    <h1>Create a Beetle Blocks account</h1>
+    <h1>Create an account</h1>
 <% end %>
 <form class="pure-form pure-form-aligned" method="POST" action="/api/users/new">
     <fieldset>

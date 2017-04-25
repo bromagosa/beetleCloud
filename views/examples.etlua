@@ -6,13 +6,3 @@
         render("views/carousel", { collection = 'notes', title = title, username = 'Examples', notes = title })
     end
 %>
-
-<hr>
-
-<div class="primer">
-    <span class="title-text">Comprehensive Collection of Examples</span>
-    <a href="/static/bb-primer.pdf">
-        <img src="/static/primer.jpg">
-        <span>Download a collection of examples</span>
-    </a>
-</div>
