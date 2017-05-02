@@ -50,8 +50,10 @@
 		
 		<h2>Source Code</h2>
 		<p>
-		Turlestitch is Free Software. Find its source code on <a href="https://github.com/backface/turtlestitch">github</a><br />
-		Cloud platform: <a href="https://github.com/backface/turtleCloud">turtleCloud</a>  - based on <a href="https://github.com/bromagosa/beetleCloud">beetleCloud</a>
+		Turlestitch is Free Software. Find its source code on github: <a href="https://github.com/backface/turtlestitch">turtlestitch</a></p>
+		<p>
+		The Cloud platform is also Free Software. It is based based on <a href="https://github.com/bromagosa/beetleCloud">beetleCloud</a> by Bernat Bromogosa and the source is on github:
+		<a href="https://github.com/backface/turtleCloud">turtleCloud</a>
 		</p>
 
 
