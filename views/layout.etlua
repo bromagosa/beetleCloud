@@ -25,7 +25,6 @@
 	<script src="/static/lib/jquery/dist/jquery.min.js"></script>
 	<script src="/static/lib/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script src="/static/lib/slick-carousel/slick/slick.js"></script>
-	<script src="/static/js/beetleblocks.js"></script>
 	<script src="/static/js/turtlestitch.js"></script>
 </head>
 <body>
