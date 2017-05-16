@@ -44,5 +44,8 @@
 <% render("views/footer") %>
 
 
+<% render("views/tracking") %>
+
+
 </body>
 </html>
