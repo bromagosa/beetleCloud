@@ -15,6 +15,12 @@ config('development', {
     port = 8080,
     session_name = 'beetlesession',
     secret = 'a super secret phrase you should never ever make public'
+
+    -- for sending email
+    mail_server = "",
+    mail_user     = "",
+    mail_password = "",
+    mail_from = ""
 })
 
 config('production', {
@@ -29,4 +35,10 @@ config('production', {
     port = 80,
     session_name = 'beetlesession',
     secret = 'a super secret phrase you should never ever make public'
+    
+    -- for sending email
+    mail_server = "",
+    mail_user     = "",
+    mail_password = "",
+    mail_from = ""
 })

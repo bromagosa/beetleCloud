@@ -95,7 +95,8 @@ CREATE TABLE users (
     joined timestamp with time zone,
     about text,
     location text,
-    isadmin boolean
+	isadmin boolean,
+	reset_code text
 );
 
 CREATE SEQUENCE users_id_seq
@@ -128,5 +129,3 @@ REVOKE ALL ON SCHEMA public FROM PUBLIC;
 REVOKE ALL ON SCHEMA public FROM postgres;
 GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
-
-
