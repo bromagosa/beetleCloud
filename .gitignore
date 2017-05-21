@@ -13,4 +13,3 @@ config.lua
 .*.swo
 static/run
 projects
-views/tracking.etlua
