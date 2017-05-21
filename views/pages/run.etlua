@@ -17,7 +17,7 @@
 <script>
 $(document).ready(function(){
 	$(".footer").hide();
-	$("#iframe").attr("src", "/static/run" + window.location.hash);
+	$("#iframe").attr("src", "/static/run" + window.location.hash + "&d =" + Date.now());
 	$("iframe").on("load", function() {
 		$(".loading").hide();
 	});
