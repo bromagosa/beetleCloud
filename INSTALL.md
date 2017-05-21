@@ -9,6 +9,7 @@ just in brief notes, more later...
 
  ```
  # luarocks install luaposix
+ # luarocks install luasec
  # luarocks install md5
  ```
 ### Changes fo Postgresql scheme
