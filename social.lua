@@ -24,6 +24,11 @@ local Likes = Model:extend('likes', {
     primary_key = { 'id' }
 })
 
+local Comments = Model:extend('comments', {
+    primary_key = { 'username', 'projectowner' }
+})
+
+
 -- Endpoints
 
 app:get('/signup', function(self)
@@ -76,7 +81,6 @@ app:get('/users/:username/projects/g/:collection', function(self)
     self.collection = self.params.collection
     self.username = self.params.username
     self.page_title = "from User:" .. self.username
-
     return { render = 'projectgrid' }
 end)
 
@@ -105,6 +109,9 @@ app:get('/users/:username/projects/:projectname', function(self)
                 self.session.username,
                 self.params.projectname,
                 self.params.username) > 0
+        self.project.comments =  Comments:select('where projectowner = ? and projectname = ? order by id desc',
+            self.project.username,
+            self.project.projectname)
 
         self.project:update({
             views = (self.project.views or 0) + 1

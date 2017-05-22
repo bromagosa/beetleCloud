@@ -60,6 +60,11 @@ local Likes = Model:extend('likes', {
     primary_key = { 'id' }
 })
 
+local Comments = Model:extend('comments', {
+    primary_key = { 'id' }
+})
+
+
 
 -- Before filter
 
@@ -599,3 +604,53 @@ app:match('stats', '/api/stats', respond_to({
         return jsonResponse(getStats())
     end
 }))
+
+-- comments
+
+app:match('new_comment', '/api/comments/new', respond_to({
+    OPTIONS = cors_options,
+    POST = function (self)
+
+        validate.assert_valid(self.params, {
+            { 'projectname', exists = true, min_length = 3 },
+            { 'projectowner', exists = true },
+            { 'author', exists = true, min_length = 3 },
+            { 'contents', exists = true }
+        })
+
+        if (self.params.author ~= self.session.username) then
+            return err.auth
+        end
+
+        local existingProject = Projects:find(self.params.projectowner, self.params.projectname)
+
+        if (existingProject) then
+            self.params.contents = self.params.contents:gsub("^%s*(.-)%s*$", "%1")
+            self.params.contents = self.params.contents:gsub("%b<>", "")
+            comment = Comments:create({
+                projectname = self.params.projectname,
+                author = self.params.author,
+                contents = self.params.contents,
+                projectowner = self.params.projectowner,
+            })
+            return jsonResponse({ comment = comment})
+        else
+            return err.nonexistentProject
+        end
+    end
+}))
+
+
+app:get('/api/users/:username/projects/:projectname/comments', function (self)
+    return jsonResponse(
+        Comments:select('where projectowner = ? and projectname = ? order by id desc',
+        self.params.username,
+        self.params.projectname)
+    )
+end)
+
+app:get('/api/comment/:id', function (self)
+    return jsonResponse(
+        Comments:find(self.params.id)
+    )
+end)

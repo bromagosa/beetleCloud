@@ -1,0 +1,71 @@
+<div class="grid">
+    <div class="title">
+        <h1>Users</h1>
+    </div>
+
+    <div id="user-grid" class="row auto-clear users">  </div>
+
+    <div id="loading"><div class="vertical-centerer">
+        <i class="fa-li fa fa-spinner fa-spin"></i></div></div>
+
+
+    <script>
+        var ajax = new XMLHttpRequest(),
+            offset = 0,
+            gridDiv = document.getElementById('user-grid'),
+            loadingDiv = document.getElementById('loading'),
+            users;
+
+        function getMore () {
+            loadingDiv.style.display = 'block';
+            ajax.onreadystatechange = function () {
+                if (ajax.readyState == 4 && ajax.status == 200) {
+                    users =JSON.parse(ajax.responseText);
+                    updateGrid();
+                }
+            };
+            // The second part of the query needs to be enclosed between double commas, as SQL strings are enclosed by single ones
+            ajax.open('GET', '/api/users/', true);
+            ajax.send();
+        };
+
+        function updateGrid () {
+
+
+            if (users.length) {
+                users.forEach(
+                        function (user) {
+                            var imageLoader = new XMLHttpRequest(),
+                                div = document.createElement('div'),
+                                projectHref= '/users/' +
+                                    encodeURIComponent(user.username)
+
+                            div.className = 'col-sm-4 col-md-3 col-lg-2 user-grid-item';
+                            gridDiv.appendChild(div);
+
+                            div.innerHTML = '<a href="/users/'+ user.username + '"/>'
+                                + '<img class="gravatar" src="/static/img/no-gravatar.png" width="64" height="64" alt=""/><br />'
+                                + '</a>'
+                                + '<span class="author"><a href="/users/' +
+                                encodeURIComponent(user.username) +'">'
+                                + user.username + '</a></span>';
+
+                            imageLoader.div = div;
+                            imageLoader.onreadystatechange = function () {
+                                if (this.readyState == 4 && this.status == 200) {
+                                    this.div.children[0].children[0].src = this.responseText;
+                                }
+                            };
+
+                            imageLoader.open('GET', '/api/users/' + encodeURIComponent(user.username) +
+                                        '/gravatar', true);
+                            imageLoader.send();
+                        });
+            }
+
+            loadingDiv.style.display = 'none';
+        };
+
+        getMore();
+    </script>
+</div>

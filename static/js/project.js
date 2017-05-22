@@ -14,8 +14,8 @@ function toggleLike () {
         }
     };
     ajax.open('GET', '/api' + window.location.pathname + '/like' , true);
-    ajax.send(); 
-};
+    ajax.send();
+}
 
 function uploadImage (file) {
     var ajax = new XMLHttpRequest();
@@ -33,7 +33,7 @@ function uploadImage (file) {
             function (resizedImage) {
                 ajax.send(resizedImage);
             });
-};
+}
 
 function featureImage (doFeatureIt) {
     var ajax = new XMLHttpRequest();
@@ -44,8 +44,8 @@ function featureImage (doFeatureIt) {
         }
     };
     ajax.open('GET', '/api' + window.location.pathname + '/altimage?featureImage=' + doFeatureIt , true);
-    ajax.send(); 
-};
+    ajax.send();
+}
 
 function toggleFeaturedClass () {
     var thumbs = document.getElementById('thumbs');
@@ -56,14 +56,14 @@ function toggleFeaturedClass () {
         thumbs.children[0].classList.add('featured');
         thumbs.children[1].classList.remove('featured');
     }
-};
+}
 
 function sortThumbnails () {
     var thumbs = document.getElementById('thumbs');
     if (thumbs.children[1].classList.contains('featured')) {
         thumbs.appendChild(thumbs.children[0]);
     }
-};
+}
 
 function setAlternateImageSrc () {
     var ajax = new XMLHttpRequest();
@@ -72,13 +72,13 @@ function setAlternateImageSrc () {
             document.getElementsByClassName('alternate')[0].src = ajax.responseText;
             if (ajax.responseText=="/static/img/no-image.png") {
 				$('.alternate').addClass('hidden');
-				$('.buttons').addClass('hidden');				
+				$('.buttons').addClass('hidden');
 			}
-        } 
+        }
     };
     ajax.open('GET', '/api' + window.location.pathname + '/altimage', true);
-    ajax.send(); 
-};
+    ajax.send();
+}
 
 function resizeAndCrop (imageFile, callback) {
     var img = document.createElement('img'),
@@ -92,12 +92,12 @@ function resizeAndCrop (imageFile, callback) {
 
     reader.onload = function (event) { img.src = event.target.result; };
     reader.readAsDataURL(imageFile);
-    
+
     img.onload = function () {
         drawImageProp(ctx, img);
         callback(canvas.toDataURL('image/png'));
     };
-};
+}
 
 function drawImageProp (ctx, img) {
     // By Ken Fyrstenberg Nilsen
@@ -115,7 +115,7 @@ function drawImageProp (ctx, img) {
         nh = ih * r,
         cx, cy, cw, ch, ar = 1;
 
-    if (nw < w) ar = w / nw;                             
+    if (nw < w) ar = w / nw;
     if (Math.abs(ar - 1) < 1e-14 && nh < h) ar = h / nh;
 
     nw *= ar;
@@ -131,9 +131,94 @@ function drawImageProp (ctx, img) {
     if (ch > ih) ch = ih;
 
     ctx.drawImage(img, cx, cy, cw, ch,  x, y, w, h);
-};
+}
 
 setAlternateImageSrc();
 sortThumbnails();
 
 document.getElementsByClassName('notes')[0].innerHTML = (buildHyperlinks(document.getElementsByClassName('notes')[0].innerHTML));
+
+
+function getComments (username, projectname) {
+    ajax.onreadystatechange = function () {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            comments =JSON.parse(ajax.responseText);
+            updateComments();
+        }
+    };
+    path = '/api/users/'+ username + '/projects/' + projectname +'/comments';
+    ajax.open('GET', path, true);
+    ajax.send();
+}
+
+function getComment (id) {
+    ajax.onreadystatechange = function () {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            comment =JSON.parse(ajax.responseText);
+            addComment(comment,true);
+        }
+    };
+    path = '/api/comment/' + id;
+    ajax.open('GET', path, true);
+    ajax.send();
+}
+
+function addComment(comment, prepend, me) {
+    comment_div = document.getElementById('comment-pool');
+    div = document.createElement('div');
+    div.setAttribute("id", "comment-" + comment.id);
+
+    if (!prepend)
+        comment_div.appendChild(div);
+    else {
+        comment_div.insertBefore(div, comment_div.firstChild);
+    }
+    div.innerHTML = '<div class="comment-item"><span class="author">' +
+        comment.author +
+        '</span><br /><p>' +
+        comment.contents + '</p>' +
+        '<span class="date">' +
+        moment(comment.date).fromNow() +
+        '</span><br /></ div>';
+    if ( false) // if owner
+        div.innerHTML += '<br />' +
+            '<div><a class=\"btn btn-danger\" role=\"button\" onclick=\"deleteComment(id)\">Delete</a></div>';
+   div.classList.add('flash');
+}
+
+function updateComments () {
+    if (comments.length) {
+        comments.forEach(
+            function (comment) {
+                addComment(comment, false);
+            }
+        );
+    }
+}
+
+
+function post_comment (projectname, author, username) {
+    var ajax_save_comment = new XMLHttpRequest();
+    ajax_save_comment.onreadystatechange = function () {
+        if (ajax_save_comment.readyState == 4 && ajax_save_comment.status == 200) {
+            document.getElementById('new_comment').value = "";
+            comments = JSON.parse(ajax_save_comment.responseText);
+            getComment(comments.comment.id);
+        }
+    };
+    ajax_save_comment.open('POST', '/api/comments/new', true);
+    ajax_save_comment.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    ajax_save_comment.send("projectname=" +
+        encodeURIComponent(projectname) +
+        "&author=" +
+        encodeURIComponent(author) +
+        "&projectowner=" +
+        encodeURIComponent(username) +
+        "&contents=" +
+        encodeURIComponent(document.getElementById('new_comment').value)
+        );
+}
+
+function reset_comment () {
+    document.getElementById('new_comment').value = '';
+}

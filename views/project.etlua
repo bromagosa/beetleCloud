@@ -124,7 +124,6 @@
 						    onblur="update_admin_tags()"
 						    onfocus="document.getElementById('admin_tags').classList.remove('flash');"
 						    onkeypress="checkKey_admin_tags(event, this)"><%= project.admin_tags or "" %></pre>
-
 					</div>
                 </div>
             <% end %>
@@ -134,44 +133,75 @@
 
 <div class="spacer">&nbsp;</div>
 
-<div class="comments">
+<div class="row">
+	<div class="col-md-4"></div>
+	<div class="col-md-8">
 
+		<div class="comments">
+			<h4><i class="fa fa-comments" aria-hidden="true"></i>
+			<%= table.getn(project.comments) %> Comments</h4>
+
+			<% if (session.username ~= "") then %>
+
+			<hr />
+			<textarea
+			    class="in-place"
+			    id="new_comment"
+			    contenteditable="true"
+			    onblur=""
+				placeholder="Leave a comment"
+			    onfocus="document.getElementById('new_comment').classList.remove('flash');"
+			    ></textarea>
+
+			<a class="btn btn-primary" onClick="post_comment('<%= project.projectname %>','<%= session.username %>','<%= project.username %>')">Post</a>
+			<a class="btn btn-grey" onClick="reset_comment()">Cancel</a>
+
+			<% end %>
+
+			<div id="comment-pool">
+			</div>
+
+		</div>
+	</div>
 </div>
 
-
-
 <script src="/static/js/project.js"></script>
+<script>
+	var ajax = new XMLHttpRequest();
+	getComments('<%= project.username %>','<%= project.projectname %>');
+</script>
+
 
 <% if visitor and visitor.isadmin then %>
-    <script>
-        function deleteProject () {
-            confirm('You are about to remove the project "<%= project.projectname %>"<br/><br/>' +
-                    'This action is <strong>permanent</strong> and cannot be undone. Are you sure you want to continue?',
-                    function (data) {
-                        if (data) {
-                            ajax.onreadystatechange = function () {
-                                alert('Project removed', function () { window.location = '/' });
-                            };
-                            ajax.open('GET', '/api/users/<%= project.username %>/projects/<%= project.projectname %>/delete', true);
-                            ajax.send();
-                        }
-                    },
-                    { return: true });
-        };
+	<script>
+		function deleteProject () {
+			confirm('You are about to remove the project "<%= project.projectname %>"<br/><br/>' +
+					'This action is <strong>permanent</strong> and cannot be undone. Are you sure you want to continue?',
+					function (data) {
+						if (data) {
+							ajax.onreadystatechange = function () {
+								alert('Project removed', function () { window.location = '/' });
+							};
+							ajax.open('GET', '/api/users/<%= project.username %>/projects/<%= project.projectname %>/delete', true);
+							ajax.send();
+						}
+					},
+					{ return: true });
+		};
 
-        function shareProject () {
-            confirm('You are about to <%= project.ispublic and "unshare" or "share" %> the project "<%= project.projectname %>"<br/><br/>' +
-                    'Are you sure you want to continue?',
-                    function (data) {
-                        if (data) {
-                            ajax.onreadystatechange = function () {
-                                alert('Project <%= project.ispublic and "unshared" or "shared" %>', function () { window.location.reload() });
-                            };
-                            ajax.open('GET', '/api/users/<%= project.username %>/projects/<%= project.projectname %>/visibility/?ispublic=<%= not project.ispublic %>', true);
-                            ajax.send();
-                        }
-                    },
-                    { return: true });
-        };
-    </script>
+		function shareProject () {
+			confirm('You are about to <%= project.ispublic and "unshare" or "share" %> the project "<%= project.projectname %>"<br/><br/>' +
+					'Are you sure you want to continue?',
+					function (data) {
+						if (data) {
+							ajax.onreadystatechange = function () {
+								alert('Project <%= project.ispublic and "unshared" or "shared" %>', function () { window.location.reload() });
+							};
+							ajax.open('GET', '/api/users/<%= project.username %>/projects/<%= project.projectname %>/visibility/?ispublic=<%= not project.ispublic %>', true);
+							ajax.send();
+						}
+					},
+					{ return: true });
+		};
+	</script>
 <% end %>

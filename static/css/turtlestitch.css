@@ -41,7 +41,7 @@ body {
 
 div.content {min-height:66%}
 
-pre {
+pre, textarea {
     white-space: pre-wrap;       /* Since CSS 2.1 */
     white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
     white-space: -pre-wrap;      /* Opera 4-6 */
@@ -50,6 +50,19 @@ pre {
 	min-height:3em;
 	margin-top:10px;
 	padding:1em 1em;
+}
+textarea {
+	width:100%;
+	display: block;
+	margin: 0 0 10px;
+	font-size: 13px;
+	line-height: 1.42857143;
+	color: #333;
+	word-break: break-all;
+	background-color: #f5f5f5;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
 }
 
 a {color:green;}
@@ -338,6 +351,18 @@ img.fluid {
     /* box-shadow: 10px 6px 12px rgba(0,0,0,0.35); */
 }
 
+.flash {
+    animation: flasher 1s linear;
+}
+
+@keyframes flasher {
+    0% { background: #eaebeb; }
+    50% { opacity: 0.0; }
+    100% {
+        background: auto;
+        opacity: 1;
+    }
+}
 
 
 .alternate.empty {
@@ -364,6 +389,11 @@ img.fluid {
 
 
 #user-grid .user-grid-item {padding:0.8em 0}
+
+.comment-item { margin: 15px 0px; padding: 15px 0px 5px 0px; border-top:1px solid #eee}
+.comment-item p { margin-bottom:5px;padding:5px 0px;  white-space: pre-wrap;}
+.comment-item .author { font-size:0.8em; font-weight: bold}
+.comment-item .date {color: #ddd; font-size:0.7em;}
 
 @media(max-width:768px) {
 	.navbar ul { margin-right:0}
