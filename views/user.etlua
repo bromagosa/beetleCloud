@@ -23,7 +23,7 @@
 		</div>
 
 		<div class="details">
-			<div class="joined"><p><strong>Joined:</strong> <%= user.joinedString %></p></div>
+
 			<div class="location">
 				<% if (user.username == session.username) then
 					render("views/inplace", {
@@ -35,8 +35,8 @@
 				else %>
 				  <p><%- user.location or 'Planet Earth' %></p>
 				<% end %>
-
 			</div>
+			<div class="joined"><p><strong>Joined:</strong> <%= user.joinedString %></p></div>
 			<% if visitor and visitor.isadmin then %>
 				<div class="email">
 					<a mailto="<%- user.email -%>"><%- user.email -%></a>
@@ -73,17 +73,19 @@
 <% if visitor and visitor.isadmin then %>
     <script>
         function becomeUser () {
-            t = confirm('You are about to become user "<%= user.username %>". ' +
+            message = ('You are about to become user "<%= user.username %>". <br /><br />' +
                     'Do you want to continue?');
-            if (t)  {
+            callback = function(result)  {
+				if (!result) return;
 				ajax.onreadystatechange = function () {
-					alert('You are now <%= user.username %>.')
+					bootbox.alert('You are now <%= user.username %>.')
 					window.location.reload(true);
 					//window.location = "/users/<%= user.username %>/";
 				};
 				ajax.open('GET', '/api/users/<%= user.username %>/become', true);
 				ajax.send();
 			}
+			bootbox.confirm(message, callback);
         };
     </script>
 <% end %>
