@@ -47,6 +47,9 @@ pre {
     white-space: -pre-wrap;      /* Opera 4-6 */
     white-space: -o-pre-wrap;    /* Opera 7 */
     word-wrap: break-word;       /* Internet Explorer 5.5+ */
+	min-height:3em;
+	margin-top:10px;
+	padding:1em 1em;
 }
 
 a {color:green;}
@@ -358,6 +361,9 @@ img.fluid {
     align-items: center;
 
 }
+
+
+#user-grid .user-grid-item {padding:0.8em 0}
 
 @media(max-width:768px) {
 	.navbar ul { margin-right:0}

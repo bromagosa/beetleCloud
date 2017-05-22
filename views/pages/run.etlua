@@ -17,7 +17,12 @@
 <script>
 $(document).ready(function(){
 	$(".footer").hide();
-	$("#iframe").attr("src", "/static/run" + window.location.hash + "&d =" + Date.now());
+	if (window.location.hash) {
+		u =  window.location.hash + "&d =" + Date.now();
+	} else {
+		u = "?d=" + Date.now();
+	}
+	$("#iframe").attr("src", "/static/run" + u);
 	$("iframe").on("load", function() {
 		$(".loading").hide();
 	});

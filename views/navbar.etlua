@@ -42,7 +42,7 @@
 				  <a href="#" class="dropdown-toggle"
 					data-toggle="dropdown" role="button"
 					aria-haspopup="true" aria-expanded="false">
-					<img width='24' height='24' class="gravatar" 
+					<img width='24' height='24' class="gravatar" alt="gravatar"
 						src="http://www.gravatar.com/avatar/<%- session.gravatar %>?s=24&d=http%3A%2F%2Fbeta.turtlestitch.org%2Fstatic%2Fimg%2Fturtle.png" />
 					  as <%- session.username %>
 						<span class="caret"></span></a>

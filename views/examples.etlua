@@ -3,6 +3,6 @@
     shapeCollections = {'Getting started', 'Randomness', 'Computational ideas', 'Drawing with boundaries', 'Simple geometric shapes', 'Sphere calculus with sin and cos', 'Miscellaneous'}
 
     for k, title in pairs(shapeCollections) do
-        render("views/carousel", { collection = 'notes', title = title, username = 'Examples', notes = title })
+        render("views/carousel", { collection = 'tags', title = title, username = 'Examples', notes = title })
     end
 %>

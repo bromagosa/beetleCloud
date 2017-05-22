@@ -72,7 +72,8 @@ CREATE TABLE projects (
     id integer NOT NULL,
     shared timestamp with time zone,
     views integer,
-    imageisfeatured boolean
+    imageisfeatured boolean,
+	admin_tags text
 );
 
 CREATE SEQUENCE projects_id_seq

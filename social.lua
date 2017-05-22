@@ -58,7 +58,9 @@ app:get('/logout', function(self)
 end)
 
 app:get('/users', function(self)
-    return 'all users'
+    self.page_title = "Users"
+
+    return { render = 'usergrid' }
 end)
 
 app:get('/users/:username', function(self)
@@ -129,7 +131,7 @@ app:match('forgot_password', '/forgot_password', respond_to({
             self.fail = true
             self.message = "I've flown all over the database but couldn't find this email"
             return { render = 'forgot_password' }
-        else            
+        else
             reset_code = md5.sumhexa(string.reverse(tostring(socket.gettime() * 10000)))
             local options = {reset_code = reset_code}
             user:update(options)

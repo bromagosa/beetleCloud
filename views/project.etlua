@@ -14,7 +14,7 @@
 			<div id="thumbs">
 
 				<div class="big-thumbnail <%= project.imageisfeatured and '' or 'featured' %>">
-					<img src="<%= project.thumbnail %>" class="fluid pull-right">
+					<img src="<%= project.thumbnail %>" class="fluid pull-right" alt="thumbnail"/>
 					<div class="buttons text-center">
 					<% if (project.username == session.username) then %>
 							<a class="btn" role="button" onclick="featureImage(false)">Feature me</a>
@@ -23,7 +23,7 @@
 				</div>
 
 				<div class="big-thumbnail <%= project.imageisfeatured and 'featured' or '' %>">
-					<img class="alternate fluid" src="">
+					<img class="alternate fluid" src="" alt="feature image" />
 					<% if (project.username == session.username) then %>
 						<div class="buttons text-center alt">
 							<a class="btn" role="button" onclick="featureImage(true)">Feature me</a><br />
@@ -49,7 +49,7 @@
 
             <h3>Project notes</h3>
 
-            <span class="notes">
+            <div class="notes">
                 <% if (project.username == session.username) then
                     render("views/inplace", {
                             content = project.notes,
@@ -60,16 +60,15 @@
                   else %>
                       <pre class="proto-in-place"><%= project.notes ~= '' and project.notes or 'This project has no notes.' %></pre>
                 <% end %>
-            </span>
+            </div>
             <br />
 
-            <a class="btn btn-primary" align="center" href="/run#cloud:Username=<%= util.escape(project.username) %>&ProjectName=<%= util.escape(project.projectname) %>">Open Project</a>
+            <a class="btn btn-primary"  href="/run#cloud:Username=<%= util.escape(project.username) %>&ProjectName=<%= util.escape(project.projectname) %>">Open Project</a>
 
 
             <hr />
             <div class="row stats">
 				<div class="col-sm-1">
-
 					<span id="likes">
 						<i <% if (session.username ~= '') then %> onclick="toggleLike()" <% end %>
 						class="clickable glyph fa fa-thumbs-o-up fa-3x <%= project.likedByUser and 'liked' %>"
@@ -88,21 +87,58 @@
 
             <% if visitor and visitor.isadmin then %>
                 <div class="admin">
-                    <span align="center">
-                        <a class="btn btn-danger" align="center" onclick="deleteProject()">Delete</a>
+                    <span>
+                        <a class="btn btn-danger" onclick="deleteProject()">Delete</a>
                     </span>
                     <i></i>
-                    <span align="center">
-                        <a class="btn btn-danger" align="center" onclick="shareProject()"><%= project.ispublic and "Unshare" or "Share" %></a>
+                    <span>
+                        <a class="btn btn-danger" onclick="shareProject()"><%= project.ispublic and "Unshare" or "Share" %></a>
                     </span>
+					<div class="meta">
+					<div style="width: 0; height: 0; overflow: hidden;"><input id="fake-input2" style="opacity:0; filter:alpha(opacity=0);"></input></div>
+						<script>
+						    var ajax_admin_tags = new XMLHttpRequest();
+						    function update_admin_tags () {
+						        ajax_admin_tags.onreadystatechange = function () {
+						            if (ajax_admin_tags.readyState == 4 && ajax_admin_tags.status == 200) {
+						                document.getElementById('admin_tags').classList.add('flash');
+						            }
+						        };
+								path = '/api/users/<%= project.username %>/projects/<%= project.projectname %>';
+						        ajax_admin_tags.open('POST', path+ '/update/admin_tags');
+						        ajax_admin_tags.send(document.getElementById('admin_tags').textContent);
+						    };
+						    function checkKey_admin_tags (event, element) {
+						        var code = (event.keyCode ? event.keyCode : event.which);
+						        if (code == 13 && !event.shiftKey) {
+						            document.getElementById('fake-input2').focus();
+						        }
+						    };
+						</script>
+						<br />
+						Tags (admin):
+						<pre
+						    class="in-place"
+						    id="admin_tags"
+						    contenteditable="true"
+						    onblur="update_admin_tags()"
+						    onfocus="document.getElementById('admin_tags').classList.remove('flash');"
+						    onkeypress="checkKey_admin_tags(event, this)"><%= project.admin_tags or "" %></pre>
+
+					</div>
                 </div>
             <% end %>
         </div>
-    </div>
 </div>
 
 
 <div class="spacer">&nbsp;</div>
+
+<div class="comments">
+
+</div>
+
+
 
 <script src="/static/js/project.js"></script>
 
