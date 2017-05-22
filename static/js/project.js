@@ -1,3 +1,5 @@
+var username, isadmin;
+
 function toggleLike () {
     var ajax = new XMLHttpRequest();
     ajax.onreadystatechange = function () {
@@ -163,7 +165,7 @@ function getComment (id) {
     ajax.send();
 }
 
-function addComment(comment, prepend, me) {
+function addComment(comment, prepend) {
     comment_div = document.getElementById('comment-pool');
     div = document.createElement('div');
     div.setAttribute("id", "comment-" + comment.id);
@@ -176,13 +178,16 @@ function addComment(comment, prepend, me) {
     div.innerHTML = '<div class="comment-item"><span class="author">' +
         comment.author +
         '</span><br /><p>' +
-        comment.contents + '</p>' +
+        buildHyperlinks(comment.contents) + '</p>' +
         '<span class="date">' +
         moment(comment.date).fromNow() +
         '</span><br /></ div>';
-    if ( false) // if owner
+
+    if ( comment.author == username || isadmin) {// if owner
         div.innerHTML += '<br />' +
-            '<div><a class=\"btn btn-danger\" role=\"button\" onclick=\"deleteComment(id)\">Delete</a></div>';
+            '<div><a class=\"btn btn-danger\" role=\"button\" onclick=\"delete_comment('+
+            comment.id +' )\">Delete</a></div>';
+    }
    div.classList.add('flash');
 }
 
@@ -195,7 +200,6 @@ function updateComments () {
         );
     }
 }
-
 
 function post_comment (projectname, author, username) {
     var ajax_save_comment = new XMLHttpRequest();
@@ -217,6 +221,18 @@ function post_comment (projectname, author, username) {
         "&contents=" +
         encodeURIComponent(document.getElementById('new_comment').value)
         );
+}
+
+function delete_comment (id) {
+    var ajax = new XMLHttpRequest();
+    ajax.onreadystatechange = function () {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            ret = JSON.parse(ajax.responseText);
+            document.getElementById('comment-' + id).parentNode.removeChild(document.getElementById('comment-' + id));
+        }
+    };
+    ajax.open('GET', '/api/comment/delete/' + id, true);
+    ajax.send();
 }
 
 function reset_comment () {

@@ -42,6 +42,7 @@ end
 err = {
     notLoggedIn = errorResponse('you are not logged in'),
     auth = errorResponse('authentication error'),
+    notfound = errorResponse('not found'),
     nonexistentUser = errorResponse('no user with this username exists'),
     nonexistentProject = errorResponse('this project does not exist, or you do not have permissions to access it')
 }
@@ -653,4 +654,23 @@ app:get('/api/comment/:id', function (self)
     return jsonResponse(
         Comments:find(self.params.id)
     )
+end)
+
+
+app:get('/api/comment/delete/:id', function (self)
+    local visitor = Users:find(self.session.username)
+    local comment = Comments:find(self.params.id)
+
+    if (not comment) then
+        return err.notfound
+    end
+
+    if (self.params.username ~= self.session.username and not (visitor or visitor.isadmin)) then
+        return err.auth
+    end
+
+    comment:delete()
+
+    return jsonResponse({ text = 'comment removed', id = self.params.id })
+
 end)

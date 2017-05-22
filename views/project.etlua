@@ -168,7 +168,14 @@
 <script src="/static/js/project.js"></script>
 <script>
 	var ajax = new XMLHttpRequest();
-	getComments('<%= project.username %>','<%= project.projectname %>');
+	getComments('<%= project.username %>','<%= project.projectname %>', '<%= session.username %>', );
+	username = '<%= session.username %>';
+
+	<% if visitor and visitor.isadmin then %>
+	isadmin = true;
+	<% else %>
+	isadmin = false;
+	<% end %>
 </script>
 
 
