@@ -175,8 +175,8 @@ function addComment(comment, prepend) {
     else {
         comment_div.insertBefore(div, comment_div.firstChild);
     }
-    div.innerHTML = '<div class="comment-item"><span class="author"><a href="/user/"' +
-        comment.author + '">' + comment.author +
+    div.innerHTML = '<div class="comment-item"><span class="author"><a href="/users/' +
+        comment.author + '">' + encodeURIComponent(comment.author) +
         '</a></span><br /><p>' +
         buildHyperlinks(comment.contents) + '</p>' +
         '<span class="date">' +

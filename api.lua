@@ -633,6 +633,7 @@ app:match('new_comment', '/api/comments/new', respond_to({
                 author = self.params.author,
                 contents = self.params.contents,
                 projectowner = self.params.projectowner,
+                date = os.date()
             })
 
             if (self.params.author ~= self.params.projectowner) then
@@ -643,7 +644,7 @@ app:match('new_comment', '/api/comments/new', respond_to({
                     .. "a new comment from user "
                     .. self.params.author .. "\n"
                     .. "Visit your project and read the comments here: \n"
-                    .. self:build_url("/user/" .. self.params.projectowner .. "/projects/" .. self.params.projectname)
+                    .. self:build_url("/users/" .. self.params.projectowner .. "/projects/" .. util.escape(self.params.projectname))
                     .. config.mail_footer
                 )
             end
