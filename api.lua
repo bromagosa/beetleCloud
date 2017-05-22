@@ -12,7 +12,7 @@ local Model = require('lapis.db.model').Model
 local util = require('lapis.util')
 local respond_to = require('lapis.application').respond_to
 local xml = require('xml')
-
+local config = require "lapis.config".get()
 local unistd = require "posix.unistd"
 salt = "21"
 
@@ -634,6 +634,19 @@ app:match('new_comment', '/api/comments/new', respond_to({
                 contents = self.params.contents,
                 projectowner = self.params.projectowner,
             })
+
+            if (self.params.author ~= self.params.projectowner) then
+                user = Users:find(self.params.projectowner)
+                ok, err = send_mail(user.email, "New comment",
+                    "Dear " .. self.params.projectowner .. ", \n\n"
+                    .. "Your project \"" .. self.params.projectname .. "\" received "
+                    .. "a new comment from user "
+                    .. self.params.author .. "\n"
+                    .. "Visit your project and read the comments here: \n"
+                    .. self:build_url("/user/" .. self.params.projectowner .. "/projects/" .. self.params.projectname)
+                    .. config.mail_footer
+                )
+            end
             return jsonResponse({ comment = comment})
         else
             return err.nonexistentProject

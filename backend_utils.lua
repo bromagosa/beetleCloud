@@ -142,7 +142,7 @@ send_mail =  function (rcpt, subject, body)
 
     local msg = {
         headers = {
-            from = "turtlestitch <" .. config.mail_from .. ">",
+            from = config.mail_from_name .. " <" .. config.mail_from .. ">",
             to = rcpt,
             subject = subject
         },

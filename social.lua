@@ -9,6 +9,7 @@ local md5 = require 'md5'
 local Model = require('lapis.db.model').Model
 local respond_to = require('lapis.application').respond_to
 local unistd = require "posix.unistd"
+local config = require "lapis.config".get()
 
 -- Database abstractions
 
@@ -146,6 +147,7 @@ app:match('forgot_password', '/forgot_password', respond_to({
                 "Dear TurtleStitcher, \n\n"
                 .. "You requested a reset of your password. Follow this link to create your new password:\n"
                 .. self:build_url(self:url_for("password_reset", { reset_code = reset_code }))
+                .. config.mail_footer
             )
             if not ok then
                 self.fail = true
