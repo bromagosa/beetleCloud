@@ -175,17 +175,16 @@ function addComment(comment, prepend) {
     else {
         comment_div.insertBefore(div, comment_div.firstChild);
     }
-    div.innerHTML = '<div class="comment-item"><span class="author">' +
-        comment.author +
-        '</span><br /><p>' +
+    div.innerHTML = '<div class="comment-item"><span class="author"><a href="/user/"' +
+        comment.author + '">' + comment.author +
+        '</a></span><br /><p>' +
         buildHyperlinks(comment.contents) + '</p>' +
         '<span class="date">' +
         moment(comment.date).fromNow() +
         '</span><br /></ div>';
 
     if ( comment.author == username || isadmin) {// if owner
-        div.innerHTML += '<br />' +
-            '<div><a class=\"btn btn-danger\" role=\"button\" onclick=\"delete_comment('+
+        div.innerHTML += '<div><a class=\"btn btn-danger\" role=\"button\" onclick=\"delete_comment('+
             comment.id +' )\">Delete</a></div>';
     }
    div.classList.add('flash');
@@ -224,15 +223,21 @@ function post_comment (projectname, author, username) {
 }
 
 function delete_comment (id) {
-    var ajax = new XMLHttpRequest();
-    ajax.onreadystatechange = function () {
-        if (ajax.readyState == 4 && ajax.status == 200) {
-            ret = JSON.parse(ajax.responseText);
-            document.getElementById('comment-' + id).parentNode.removeChild(document.getElementById('comment-' + id));
-        }
+    message = 'You are about to delete this comment. <br /><br />' +
+            'Are you sure you want to continue?';
+    callback = function (result) {
+        if (!result) return;
+        var ajax = new XMLHttpRequest();
+        ajax.onreadystatechange = function () {
+            if (ajax.readyState == 4 && ajax.status == 200) {
+                ret = JSON.parse(ajax.responseText);
+                document.getElementById('comment-' + id).parentNode.removeChild(document.getElementById('comment-' + id));
+            }
+        };
+        ajax.open('GET', '/api/comment/delete/' + id, true);
+        ajax.send();
     };
-    ajax.open('GET', '/api/comment/delete/' + id, true);
-    ajax.send();
+    bootbox.confirm(message, callback);
 }
 
 function reset_comment () {

@@ -364,6 +364,9 @@ img.fluid {
     }
 }
 
+.flash {
+    animation: flasher 1s linear;
+}
 
 .alternate.empty {
 	border: 2px dashed #dddddd;
@@ -392,7 +395,8 @@ img.fluid {
 
 .comment-item { margin: 15px 0px; padding: 15px 0px 5px 0px; border-top:1px solid #eee}
 .comment-item p { margin-bottom:5px;padding:5px 0px;  white-space: pre-wrap;}
-.comment-item .author { font-size:0.8em; font-weight: bold}
+.comment-item .author { font-size:0.8em; font-weight: bold; color:black}
+.comment-item .author a { color:black}
 .comment-item .date {color: #ddd; font-size:0.7em;}
 
 @media(max-width:768px) {
