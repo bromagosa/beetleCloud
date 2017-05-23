@@ -76,6 +76,7 @@
 						(<span class="likecount"><%= project.likes %></span>)
 					</span>
 
+					<% if (project.likes > 0) then %>
 					<div class="dropdown liker-dropdown ">
 					 	<a class="dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
 					 	<ul class="dropdown-menu liker-dropdown-menu">
@@ -90,7 +91,7 @@
 							</li>
 					 	</ul>
 					</div>
-
+					<% end %>
 				</div>
 				<div class="col-sm-6 project-views">
 					<span>Views: <%= project.views or 0 %></span><br />
