@@ -68,15 +68,31 @@
 
             <hr />
             <div class="row stats">
-				<div class="col-sm-1">
+				<div class="col-sm-2">
 					<span id="likes">
 						<i <% if (session.username ~= '') then %> onclick="toggleLike()" <% end %>
-						class="clickable glyph fa fa-thumbs-o-up fa-3x <%= project.likedByUser and 'liked' %>"
+						class="likebutton clickable fa fa-thumbs-o-up fa-2x <%= project.likedByUser and 'liked' %>"
 						<% if (project.likedByUser) then %> title="you like this project" <% end %> ></i>
-						<i><%= project.likes %></i>
+						(<span class="likecount"><%= project.likes %></span>)
 					</span>
+
+					<div class="dropdown liker-dropdown ">
+					 	<a class="dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+					 	<ul class="dropdown-menu liker-dropdown-menu">
+							<li>
+							<% for k,v in pairs(project.likers) do %>
+								<a href="/users/<%= v.liker %>">
+								 <img width='24' height='24' class="gravatar" alt=""
+									src="http://www.gravatar.com/avatar/<%= v.gravatar %>?s=24&d=http%3A%2F%2Fbeta.turtlestitch.org%2Fstatic%2Fimg%2Fturtle.png" />
+								<%= v.liker %>
+								</a>
+							<% end %>
+							</li>
+					 	</ul>
+					</div>
+
 				</div>
-				<div class="col-sm-6">
+				<div class="col-sm-6 project-views">
 					<span>Views: <%= project.views or 0 %></span><br />
 					<span>Shared: <%= project.sharedString %></span><br />
 					<span>Modified: <%= project.modifiedString %></span><br />

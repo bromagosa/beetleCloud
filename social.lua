@@ -113,7 +113,11 @@ app:get('/users/:username/projects/:projectname', function(self)
         self.project.comments =  Comments:select('where projectowner = ? and projectname = ? order by id desc',
             self.project.username,
             self.project.projectname)
-
+        self.project.likers =
+                db.select(
+                    'distinct likes.liker, md5(users.email) as gravatar from likes, users where likes.projectname = ? and likes.projectowner = ? and likes.liker = users.username ',
+                    self.params.projectname,
+                    self.params.username)
         self.project:update({
             views = (self.project.views or 0) + 1
         })

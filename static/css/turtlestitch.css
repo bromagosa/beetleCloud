@@ -324,6 +324,14 @@ border-radius: 4px;
 	box-shadow: 1px 1px rgba(0,0,0,0.15);
 }
 
+.project-views {color:#999;font-size:0.9em;font-style: italic}
+
+#likes {font-size:1.5em;float:left}
+.liked {color:green;}
+.liker-dropdown {float:left}
+.liker-dropdown-menu {padding-left:10px,}
+.liker-dropdown-menu a { text-decoration:none;color:green}
+
 /* custom additions */
 .run {
 	position:absolute;
@@ -336,7 +344,6 @@ border-radius: 4px;
     align-items: center;
 
 }
-
 
 .run iframe {height:100%;width:100%;border:0;padding-top:55px}
 .gravatar {margin-right:10px}
@@ -394,6 +401,7 @@ img.fluid {
 #user-grid .user-grid-item {padding:0.8em 0}
 
 .comment-item { margin: 15px 0px; padding: 15px 0px 5px 0px; border-top:1px solid #eee}
+.comment-item { margin-bottom:20px }
 .comment-item p { margin-bottom:5px;padding:5px 0px;  white-space: pre-wrap;}
 .comment-item .author { font-size:0.8em; font-weight: bold; color:black}
 .comment-item .author a { color:black}

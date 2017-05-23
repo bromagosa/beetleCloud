@@ -658,9 +658,13 @@ app:match('new_comment', '/api/comments/new', respond_to({
 
 app:get('/api/users/:username/projects/:projectname/comments', function (self)
     return jsonResponse(
-        Comments:select('where projectowner = ? and projectname = ? order by id desc',
-        self.params.username,
-        self.params.projectname)
+    --    Comments:select('where projectowner = ? and projectname = ? order by id desc',
+    --    self.params.username,
+    --    self.params.projectname)
+        db.select(
+            'distinct *, md5(users.email) as gravatar from comments, users where comments.projectname = ? and comments.projectowner = ? and comments.author = users.username order by comments.date desc',
+            self.params.projectname,
+            self.params.username)
     )
 end)
 

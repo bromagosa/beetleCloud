@@ -175,18 +175,29 @@ function addComment(comment, prepend) {
     else {
         comment_div.insertBefore(div, comment_div.firstChild);
     }
-    div.innerHTML = '<div class="comment-item"><span class="author"><a href="/users/' +
+
+    div.innerHTML = "";
+
+    if ( comment.author == username || isadmin) {// if owner
+        div.innerHTML += '<div style="float:right"><a class=\"btn btn-danger\" role=\"button\" onclick=\"delete_comment('+
+            comment.id +' )\">Delete</a></div>';
+    }
+    div.innerHTML += '<div class="comment-item">' +
+        '<div class="row"><div class="col-sm-1">' +
+        '<img width="48" height="48" class="gravatar" alt=""' +
+        ' src="http://www.gravatar.com/avatar/' + comment.gravatar + '?s=48&d=http%3A%2F%2Fbeta.turtlestitch.org%2Fstatic%2Fimg%2Fturtle.png" />' +
+        '</div><div class="col-sm-8">' +
+        '<span class="author"><a href="/users/' +
         comment.author + '">' + encodeURIComponent(comment.author) +
         '</a></span><br /><p>' +
         buildHyperlinks(comment.contents) + '</p>' +
         '<span class="date">' +
         moment(comment.date).fromNow() +
-        '</span><br /></ div>';
+        '</span><br />' +
+        '</ div>' +
+        '</ div><div class="clear"></div></div>';
 
-    if ( comment.author == username || isadmin) {// if owner
-        div.innerHTML += '<div><a class=\"btn btn-danger\" role=\"button\" onclick=\"delete_comment('+
-            comment.id +' )\">Delete</a></div>';
-    }
+
    div.classList.add('flash');
 }
 

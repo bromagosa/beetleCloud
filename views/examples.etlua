@@ -1,6 +1,18 @@
 <h1>Examples</h1>
 <%
-    shapeCollections = {'Getting started', 'Randomness', 'Computational ideas', 'Drawing with boundaries', 'Simple geometric shapes', 'Sphere calculus with sin and cos', 'Miscellaneous'}
+    shapeCollections = {
+        'Getting started',
+        'Randomness',
+        'Drawing with boundaries',
+        'Letters',
+        'Follow the mouse',
+        'Sin and cosinus',
+        'Fractals',
+        'Parallel processes',
+        'Computational ideas'
+    }
+
+        --'Simple geometric shapes',
 
     for k, title in pairs(shapeCollections) do
         render("views/carousel", { collection = 'tags', title = title, username = 'Examples', notes = title })
