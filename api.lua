@@ -132,6 +132,7 @@ app:get('/api/projects/:selection/:limit/:offset(/:username)', function (self)
 
     local username = self.params.username or 'Examples'
     local list = self.params.list or ''
+    local tag = self.params.tag or ''
     local notes = self.params.notes or ''
 
     local query = {
@@ -140,13 +141,13 @@ app:get('/api/projects/:selection/:limit/:offset(/:username)', function (self)
         favorite = 'distinct projects.id, projects.projectName, projects.username from projects, likes where projects.projectName = likes.projectName and projects.username = likes.projectowner and likes.liker = \'' .. username .. '\' group by projects.projectname, projects.username order by projects.id desc',
         shared = 'projectName, username from projects where isPublic = true and username = \'' .. username .. '\' order by id desc',
         notes = 'projectName, username from projects where isPublic = true and username = \'' .. username .. '\' and notes ilike \'%' .. notes .. '%\' order by id desc',
-        tags = 'projectName, username from projects where isPublic = true and username = \'' .. username .. '\' and admin_tags ilike \'%' .. notes .. '%\' order by id desc',
+        tag = 'projectName, username from projects where isPublic = true and admin_tags ilike \'%' .. tag .. '%\' order by id desc',
         list = 'projectName, username from projects where isPublic = true and username = \'' .. username .. '\' and projectName in ' .. list ..  ' order by id desc'
     }
 
     return jsonResponse(
         db.select(
-            query[self.params.selection] ..' limit ? offset ?',
+            query[self.params.selection] .. ' limit ? offset ?',
             self.params.limit or 5,
             self.params.offset or 0))
 end)

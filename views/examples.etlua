@@ -9,12 +9,13 @@
         'Sin and cosinus',
         'Fractals',
         'Parallel processes',
-        'Computational ideas'
+        'Computational ideas',
+        'Miscellaneous'
     }
 
         --'Simple geometric shapes',
 
     for k, title in pairs(shapeCollections) do
-        render("views/carousel", { collection = 'tags', title = title, username = 'Examples', notes = title })
+        render("views/carousel", { collection = 'tag', title = title, tag = title })
     end
 %>
