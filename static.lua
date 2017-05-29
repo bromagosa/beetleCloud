@@ -26,9 +26,9 @@ app:get('/contact', function(self)
     return { render = 'pages/contact' }
 end)
 
-app:get('/examples', function(self)
-	self.page_title = "Examples"
-    return { render = 'examples' }
+app:get('/categories', function(self)
+	self.page_title = "Categories"
+    return { render = 'categories' }
 end)
 
 app:get('/run', function(self)
@@ -39,5 +39,3 @@ end)
 --app:get('/run', function(self)
 --    return { render = 'pages/run' }
 --end)
-
-

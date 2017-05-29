@@ -26,8 +26,6 @@
 </head>
 <body>
 
-
-
 <% render("views/navbar") %>
 
 <div class="content">
@@ -36,13 +34,8 @@
 	</div>
 </div>
 
-
-
 <% render("views/footer") %>
-
-
 <% render("views/tracking") %>
-
 
 </body>
 </html>
