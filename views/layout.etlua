@@ -4,17 +4,12 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title><%= page_title or "" %> <% if (page_title) then %> - <% end %>  TurtleStitch - Coded Embroidery   </title>
+	<title><%= page_title or "" %><% if (page_title) then %> / <% end %>TurtleStitch - Coded Embroidery</title>
 
 	<link rel="shortcut icon" href="/static/img/favicon.ico" />
 	<link rel="icon" href="/static/img/favicon.png" type="image/png">
-	<meta name="description" content="Turtlestitch is based on a browser-based
-	educational programming language (Snap!) to generate patterns for embroidery
-	machines. It is easy to use, requiring no prior knowledge in programming,
-	yet powerful in creating nowels patterns for embroidery. It is usefull
-	for designers to experiment with generative aesthetics and precision
-	 embroidery as well as tool for innovative workshops combining an
-	 introduction to programing with haptic output. " />
+
+	<% render("views/meta") %>
 
 	<link href="/static/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
 	<link href="/static/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />

@@ -23,7 +23,7 @@
 				</div>
 
 				<div class="big-thumbnail <%= project.imageisfeatured and 'featured' or '' %>">
-					<img class="alternate fluid" src="" alt="feature image" />
+					<img class="alternate fluid" src="/static/img/no-thumb.png" alt="feature image" />
 					<% if (project.username == session.username) then %>
 						<div class="buttons text-center alt">
 							<a class="btn" role="button" onclick="featureImage(true)">Feature me</a><br />

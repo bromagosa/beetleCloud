@@ -31,5 +31,6 @@ require 'api'
 require 'social'
 require 'static'
 require 'admin'
+require 'redirects'
 
 return app
