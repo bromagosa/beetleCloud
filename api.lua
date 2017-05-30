@@ -691,7 +691,7 @@ end)
 app:get('/api/comment/:id', function (self)
     return jsonResponse(
     db.select(
-        'distinct comments.contents, comments.date, users.username as author, md5(users.email) as gravatar from comments, users where comments.id = ? and comments.author = users.username',
+        'distinct comments.contents, comments.id, comments.date, users.username as author, md5(users.email) as gravatar from comments, users where comments.id = ? and comments.author = users.username',
         self.params.id)
     )
 end)
