@@ -513,6 +513,7 @@ app:match('toggle_like', '/api/users/:username/projects/:projectname/like', resp
         end
 
         local project = Projects:find(self.params.username, self.params.projectname)
+        local user = Users:find(self.params.username)
 
         if (project) then
 
@@ -526,6 +527,18 @@ app:match('toggle_like', '/api/users/:username/projects/:projectname/like', resp
                     projectowner = self.params.username,
                     liker = self.session.username
                 })
+
+                if (user.notify_like) then
+                    ok, err = send_mail(user.email, "Someone likes your project",
+                        "Dear " .. self.params.username .. ", \n\n"
+                        .. "Your project \"" .. self.params.projectname .. "\" got "
+                        .. "a thumb up from user "
+                        .. self.session.username .. "\n\n"
+                        .. "Visit your project and see all likes here: \n"
+                        .. self:build_url("/users/" .. self.params.username .. "/projects/" .. util.escape(self.params.projectname))
+                        .. config.mail_footer
+                    )
+                end
 
                 return jsonResponse({ text = 'project liked' })
             else
@@ -617,8 +630,12 @@ app:match('new_comment', '/api/comments/new', respond_to({
             { 'projectname', exists = true, min_length = 3 },
             { 'projectowner', exists = true },
             { 'author', exists = true, min_length = 3 },
-            { 'contents', exists = true }
+            { 'contents', exists = true, min_length = 3 }
         })
+
+        if (string.len(self.params.contents) < 3) then
+             return errorResponse('comment too short')
+        end
 
         if (self.params.author ~= self.session.username) then
             return err.auth
@@ -639,15 +656,17 @@ app:match('new_comment', '/api/comments/new', respond_to({
 
             if (self.params.author ~= self.params.projectowner) then
                 user = Users:find(self.params.projectowner)
-                ok, err = send_mail(user.email, "New comment",
-                    "Dear " .. self.params.projectowner .. ", \n\n"
-                    .. "Your project \"" .. self.params.projectname .. "\" received "
-                    .. "a new comment from user "
-                    .. self.params.author .. "\n"
-                    .. "Visit your project and read the comments here: \n"
-                    .. self:build_url("/users/" .. self.params.projectowner .. "/projects/" .. util.escape(self.params.projectname))
-                    .. config.mail_footer
-                )
+                if (user.notify_comment) then
+                    ok, err = send_mail(user.email, "New comment",
+                        "Dear " .. self.params.projectowner .. ", \n\n"
+                        .. "Your project \"" .. self.params.projectname .. "\" received "
+                        .. "a new comment from user "
+                        .. self.params.author .. "\n\n"
+                        .. "Visit your project and read all comments here: \n"
+                        .. self:build_url("/users/" .. self.params.projectowner .. "/projects/" .. util.escape(self.params.projectname))
+                        .. config.mail_footer
+                    )
+                end
             end
             return jsonResponse({ comment = comment})
         else
@@ -663,7 +682,7 @@ app:get('/api/users/:username/projects/:projectname/comments', function (self)
     --    self.params.username,
     --    self.params.projectname)
         db.select(
-            'distinct *, md5(users.email) as gravatar from comments, users where comments.projectname = ? and comments.projectowner = ? and comments.author = users.username order by comments.date desc',
+            'distinct comments.contents, comments.id, comments.date, username as author, md5(email) as gravatar from comments, users where comments.projectname = ? and comments.projectowner = ? and comments.author = users.username order by comments.id desc',
             self.params.projectname,
             self.params.username)
     )
@@ -671,7 +690,9 @@ end)
 
 app:get('/api/comment/:id', function (self)
     return jsonResponse(
-        Comments:find(self.params.id)
+    db.select(
+        'distinct comments.contents, comments.date, users.username as author, md5(users.email) as gravatar from comments, users where comments.id = ? and comments.author = users.username',
+        self.params.id)
     )
 end)
 

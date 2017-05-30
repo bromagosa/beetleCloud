@@ -7,7 +7,7 @@
             }
         };
         ajax_<%= id %>.open('POST', '/api/<%= path %>/update/<%= property %>');
-        ajax_<%= id %>.send(document.getElementById('<%= id %>').textContent); 
+        ajax_<%= id %>.send(document.getElementById('<%= id %>').textContent);
     };
     function checkKey_<%= id %> (event, element) {
         var code = (event.keyCode ? event.keyCode : event.which);
@@ -16,7 +16,7 @@
         }
     };
 </script>
-<div style="width: 0; height: 0; overflow: hidden;"><input id="fake-input" style="opacity:0; filter:alpha(opacity=0);"></input></div>
+<div style="width: 0; height: 0; overflow: hidden;"><input id="fake-input" style="opacity:0; filter:alpha(opacity=0);" /></div>
 <pre
     class="in-place"
     id="<%= id %>"

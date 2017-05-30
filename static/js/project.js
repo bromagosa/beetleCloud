@@ -157,7 +157,7 @@ function getComment (id) {
     ajax.onreadystatechange = function () {
         if (ajax.readyState == 4 && ajax.status == 200) {
             comment =JSON.parse(ajax.responseText);
-            addComment(comment,true);
+            addComment(comment[0],true);
         }
     };
     path = '/api/comment/' + id;

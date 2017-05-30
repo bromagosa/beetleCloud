@@ -2,7 +2,7 @@
 <div class="row">
 	<div class="col-sm-2">
 		<p style="text-align:right;padding-top:10px;">
-			<img class="gravatar" src="http://www.gravatar.com/avatar/<%- gravatar %>?s=64&d=http%3A%2F%2Fbeta.turtlestitch.org%2Fstatic%2Fimg%2Fturtle.png" />
+			<img class="gravatar" src="http://www.gravatar.com/avatar/<%- gravatar %>?s=64&d=http%3A%2F%2Fbeta.turtlestitch.org%2Fstatic%2Fimg%2Fturtle.png" alt="<%= user.username %>"/>
 	</div>
 	<div class="col-sm-6">
 		<h1><%- user.username %></h1>
@@ -32,18 +32,47 @@
 							path = 'users/' .. user.username,
 							property = 'location'
 						})
-				else %>
+				%>
+				<hr />
+				<div class="notfications_settings">
+
+					<input class="notify_comment" type="checkbox" id="notify_comment" value="x" <% if user.notify_comment then %> checked <% end %> /> Notify me on comment <br />
+					<input class="notify_like" type="checkbox" id="notify_like" value="x" <% if user.notify_like then  %> checked <% end %> /> Notify me on likes
+
+				</div>
+				<hr />
+
+				<script>
+				    function update_notfications_settings (id) {
+						var ajax = new XMLHttpRequest();
+				        ajax.onreadystatechange = function () {
+				            if (ajax.readyState == 4 && ajax.status == 200) {
+				                $(".notfications_settings").addClass('flash');
+				            }
+				        };
+				        ajax.open('POST', '/api/users/<%= user.username %>/update/'+id);
+				        ajax.send($("#" + id).is(':checked'));
+				    };
+
+					$(document).ready(function () {
+						$(".notfications_settings input").click(function() {
+							update_notfications_settings($(this).attr("id"));
+						});
+					});
+				</script>
+
+				<% else %>
 				  <p><%- user.location or 'Planet Earth' %></p>
 				<% end %>
 			</div>
 			<div class="joined"><p><strong>Joined:</strong> <%= user.joinedString %></p></div>
 			<% if visitor and visitor.isadmin then %>
 				<div class="email">
-					<a mailto="<%- user.email -%>"><%- user.email -%></a>
+					<a href="mailto:<%- user.email -%>"><%- user.email -%></a>
 				</div>
 				<div class="admin">
 					<div align="center">
-						<a class="btn btn-danger" align="center" onclick="becomeUser()">Become this user</a>
+						<a class="btn btn-danger" onclick="becomeUser()">Become this user</a>
 					</div>
 				</div>
 			<% end %>
