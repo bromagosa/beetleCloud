@@ -1,21 +1,22 @@
 <div class="big-carousel">
 	<div class="slider top">
 		<div class="slide text-center">
-			<img class="first-slide" src="/static/img/slide1.png" alt="code! .. draw! .. stitch!" />
+			<img class="first-slide" data-lazy="/static/img/slide1.png" alt="code! .. draw! .. stitch!" />
 			<h2>Code! .. Draw! .. Stitch!</h2>
 		</div>
 		<div class="slide text-center">
-			<img src="/static/img/slide2.png" alt="Dragon Curve">
+			<img data-lazy="/static/img/slide2.png" alt="Dragon Curve">
 			<h2>Code! .. Draw! .. Stitch!</h2>
 		</div>
 		<div class="slide text-center">
-			<a href="https://t.co/403bV9m3uT"><img src="/static/img/slide3.jpg" /></a>
+			<a href="https://t.co/403bV9m3uT"><img data-lazy="/static/img/slide3.jpg" alt="" /></a>
 		</div>
 	 </div>
 </div>
 
 <script>
 	$(document).ready(function(){
+
 		$('.top').slick({
             dots: true,
             infinite: true,
@@ -26,7 +27,9 @@
             centerMode: true,
             centerPadding: '10px',
             fade: true,
-            autoplay: true
+            autoplay: true,
+			lazyLoad: 'progressive'
 		});
+
 	});
 </script>

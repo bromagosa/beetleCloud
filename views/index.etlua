@@ -4,12 +4,13 @@
 <% render("views/pages/index_features") %>
 
 <div class="index-run">
-	<p><a href="/run" title="run"><img class="icon-run" width="100" src="/static/img/turtle-run.png" /></a>
+	<p><a href="/run" title="run"><img class="icon-run" width="100" src="/static/img/turtle-run.png" alt="run" /></a>
 		<a class="btn btn-lg btn-run" href="run" role="button">Run TurtleStich!</a></p><br />
 </div>
 
 <%
-	render("views/carousel", { collection = 'favorite', title = 'Featured Projects' })
-    render("views/carousel", { collection = 'newest', title = 'Newest Projects' })
-	render("views/carousel", { collection = 'popular', title = 'Popular Projects' })
+	render("views/carousel", { collection = 'tag', title = 'Featured', tag = 'Featured'})
+	render("views/carousel", { collection = 'newest', title = 'Newest' })
+	render("views/carousel", { collection = 'tag', title = 'Getting Started', tag = 'Getting Started'})
+	render("views/carousel", { collection = 'popular', title = 'Popular' })
 %>

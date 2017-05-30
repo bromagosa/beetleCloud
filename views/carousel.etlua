@@ -7,12 +7,12 @@
             carouselDiv_<%= id %> = document.currentScript.parentElement,
             projects_<%= id %>;
         function get<%= id %>() {
-            carouselDiv_<%= id %>.classList.add('fade');
+            //carouselDiv_<%= id %>.classList.add('fade');
             ajax_<%= id %>.onreadystatechange = function () {
                 if (ajax_<%= id %>.readyState == 4 && ajax_<%= id %>.status == 200) {
                     projects_<%= id %> =JSON.parse(ajax_<%= id %>.responseText);
                     update<%= id %>();
-                    carouselDiv_<%= id %>.classList.remove('fade');
+                    //carouselDiv_<%= id %>.classList.remove('hidden');
                 }
             };
             // The second part of the query needs to be enclosed between double commas, as SQL strings are enclosed by single ones
@@ -75,7 +75,7 @@
     <div class="projects slider projects_<%= id %>" id="projects_<%= id %>">
         <% for i = 1, 10, 1 do %>
         <div class="project empty" id="project-<%= i - 1 %>-<%= id %>">
-            <a><img class="thumbnail" alt="" src="/static/img/no-thumb.png" /></a>
+            <a><img class="thumbnail" src="/static/img/no-thumb.png" data-lazy="/static/img/no-thumb.png" alt="" /></a>
             <a class="name ellipsis"></a>
             <span class="author">by <a href=""></a></span>
         </div>
@@ -87,24 +87,35 @@
     <script>
 		$(document).ready(function(){
 
-			get<%= id %>();
+            prev_<%= id %> = function() {
+                if (offset_<%= id %> > 0) {
+                    offset_<%= id %> = offset_<%= id %> - 5;
+                    get<%= id %>();
+                }
+            }
+
+            next_<%= id %> = function() {
+                if (projects_<%= id %>.length == 5) {
+                     offset_<%= id %> = offset_<%= id %> + 5;
+                     get<%= id %>();
+                }
+            }
 
 			$('.projects_<%= id %>').slick({
+                lazyLoad: 'ondemand',
 				dots: false,
 				infinite: true,
 				speed: 300,
 				slidesToShow: 5,
 				slidesToScroll: 0,
-				prevArrow: '<div class="slick-prev" onclick="if (offset_<%= id %> > 0) { offset_<%= id %> = offset_<%= id %> - 5; get<%= id %>(); }"><i class="fa fa-angle-left" aria-hidden="true"></i></div>',
-				nextArrow: '<div class="slick-next" onclick="if (projects_<%= id %>.length == 5) { offset_<%= id %> = offset_<%= id %> + 5; get<%= id %>(); }"><i class="fa fa-arrow-circle-right"></i></div>',
+				prevArrow: '<div class="slick-prev" onclick="prev_<%= id %>();"><i class="fa fa-angle-left" aria-hidden="true"></i></div>',
+				nextArrow: '<div class="slick-next" onclick="next_<%= id %>();"><i class="fa fa-arrow-circle-right"></i></div>',
 				responsive: [
 					{
 					  breakpoint: 1024,
 					  settings: {
 						slidesToShow: 3,
 						slidesToScroll: 3,
-						infinite: true,
-						dots: true
 					  }
 					},
 					{
@@ -123,6 +134,10 @@
 					}
 				]
 			});
+
+
+			get<%= id %>();
+
 
 		});
 
