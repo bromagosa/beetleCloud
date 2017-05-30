@@ -95,7 +95,6 @@
 				</div>
 				<div class="col-sm-6 project-views">
 					<span>Views: <%= project.views or 0 %></span><br />
-					<span>Shared: <%= project.sharedString %></span><br />
 					<span>Modified: <%= project.modifiedString %></span><br />
 				</div>
             </div>
