@@ -73,7 +73,7 @@
         }
         
         if(!projects[0] && !users[0]) {
-			resultsDiv.innerHTML = "nothing found."
+			resultsDiv.innerHTML = "<span class=\"searchnotfound\">nothing found.</span>"
 		}
 
         resultsDiv.style.display = 'block';

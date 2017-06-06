@@ -98,6 +98,7 @@ input.form-control:focus, textarea.form-control:focus, .news-input:focus {
 .navbar .search-results {margin-left:15px;min-width:200px;}
 .navbar .search-results a {color:green}
 .navbar .search-results a:hover {color:darkgreen;background:none}
+.navbar .search-results span {margin-left:15px;}
 
 .navbar .input-group {width:200px;}
 
