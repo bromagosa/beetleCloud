@@ -1,6 +1,6 @@
 
 <li class="dropdown search">
-	<form class="navbar-form" role="search" action="#">
+	<div class="navbar-form">
 			<div class="input-group">
 				<!--
 				<div class="input-group-btn">
@@ -10,9 +10,10 @@
 				-->
 				<input type="text" class="form-control" placeholder="Search" name="q" value=""
 					  oninput="search(this.value)"
-					onchange="search(this.value)" />
+					onchange="search(this.value)" 
+					autocomplete="off" />
 			</div>
-		</form>
+		</div>
 	<ul id="search-results" class="dropdown-menu search-results"></ul>
 </li>
 		
