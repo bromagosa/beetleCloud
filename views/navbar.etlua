@@ -20,7 +20,7 @@
 		<li><a href="/categories">Categories</a></li>
 		<li><a href="/faq">FAQ</a></li>
 		<!--<li><a href="/contact">Contact</a></li>-->
-		<li><a href="http://www.stitchcode.com/category/turtlestitch/">Blog</a></li>
+		<li><a href="http://www.stitchcode.com/category/turtlestitch/" target="_blank">Blog</a></li>
 
 		<% render("views/search") %>
 
