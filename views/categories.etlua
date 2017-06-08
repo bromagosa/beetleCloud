@@ -1,4 +1,4 @@
-<h1>Examples</h1>
+<h1>Categories</h1>
 <%
     shapeCollections = {
         'Getting started',
