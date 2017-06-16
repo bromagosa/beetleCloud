@@ -113,6 +113,7 @@ input.form-control:focus, textarea.form-control:focus, .news-input:focus {
 
 .slick-slide {
   margin: 0px 20px;
+  overflow:hidden;
 }
 
 .slick-slide img {

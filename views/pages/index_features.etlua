@@ -2,11 +2,9 @@
 	<div class="slider top">
 		<div class="slide text-center">
 			<img class="first-slide" data-lazy="/static/img/slide1.png" alt="code! .. draw! .. stitch!" />
-			<h2>Code! .. Draw! .. Stitch!</h2>
 		</div>
 		<div class="slide text-center">
 			<img data-lazy="/static/img/slide2.png" alt="Dragon Curve">
-			<h2>Code! .. Draw! .. Stitch!</h2>
 		</div>
 		<div class="slide text-center">
 			<a href="https://t.co/403bV9m3uT"><img data-lazy="/static/img/slide3.jpg" alt="" /></a>

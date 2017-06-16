@@ -44,21 +44,24 @@
 		<br>
 		
 		<a name="whatis"><h3>What is turtlestitch?</h3></a>
-		A platform to generate patterns for embroidery machines. Technically, it's based on Snap!, a browser-based educational programming language. It is easy to use, requires no prior knowledge in programming, yet powerful tool to create novel patterns for embroidery. It is useful for designers for experimenting with generative aesthetics and precision embroidery, as well as tool for innovative workshops combining an introduction to programing with haptic output. 
+		TurtleStitch is a platform to generate patterns for embroidery machines. Technically, it's based on Snap!, 
+		a browser-based educational programming language. It is easy to use, requires no prior knowledge in programming, 
+		and is a powerful tool to create personalized patterns for embroidery. It is useful for designers for experimenting with generative aesthetics and precision embroidery, as well as tool for innovative workshops combining an introduction to programing with haptic output. 
 		<br><br><br>
 		
 		
 		
 		<h3>Using turtlestitch</h3>
 		<a name="startdes"><h3>What do I need to start designing?</h3></a> 
-		All you need is Internet access and a modern browser. We like Firefox, because it's Free Software, but Chrome, Safari work as well. 
+		All you need is Internet access and a modern browser. We like Firefox, because it's Free Software, but Chrome and Safari work as well. 
 		<br><br>
 		
 		
 		<a name="keepm"><h3>What to keep in mind when designing?</h3></a>
 		<br>
 		<b>Getting started.</b> We are using the “pen function” of Snap! to define the line. For an introduction to Snap! see the <a href="http://snap.berkeley.edu/SnapManual.pdf" target="_blank">Snap! User Manual</a> (pdf, 3,4MB). To learn form others who already programmed patterns, go to the <a href="http://www.turtlestitch.org/gallery" target="_blank">gallery</a> and look for a pattern you might want to modify.<br><br>
-		<b>Size of the stitches.</b> The line the turtle traces will eventually be embroidered. The results tend to be best, if the turtle moves in units of 8-12 steps. This number of steps determines the size of the individual stitch. Below 8, the stitches become rather small and the embroidery rather dense, above 12, the stitches become rather larger and loose. These are recommended values, feel free to experiment.<br><br>
+		<b>Size of the stitches.</b> The line the turtle traces will eventually be embroidered. The results tend to be best if the turtle moves in units of 8-12 steps. 
+			The number of steps determines the size of the individual stitch. Under 8, the stitches become rather small and the embroidery pattern would be rather dense. Above 12, the stitches become rather larger and loose. These are recommended values, but feel free to experiment.<br><br>
 		<b>Crossing lines.</b> The lines should not cross each other too often, otherwise there is danger of damaging the fabric on which you embroider. If you use regular sewing machines, you already know this. <br><br>
 		<b>Scaling the pattern.</b> The maximum size of your pattern is determined by the size of the embroidery frame of your machine. To make sure you are working on the right scale, you can define the “Stage size”. Go to settings (       ), choose “Stage size ...” and define sizes of your “stage” on which you design. The values are given in pixels and 50 pixels = 1cm. So, if you want to design for pattern with a maximum size of 15cm x 15cm, choose the values for “Stage width” and “Stage height” each 750.<br><br>
 		To get more detailed views of the size of your design, you can activate different grid backgrounds. Go to file (      ), choose one from “Backgrounds”.
