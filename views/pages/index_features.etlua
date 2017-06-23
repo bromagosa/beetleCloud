@@ -4,11 +4,17 @@
 			<img class="first-slide" data-lazy="/static/img/slide1.png" alt="code! .. draw! .. stitch!" />
 		</div>
 		<div class="slide text-center">
-			<img data-lazy="/static/img/slide2.png" alt="Dragon Curve">
+			<a href="/users/mash/projects/dragon curve"><img data-lazy="/static/img/slide2.jpg" alt="Dragon Curve"></a>
 		</div>
 		<div class="slide text-center">
-			<a href="https://t.co/403bV9m3uT"><img data-lazy="/static/img/slide3.jpg" alt="" /></a>
+			<a href="/users/chmod/projects/AshaInfinityMandale_modification2"><img data-lazy="/static/img/slide3.jpg" alt="ashaMANDALAinfinity" /></a>
 		</div>
+		<div class="slide text-center">
+			<a href="/users/chmod/projects/random stitch length"><img data-lazy="/static/img/slide4.jpg" alt="" /></a>
+		</div>
+		<div class="slide text-center">
+			<a href="/users/mash/projects/bounce_test%202"><img data-lazy="/static/img/slide5.jpg" alt="" /></a>
+		</div>		
 	 </div>
 </div>
 

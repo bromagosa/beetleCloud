@@ -6,6 +6,7 @@
             offset_<%= id %> = 0,
             carouselDiv_<%= id %> = document.currentScript.parentElement,
             projects_<%= id %>;
+        
         function get<%= id %>() {
             //carouselDiv_<%= id %>.classList.add('fade');
             ajax_<%= id %>.onreadystatechange = function () {
@@ -25,6 +26,7 @@
             true);
             ajax_<%= id %>.send();
         };
+        
         function update<%= id %>() {
             for (var i = 0; i < projects_<%= id %>.length; i ++) {
                 var div = document.getElementById('project-' + i + '-<%= id %>'),
@@ -33,7 +35,6 @@
 				$('#project-' + i + '-<%= id %>').removeClass('empty');
                 div.children[0].href = '/users/' + encodeURIComponent(projects_<%= id %>[i].username) +
                                         '/projects/' + encodeURIComponent(projects_<%= id %>[i].projectname);
-                div.children[0].children[0].src = '/static/img/no-thumb.png';
                 div.children[1].textContent = projects_<%= id %>[i].projectname;
                 div.children[1].href = div.children[0].href;
                 if (typeof div.children[2].children[0] !== 'undefined') div.children[2].children[0].textContent = projects_<%= id %>[i].username;
@@ -52,11 +53,11 @@
                 imageLoader.send();
 
             }
-            for (var i = projects_<%= id %>.length || 0; i < 10; i ++) {
+            for (var i = projects_<%= id %>.length || 0; i < 0; i ++) {
                 var div = document.getElementById('project-' + i + '-<%= id %>');
-                $('#project-' + i + '-<%= id %>').addClass('empty');
+                //$('#project-' + i + '-<%= id %>').addClass('empty');
                 div.children[0].removeAttribute('href');
-                div.children[0].children[0].src = '/static/img/no-thumb.png';
+                //div.children[0].children[0].src = '/static/img/no-thumb.png';
                 //div.children[0].children[0].removeAttribute('src');
                 div.children[1].textContent = '';
                 div.children[1].removeAttribute('href');
@@ -69,7 +70,7 @@
 
     <div class="title">
         <span class="title-text"><%= title %></span>
-        <span class="show-all"><a href="<%= (username and ('/users/' .. username ..'/') or '') .. 'projects/g/' .. collection .. '/' .. (list or '') %>">Show all</a></span>
+        <span class="show-all"><a href="<%= (username and ('/users/' .. username ..'/') or '') .. 'projects/g/' .. collection .. '/' .. (list or tag or '') %>">Show all</a></span>
     </div>
 
     <div class="projects slider projects_<%= id %>" id="projects_<%= id %>">

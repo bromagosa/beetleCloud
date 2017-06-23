@@ -7,7 +7,8 @@
                     popular = 'Popular Projects',
                     favorite = (username ~= 'Examples') and ('Projects liked by ' .. username) or ('Beetle Blocks team favorites'),
                     shared = 'Projects shared by ' .. username,
-                    notes = notes
+                    notes = notes,
+                    tag = tag
                 }
             %>
             <%= titleDict[collection] %>
@@ -43,7 +44,7 @@
                 }
             };
             // The second part of the query needs to be enclosed between double commas, as SQL strings are enclosed by single ones
-            ajax.open('GET', '/api/projects/<%= collection %>/16/' + offset + "<%= '/' .. (username or '') %>?list=<%= list or '' %>&notes=<%= notes or '' %>", true);
+            ajax.open('GET', '/api/projects/<%= collection %>/16/' + offset + "<%= '/' .. (username or '') %>?list=<%= list or '' %>&notes=<%= notes or '' %>&tag=<%= tag or '' %>", true);
             ajax.send();
         };
 
