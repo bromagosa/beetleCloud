@@ -79,6 +79,14 @@ app:get('/projects/g/:collection', function(self)
     return { render = 'projectgrid' }
 end)
 
+app:get('/projects/g/tag/:tag', function(self)
+	self.collection = "tag"
+    self.tag = self.params.tag
+    self.username = ''
+    self.page_title =  self.params.tag
+    return { render = 'projectgrid' }
+end)
+
 app:get('/users/:username/projects/:projectname', function(self)
     self.visitor = Users:find(self.session.username)
     self.project = Projects:find(self.params.username, self.params.projectname)

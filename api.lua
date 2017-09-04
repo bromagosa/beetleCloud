@@ -106,6 +106,7 @@ app:get('/api/projects/:selection/:limit/:offset(/:username)', function (self)
     local username = self.params.username or 'Examples'
     local list = self.params.list or ''
     local notes = self.params.notes or ''
+    local tag = self.params.tag or ''
 
     local query = { 
         newest = 'projectName, username from projects where isPublic = true order by id desc',
@@ -113,7 +114,8 @@ app:get('/api/projects/:selection/:limit/:offset(/:username)', function (self)
         favorite = 'distinct projects.id, projects.projectName, projects.username from projects, likes where projects.projectName = likes.projectName and projects.username = likes.projectowner and likes.liker = \'' .. username .. '\' group by projects.projectname, projects.username order by projects.id desc',
         shared = 'projectName, username from projects where isPublic = true and username = \'' .. username .. '\' order by id desc',
         notes = 'projectName, username from projects where isPublic = true and username = \'' .. username .. '\' and notes = \'' .. notes .. '\' order by id desc',
-        list = 'projectName, username from projects where isPublic = true and username = \'' .. username .. '\' and projectName in ' .. list ..  ' order by id desc'
+        list = 'projectName, username from projects where isPublic = true and username = \'' .. username .. '\' and projectName in ' .. list ..  ' order by id desc',
+        tag = 'projectName, username from projects where isPublic = true and admin_tags ilike \'%' .. tag .. '%\' order by id desc',
     }
 
     return jsonResponse(
@@ -312,8 +314,15 @@ app:match('update_project', '/api/users/:username/projects/:projectname/update/:
             return err.nonexistentProject
         end
 
-        if (self.params.username ~= self.session.username) then
-            return err.auth
+		if (self.params.property == 'admin_tags') then
+            local visitor = Users:find(self.session.username)
+            if (not visitor.isadmin) then
+                return err.auth
+            end
+        else
+            if (self.params.username ~= self.session.username) then
+                return err.auth
+            end
         end
 
         local options = {}
@@ -324,6 +333,10 @@ app:match('update_project', '/api/users/:username/projects/:projectname/update/:
             local xmlData = xml.load(project.contents)
             xml.find(xmlData, 'notes')[1] = options['notes']
             options['contents'] = xml.dump(xmlData)
+        end
+
+        if options['admin_tags'] == nil then
+            options['admin_tags'] = ""
         end
 
         project:update(options)
