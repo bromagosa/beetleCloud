@@ -165,7 +165,10 @@ CREATE TABLE users (
     joined timestamp with time zone,
     about text,
     location text,
-    isadmin boolean
+    isadmin boolean,
+    reset_code text,
+    notify_comment boolean default true,
+    notify_like boolean default true
 );
 
 
