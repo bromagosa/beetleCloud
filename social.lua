@@ -218,3 +218,58 @@ app:match("password_reset", "/password_reset/:reset_code", respond_to({
         return { render = 'password_reset' }
     end
 }))
+
+app:match("change_password", "/change_password", respond_to({
+    OPTIONS = cors_options,
+    POST = function (self)
+        self.page_title = "Change Password"
+        local user = Users:find(self.session.username)
+
+        if (not user) then
+            self.page_title = "Failed: Change Password"
+            self.fail = true
+            self.message = "You are not logged in"
+            return { render = 'change_password' }
+        else
+			if (bcrypt.verify(self.params.old_password, user.password)) then
+
+				if (self.params.password ~= self.params.confirm_password) then
+					self.fail = true
+					self.message = "Passwords do not match"
+					return { render = 'change_password' }
+				end
+
+				if (string.len(self.params.password) < 3) then
+					self.fail = true
+					self.message = "Password is too short"
+					return { render = 'change_password' }
+				end
+
+				options = {
+					password = bcrypt.digest(self.params.password, 11),
+				}
+				user:update(options)
+			else
+				self.fail = true
+				self.message = "Old Password is incorrect"
+				return { render = 'change_password' }
+			end
+
+            self.success = true
+            return { render = 'change_password' }
+        end
+    end,
+    GET = function(self)
+		local user = Users:find(self.session.username)
+		self.page_title = "Change Password"
+
+        if (not user) then
+            self.page_title = "Failed: Change Password"
+            self.fail = true
+            self.message = "You are not logged in"
+        end
+
+
+        return { render = 'change_password' }
+    end
+}))
