@@ -417,6 +417,7 @@ img.fluid {
 .comment-item .author a { color:black}
 .comment-item .date {color: #ddd; font-size:0.7em;}
 
+
 @media(max-width:768px) {
 	.navbar ul { margin-right:0}
 	.navbar .search {margin-left:15px}
@@ -430,6 +431,13 @@ img.fluid {
 		width: 90%;
 		margin: 15px auto;
 	}
+}
+
+@media(max-width:970px) {
+	.navbar ul { margin-right:0}
+	.navbar .search {margin-left:0px;}
+	.navbar .search-results {margin-left:0}
+	.navbar .input-group {width:150px;}	
 }
 
 @media (min-width:1200px){

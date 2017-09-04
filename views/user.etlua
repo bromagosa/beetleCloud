@@ -66,6 +66,7 @@
 				<% end %>
 			</div>
 			<div class="joined"><p><strong>Joined:</strong> <%= user.joinedString %></p></div>
+			<div class="password"><p><a href="/change_password">Change my Password</a></p></div>
 			<% if visitor and visitor.isadmin then %>
 				<div class="email">
 					<a href="mailto:<%- user.email -%>"><%- user.email -%></a>
