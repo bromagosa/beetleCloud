@@ -14,7 +14,14 @@ config('development', {
     site_name = 'Beetle Cloud',
     port = 8080,
     session_name = 'beetlesession',
-    secret = 'a super secret phrase you should never ever make public'
+    secret = 'a super secret phrase you should never ever make public',
+
+     -- for sending email
+    mail_server = "",
+    mail_user     = "",
+    mail_password = "",
+    mail_from = "",
+    mail_footer = ""
 })
 
 config('production', {
@@ -28,5 +35,12 @@ config('production', {
     site_name = 'Beetle Cloud',
     port = 80,
     session_name = 'beetlesession',
-    secret = 'a super secret phrase you should never ever make public'
+    secret = 'a super secret phrase you should never ever make public',
+
+     -- for sending email
+    mail_server = "",
+    mail_user     = "",
+    mail_password = "",
+    mail_from = "".
+    mail_footer = ""
 })

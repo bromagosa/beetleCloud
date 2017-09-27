@@ -126,7 +126,8 @@ CREATE TABLE projects (
     id integer NOT NULL,
     shared timestamp with time zone,
     views integer,
-    imageisfeatured boolean
+    imageisfeatured boolean,
+    admin_tags text
 );
 
 
@@ -165,7 +166,10 @@ CREATE TABLE users (
     joined timestamp with time zone,
     about text,
     location text,
-    isadmin boolean
+    isadmin boolean,
+    reset_code text,
+    notify_comment boolean default true,
+    notify_like boolean default true
 );
 
 

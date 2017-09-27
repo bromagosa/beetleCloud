@@ -30,6 +30,8 @@ Additional Lua packages you need for the BeetleCloud to work properly are the Bc
 # luarocks install lapis
 # luarocks install xml
 # luarocks install bcrypt
+# luarocks install md5
+# luarocks install luasec
 ```
 
 ### PostgreSQL
