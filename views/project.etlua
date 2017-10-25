@@ -61,6 +61,7 @@
             </div>
 
             <% if visitor and visitor.isadmin then %>
+
                 <div class="pure-g admin">
                     <span align="center" class="pure-u-11-24">
                         <a class="pure-button red-button" align="center" onclick="deleteProject()">Delete</a>
@@ -70,6 +71,40 @@
                         <a class="pure-button red-button" align="center" onclick="shareProject()"><%= project.ispublic and "Unshare" or "Share" %></a>
                     </span>
                 </div>
+
+			<div class="admin_tags">
+					 <input id="fake-input2" style="opacity:0; filter:alpha(opacity=0);"></input>
+						<script>
+						    var ajax_admin_tags = new XMLHttpRequest();
+						    function update_admin_tags () {
+						        ajax_admin_tags.onreadystatechange = function () {
+						            if (ajax_admin_tags.readyState == 4 && ajax_admin_tags.status == 200) {
+						                document.getElementById('admin_tags').classList.add('flash');
+						            }
+						        };
+								path = '/api/users/<%= project.username %>/projects/<%= project.projectname %>';
+						        ajax_admin_tags.open('POST', path+ '/update/admin_tags');
+						        ajax_admin_tags.send(document.getElementById('admin_tags').textContent);
+						    };
+						    function checkKey_admin_tags (event, element) {
+						        var code = (event.keyCode ? event.keyCode : event.which);
+						        if (code == 13 && !event.shiftKey) {
+						            document.getElementById('fake-input2').focus();
+						        }
+						    };
+						</script>
+						<br />
+						Tags (admin, list of tags seperated by ";"):
+						<pre style="padding:0.5em;margin:0.5em 0; background:white"
+						    class="in-place"
+						    id="admin_tags"
+						    contenteditable="true"
+						    onblur="update_admin_tags()"
+						    onfocus="document.getElementById('admin_tags').classList.remove('flash');"
+						    onkeypress="checkKey_admin_tags(event, this)"><%= project.admin_tags or "" %>
+						  </pre>
+				</div>
+
             <% end %>
         </div>
     </div>

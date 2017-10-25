@@ -22,5 +22,11 @@
 
             <button type="submit" class="pure-button red-button">Sign in</button>
         </div>
+        
+		<div class="pure-controls">
+        <p><a href="/forgot_password">Forgot your Password?</a></p>
+		</div> 
+		
     </fieldset>
 </form>
+

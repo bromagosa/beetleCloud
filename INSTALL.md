@@ -30,6 +30,8 @@ Additional Lua packages you need for the BeetleCloud to work properly are the Bc
 # luarocks install lapis
 # luarocks install xml
 # luarocks install bcrypt
+# luarocks install md5
+# luarocks install luasec
 ```
 
 ### PostgreSQL
@@ -93,7 +95,7 @@ Of course, the BeetleCloud makes no sense without Beetle Blocks. You should clon
 
 ```
 $ git clone https://github.com/ericrosenbaum/BeetleBlocks.git /tmp/BeetleBlocks
-$ cp -r /tmp/BeetleBlocks/run [path-to-beetleCloud]/static
+$ cp -r /tmp/BeetleBlocks [path-to-beetleCloud]/static/run
 ```
 
 ## Running the BeetleCloud
@@ -109,5 +111,5 @@ You can now point your browser to `http://localhost:8080`.
 When deploying it, you'll need to add the `--production` flag to it, and if you're using port 80 you'll need to run Lapis from a user account with permission to do so:
 
 ```
-# lapis server --production
+$ lapis server --production
 ```
