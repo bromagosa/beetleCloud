@@ -42,9 +42,9 @@
 				  <a href="#" class="dropdown-toggle"
 					data-toggle="dropdown" role="button"
 					aria-haspopup="true" aria-expanded="false">
-					<img width='24' height='24' class="gravatar" alt="gravatar"
+					<img width='32' height='32' class="img-circle gravatar" style="margin-top:-6px" alt="gravatar"
 						src="http://www.gravatar.com/avatar/<%- session.gravatar %>?s=24&d=http%3A%2F%2Fbeta.turtlestitch.org%2Fstatic%2Fimg%2Fturtle.png" />
-					  as <%- session.username %>
+				<%- session.username %>
 						<span class="caret"></span></a>
 				  <ul class="dropdown-menu">
                     <li><a href="/myprojects">My Projects</a></li>
