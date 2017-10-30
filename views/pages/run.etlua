@@ -18,7 +18,7 @@
 $(document).ready(function(){
 	$(".footer").hide();
 	if (window.location.hash) {
-		u =  window.location.hash + "&d =" + Date.now();
+		u =  window.location.hash; // + "&d =" + Date.now();
 	} else {
 		u = "?d=" + Date.now();
 	}
