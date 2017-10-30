@@ -36,9 +36,6 @@ app:get('/run', function(self)
     return { render = 'pages/run' }
 end)
 
-app:get('/beta', function(self)
-    return { redirect_to = 'http://m.ash.to/turtlestitch/alpha-three' }
-end)
 
 --app:get('/run', function(self)
 --    return { render = 'pages/run' }

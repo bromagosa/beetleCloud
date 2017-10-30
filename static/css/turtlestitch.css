@@ -264,6 +264,8 @@ border-radius: 4px;
 
 .big-thumbnail div.fileinput {margin-top:10px}
 .notes pre {min-height:5em}
+.notes pre.publ {font-family: Roboto;border:0;background:none;padding:0}
+
 
 .myprojects .browser {min-height:300px}
 .myprojects .search {width:90%}

@@ -58,7 +58,8 @@
                             property = 'notes'
                     })
                   else %>
-                      <pre class="proto-in-place"><%= project.notes ~= '' and project.notes or 'This project has no notes.' %></pre>
+                      <pre class="publ"><%= project.notes ~= '' and project.notes or 'This project has no notes.' %>
+                      </pre>
                 <% end %>
             </div>
             <br />
