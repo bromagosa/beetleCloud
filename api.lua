@@ -38,7 +38,7 @@ end
 
 err = {
     notLoggedIn = errorResponse('you are not logged in'),
-    notfound = errorResponse('not found'),   
+    notfound = errorResponse('not found'),
     auth = errorResponse('authentication error'),
     nonexistentUser = errorResponse('no user with this username exists'),
     nonexistentProject = errorResponse('this project does not exist, or you do not have permissions to access it')
@@ -342,7 +342,7 @@ app:match('update_project', '/api/users/:username/projects/:projectname/update/:
         end
 
         project:update(options)
-        
+
     end
 }))
 
@@ -439,7 +439,7 @@ app:match('set_visibility', '/api/users/:username/projects/:projectname/visibili
         else
             return err.nonexistentProject
         end
-        
+
     end
 }))
 
@@ -466,7 +466,7 @@ app:match('remove_project', '/api/users/:username/projects/:projectname/delete',
         else
             return err.nonexistentProject
         end
-        
+
     end
 }))
 
@@ -487,9 +487,9 @@ app:match('toggle_like', '/api/users/:username/projects/:projectname/like', resp
 
         if (project) then
 
-            if (Likes:count('liker = ? and projectname = ? and projectowner = ?', 
-                self.session.username, 
-                self.params.projectname, 
+            if (Likes:count('liker = ? and projectname = ? and projectowner = ?',
+                self.session.username,
+                self.params.projectname,
                 self.params.username) == 0) then
 
                 Likes:create({
@@ -503,8 +503,8 @@ app:match('toggle_like', '/api/users/:username/projects/:projectname/like', resp
                 db.delete(
                     'likes',
                     'liker = ? and projectname = ? and projectowner = ?',
-                    self.session.username, 
-                    self.params.projectname, 
+                    self.session.username,
+                    self.params.projectname,
                     self.params.username)
                 return jsonResponse({ text = 'project unliked' })
             end
