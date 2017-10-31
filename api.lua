@@ -38,6 +38,7 @@ end
 
 err = {
     notLoggedIn = errorResponse('you are not logged in'),
+    notfound = errorResponse('not found'),   
     auth = errorResponse('authentication error'),
     nonexistentUser = errorResponse('no user with this username exists'),
     nonexistentProject = errorResponse('this project does not exist, or you do not have permissions to access it')
