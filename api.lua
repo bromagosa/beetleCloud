@@ -59,6 +59,11 @@ local Likes = Model:extend('likes', {
     primary_key = { 'id' }
 })
 
+local Comments = Model:extend('comments', {
+    primary_key = { 'id' }
+})
+
+
 
 -- Before filter
 
@@ -221,7 +226,7 @@ app:match('login', '/api/users/login', respond_to({
         elseif (bcrypt.verify(self.params.password, user.password)) then
             self.session.username = user.username
             self.session.email = user.email
-            self.session.gravatar = md5.sumhexa(user.email)            
+            self.session.gravatar = md5.sumhexa(user.email)
             if comesFromWebClient then
                 return { redirect_to = '/' }
             else
@@ -517,7 +522,7 @@ app:match('toggle_like', '/api/users/:username/projects/:projectname/like', resp
                     projectowner = self.params.username,
                     liker = self.session.username
                 })
-                
+
                 if (user.notify_like) then
                     ok, err = send_mail(user.email, "Someone likes your project",
                         "Dear " .. self.params.username .. ", \n\n"
@@ -528,7 +533,7 @@ app:match('toggle_like', '/api/users/:username/projects/:projectname/like', resp
                         .. self:build_url("/users/" .. self.params.username .. "/projects/" .. util.escape(self.params.projectname))
                         .. config.mail_footer
                     )
-                end                
+                end
 
                 return jsonResponse({ text = 'project liked' })
             else
@@ -609,3 +614,98 @@ app:match('stats', '/api/stats', respond_to({
         return jsonResponse(getStats())
     end
 }))
+
+-- comments
+
+app:match('new_comment', '/api/comments/new', respond_to({
+    OPTIONS = cors_options,
+    POST = function (self)
+
+        validate.assert_valid(self.params, {
+            { 'projectname', exists = true, min_length = 3 },
+            { 'projectowner', exists = true },
+            { 'author', exists = true, min_length = 3 },
+            { 'contents', exists = true, min_length = 3 }
+        })
+
+        if (string.len(self.params.contents) < 3) then
+             return errorResponse('comment too short')
+        end
+
+        if (self.params.author ~= self.session.username) then
+            return err.auth
+        end
+
+        local existingProject = Projects:find(self.params.projectowner, self.params.projectname)
+
+        if (existingProject) then
+            self.params.contents = self.params.contents:gsub("^%s*(.-)%s*$", "%1")
+            self.params.contents = self.params.contents:gsub("%b<>", "")
+            comment = Comments:create({
+                projectname = self.params.projectname,
+                author = self.params.author,
+                contents = self.params.contents,
+                projectowner = self.params.projectowner,
+                date = os.date()
+            })
+
+            if (self.params.author ~= self.params.projectowner) then
+                user = Users:find(self.params.projectowner)
+                if (user.notify_comment) then
+                    ok, err = send_mail(user.email, "New comment",
+                        "Dear " .. self.params.projectowner .. ", \n\n"
+                        .. "Your project \"" .. self.params.projectname .. "\" received "
+                        .. "a new comment from user "
+                        .. self.params.author .. "\n\n"
+                        .. "Visit your project and read all comments here: \n"
+                        .. self:build_url("/users/" .. self.params.projectowner .. "/projects/" .. util.escape(self.params.projectname))
+                        .. config.mail_footer
+                    )
+                end
+            end
+            return jsonResponse({ comment = comment})
+        else
+            return err.nonexistentProject
+        end
+    end
+}))
+
+
+app:get('/api/users/:username/projects/:projectname/comments', function (self)
+    return jsonResponse(
+    --    Comments:select('where projectowner = ? and projectname = ? order by id desc',
+    --    self.params.username,
+    --    self.params.projectname)
+        db.select(
+            'distinct comments.contents, comments.id, comments.date, username as author, md5(email) as gravatar from comments, users where comments.projectname = ? and comments.projectowner = ? and comments.author = users.username order by comments.id desc',
+            self.params.projectname,
+            self.params.username)
+    )
+end)
+
+app:get('/api/comment/:id', function (self)
+    return jsonResponse(
+    db.select(
+        'distinct comments.contents, comments.id, comments.date, users.username as author, md5(users.email) as gravatar from comments, users where comments.id = ? and comments.author = users.username',
+        self.params.id)
+    )
+end)
+
+
+app:get('/api/comment/delete/:id', function (self)
+    local visitor = Users:find(self.session.username)
+    local comment = Comments:find(self.params.id)
+
+    if (not comment) then
+        return err.notfound
+    end
+
+    if (self.params.username ~= self.session.username and not (visitor or visitor.isadmin)) then
+        return err.auth
+    end
+
+    comment:delete()
+
+    return jsonResponse({ text = 'comment removed', id = self.params.id })
+
+end)
