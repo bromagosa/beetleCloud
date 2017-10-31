@@ -6,7 +6,7 @@ local app = require 'app'
 local app_helpers = require 'lapis.application'
 local validate = require 'lapis.validate'
 local bcrypt = require 'bcrypt'
-local db = require 'lapis.db' 
+local db = require 'lapis.db'
 local Model = require('lapis.db.model').Model
 local util = require('lapis.util')
 local respond_to = require('lapis.application').respond_to
@@ -22,9 +22,9 @@ end
 
 jsonResponse = function (json)
     return {
-        layout = false, 
-        status = 200, 
-        readyState = 4, 
+        layout = false,
+        status = 200,
+        readyState = 4,
         json = json
     }
 end
@@ -96,7 +96,7 @@ app:get('/api/users/:username/become', function (self)
     if (visitor and visitor.isadmin) then
         self.session.username = self.params.username
         return jsonResponse({ text = visitor.username .. ' became ' .. self.params.username })
-    else 
+    else
         return err.auth
     end
 end)
@@ -105,22 +105,22 @@ app:get('/api/projects/:selection/:limit/:offset(/:username)', function (self)
 
     local username = self.params.username or 'Examples'
     local list = self.params.list or ''
-    local notes = self.params.notes or ''
     local tag = self.params.tag or ''
+    local notes = self.params.notes or ''
 
-    local query = { 
+    local query = {
         newest = 'projectName, username from projects where isPublic = true order by id desc',
         popular = 'count(*) as likecount, projects.projectName, projects.username from projects, likes where projects.isPublic = true and projects.projectName = likes.projectName and projects.username = likes.projectowner group by projects.projectname, projects.username order by likecount desc',
         favorite = 'distinct projects.id, projects.projectName, projects.username from projects, likes where projects.projectName = likes.projectName and projects.username = likes.projectowner and likes.liker = \'' .. username .. '\' group by projects.projectname, projects.username order by projects.id desc',
         shared = 'projectName, username from projects where isPublic = true and username = \'' .. username .. '\' order by id desc',
         notes = 'projectName, username from projects where isPublic = true and username = \'' .. username .. '\' and notes = \'' .. notes .. '\' order by id desc',
         list = 'projectName, username from projects where isPublic = true and username = \'' .. username .. '\' and projectName in ' .. list ..  ' order by id desc',
-        tag = 'projectName, username from projects where isPublic = true and admin_tags ilike \'%' .. tag .. '%\' order by id desc',
+        tag = 'projectName, username from projects where isPublic = true and admin_tags ilike \'%' .. tag .. '%\' order by id desc'
     }
 
     return jsonResponse(
         db.select(
-            query[self.params.selection] ..' limit ? offset ?',
+            query[self.params.selection] .. ' limit ? offset ?',
             self.params.limit or 5,
             self.params.offset or 0))
 end)
@@ -133,8 +133,8 @@ app:get('/api/users/:username/projects/:projectname/image', function (self)
             return altImageFor(project)
         else
             return {
-                layout = false, 
-                status = 200, 
+                layout = false,
+                status = 200,
                 readyState = 4,
                 project.thumbnail
             }
@@ -151,12 +151,12 @@ app:match('project_list', '/api/users/:username/projects', respond_to({
 
         if (self.params.username == self.session.username) then
             return jsonResponse(Projects:find_all(
-            { self.params.username }, 
+            { self.params.username },
             { key = 'username' }))
         else
             return jsonResponse(Projects:find_all(
-            { self.params.username }, 
-            { 
+            { self.params.username },
+            {
                 key = 'username',
                 where = { ispublic = true }
             }))
@@ -204,7 +204,7 @@ app:match('login', '/api/users/login', respond_to({
             if comesFromWebClient then
                 return { redirect_to = '/' }
             else
-                return jsonResponse({ 
+                return jsonResponse({
                     text = 'User ' .. self.params.username .. ' logged in'
                 })
             end
@@ -227,7 +227,7 @@ app:match('logout', '/api/users/logout', respond_to({
         if comesFromWebClient then
             return { redirect_to = '/' }
         else
-            return jsonResponse({ 
+            return jsonResponse({
                 text = 'User ' .. username .. ' logged out'
             })
         end
@@ -314,7 +314,7 @@ app:match('update_project', '/api/users/:username/projects/:projectname/update/:
             return err.nonexistentProject
         end
 
-		if (self.params.property == 'admin_tags') then
+        if (self.params.property == 'admin_tags') then
             local visitor = Users:find(self.session.username)
             if (not visitor.isadmin) then
                 return err.auth
@@ -430,7 +430,7 @@ app:match('set_visibility', '/api/users/:username/projects/:projectname/visibili
                 project:update({ shared = db.format_date() })
             end
 
-            return jsonResponse({ 
+            return jsonResponse({
                 text = 'project ' .. self.params.projectname .. ' is now ' ..
                 (self.params.ispublic == 'true' and 'public' or 'private')
             })
@@ -523,7 +523,7 @@ app:match('alternate_image', '/api/users/:username/projects/:projectname/altimag
             return err.nonexistentProject
         end
 
-        if (self.params.featureImage) then 
+        if (self.params.featureImage) then
             -- we got the featureImage parameter, meaning we want to change the featured image
             -- for this project
 
@@ -573,5 +573,5 @@ app:match('stats', '/api/stats', respond_to({
     OPTIONS = cors_options,
     GET = function (self)
         return jsonResponse(getStats())
-    end 
+    end
 }))
