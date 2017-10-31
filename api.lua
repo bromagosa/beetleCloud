@@ -5,6 +5,7 @@
 local app = require 'app'
 local app_helpers = require 'lapis.application'
 local validate = require 'lapis.validate'
+local md5 = require 'md5'
 local bcrypt = require 'bcrypt'
 local db = require 'lapis.db'
 local Model = require('lapis.db.model').Model
@@ -90,6 +91,22 @@ end)
 app:get('/api/users/:username', function (self)
     -- find() doesn't allow for field filtering
     return jsonResponse(Users:select('where username = ?', self.params.username, { fields = 'username, location, about, joined' })[1])
+end)
+
+app:get('/api/users/:username/gravatar', function (self)
+    local user = Users:find(self.params.username)
+
+    if (user) then
+        return {
+            layout = false,
+            status = 200,
+            readyState = 4,
+            "http://www.gravatar.com/avatar/"
+                .. md5.sumhexa(user.email)
+        }
+    else
+        return err.nonexistentUser
+    end
 end)
 
 app:get('/api/users/:username/become', function (self)
