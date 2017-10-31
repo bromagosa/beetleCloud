@@ -61,9 +61,16 @@ end)
 
 app:get('/users/:username', function(self)
     self.user = Users:find(self.params.username)
-    self.user.joinedString = dateString(self.user.joined)
-    self.visitor = Users:find(self.session.username)
-    return { render = 'user' }
+    if self.user then
+        self.user.joinedString = dateString(self.user.joined)
+        self.visitor = Users:find(self.session.username)
+        self.gravatar = md5.sumhexa(self.user.email)
+        self.page_title = "User " .. self.params.username
+        return { render = 'user' }
+    else
+        return { render = 'notfound' }
+    end
+end)
 end)
 
 app:get('/users/:username/projects/g/:collection', function(self)
