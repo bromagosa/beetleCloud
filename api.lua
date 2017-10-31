@@ -220,6 +220,8 @@ app:match('login', '/api/users/login', respond_to({
             end
         elseif (bcrypt.verify(self.params.password, user.password)) then
             self.session.username = user.username
+            self.session.email = user.email
+            self.session.gravatar = md5.sumhexa(user.email)            
             if comesFromWebClient then
                 return { redirect_to = '/' }
             else
