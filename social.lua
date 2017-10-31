@@ -4,13 +4,12 @@
 -- project pages and user pages
 
 local app = require 'app'
-local db = require 'lapis.db' 
-local Model = require('lapis.db.model').Model
-local config = require "lapis.config".get()
-local respond_to = require('lapis.application').respond_to
+local db = require 'lapis.db'
 local md5 = require 'md5'
+local Model = require('lapis.db.model').Model
+local respond_to = require('lapis.application').respond_to
 local bcrypt = require 'bcrypt'
-
+local config = require "lapis.config".get()
 
 -- Database abstractions
 
