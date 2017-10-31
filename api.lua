@@ -11,6 +11,7 @@ local Model = require('lapis.db.model').Model
 local util = require('lapis.util')
 local respond_to = require('lapis.application').respond_to
 local xml = require('xml')
+local config = require "lapis.config".get()
 
 require 'backend_utils'
 
