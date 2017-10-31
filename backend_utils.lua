@@ -69,6 +69,16 @@ function getStats()
     }
 end
 
+
+function dateString(sqlDate)
+    if (sqlDate == nil) then return 'never' end
+    actualDate = require('date')(sqlDate)
+    return string.format('%02d', actualDate:getday()) ..
+                '.' .. string.format('%02d', actualDate:getmonth()) ..
+                '.' .. actualDate:getyear()
+end
+
+
 send_mail =  function (rcpt, subject, body)
     local socket = require 'socket'
     local base = _G

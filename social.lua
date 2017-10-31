@@ -115,14 +115,6 @@ app:get('/users/:username/projects/:projectname', function(self)
     end
 end)
 
-function dateString(sqlDate)
-    if (sqlDate == nil) then return 'never' end
-    actualDate = require('date')(sqlDate)
-    return string.format('%02d', actualDate:getday()) ..
-                '.' .. string.format('%02d', actualDate:getmonth()) ..
-                '.' .. actualDate:getyear()
-end
-
 app:match('forgot_password', '/forgot_password', respond_to({
     OPTIONS = cors_options,
     POST = function (self)
