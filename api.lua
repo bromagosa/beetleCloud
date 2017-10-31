@@ -503,6 +503,7 @@ app:match('toggle_like', '/api/users/:username/projects/:projectname/like', resp
         end
 
         local project = Projects:find(self.params.username, self.params.projectname)
+        local user = Users:find(self.params.username)
 
         if (project) then
 
@@ -516,6 +517,18 @@ app:match('toggle_like', '/api/users/:username/projects/:projectname/like', resp
                     projectowner = self.params.username,
                     liker = self.session.username
                 })
+                
+                if (user.notify_like) then
+                    ok, err = send_mail(user.email, "Someone likes your project",
+                        "Dear " .. self.params.username .. ", \n\n"
+                        .. "Your project \"" .. self.params.projectname .. "\" got "
+                        .. "a thumb up from user "
+                        .. self.session.username .. "\n\n"
+                        .. "Visit your project and see all likes here: \n"
+                        .. self:build_url("/users/" .. self.params.username .. "/projects/" .. util.escape(self.params.projectname))
+                        .. config.mail_footer
+                    )
+                end                
 
                 return jsonResponse({ text = 'project liked' })
             else
