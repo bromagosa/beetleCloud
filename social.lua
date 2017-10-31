@@ -76,7 +76,6 @@ app:get('/users/:username', function(self)
         return { render = 'notfound' }
     end
 end)
-end)
 
 app:get('/users/:username/projects/g/:collection', function(self)
     self.collection = self.params.collection
