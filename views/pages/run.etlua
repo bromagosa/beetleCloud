@@ -18,6 +18,7 @@
 $(document).ready(function(){
 	$(".footer").hide();
 	url = new URL(window.location.href);
+	u = "";
 	searchParams = new URLSearchParams(url.search);
 	if (window.location.hash) {
 		u =  window.location.hash; // + "&d =" + Date.now();

@@ -137,23 +137,22 @@
         });
     };
 
-    function deleteProject () {
-        confirm('You are about to remove the project "' + currentProject
-                + '"<br/><br/>This action is <strong>permanent</strong> and cannot be undone. Are you sure you want to continue?',
-                function (data) {
-                    if (data) {
-                        ajax.onreadystatechange = function () {
-                            if (ajax.readyState == 4 && ajax.status == 200) {
-                                document.getElementsByClassName('project-item selected')[0].remove();
-                                selectProject();
-                            }
-                        };
-                        ajax.open('GET', '/api/users/<%= session.username %>/projects/' + encodeURIComponent(currentProject) + '/delete', true);
-                        ajax.send();
-                    }
-                },
-                { return: true });
-    };
+
+	function deleteProject () {
+		message = 'You are about to remove the project "' + encodeURIComponent(currentProject) + '"<br/><br/>' +
+				'This action is <strong>permanent</strong> and cannot be undone. <br /><br />' +
+				'Are you sure you want to continue?',
+		callback = function (result) {
+			if (!result) return;
+			ajax.onreadystatechange = function () {
+				document.getElementsByClassName('project-item selected')[0].remove();
+				bootbox.alert('Project removed');
+			};
+			ajax.open('GET', '/api/users/<%= session.username %>/projects/' + encodeURIComponent(currentProject) + '/delete', true);
+			ajax.send();
+		}
+		bootbox.confirm(message, callback);
+	};
 
     function shareProject () {
         var element = document.getElementsByClassName('project-item selected')[0],

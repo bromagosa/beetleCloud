@@ -490,6 +490,7 @@ app:match('remove_project', '/api/users/:username/projects/:projectname/delete',
 
         if (project) then
             db.delete('likes', { projectowner = self.params.username, projectname = self.params.projectname })
+            db.delete('comments', { projectowner = self.params.username, projectname = self.params.projectname })
             project:delete()
             return jsonResponse({ text = 'project ' .. self.params.projectname .. ' removed' })
         else
