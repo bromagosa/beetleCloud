@@ -17,12 +17,13 @@
 <script>
 $(document).ready(function(){
 	$(".footer").hide();
+	url = new URL(window.location.href);
+	searchParams = new URLSearchParams(url.search);
 	if (window.location.hash) {
 		u =  window.location.hash; // + "&d =" + Date.now();
-	} else {
-		u = "?d=" + Date.now();
 	}
-	$("#iframe").attr("src", "/static/run" + u);
+	params = '?' + searchParams  + "&d=" + Date.now();
+	$("#iframe").attr("src", "/static/run" + params + u);
 	$("iframe").on("load", function() {
 		$(".loading").hide();
 	});
