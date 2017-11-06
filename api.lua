@@ -41,8 +41,8 @@ end
 
 err = {
     notLoggedIn = errorResponse('you are not logged in'),
-    auth = errorResponse('authentication error'),
     notfound = errorResponse('not found'),
+    auth = errorResponse('authentication error'),
     nonexistentUser = errorResponse('no user with this username exists'),
     nonexistentProject = errorResponse('this project does not exist, or you do not have permissions to access it')
 }
@@ -140,9 +140,9 @@ app:get('/api/projects/:selection/:limit/:offset(/:username)', function (self)
         popular = 'count(*) as likecount, projects.projectName, projects.username from projects, likes where projects.isPublic = true and projects.projectName = likes.projectName and projects.username = likes.projectowner group by projects.projectname, projects.username order by likecount desc',
         favorite = 'distinct projects.id, projects.projectName, projects.username from projects, likes where projects.projectName = likes.projectName and projects.username = likes.projectowner and likes.liker = \'' .. username .. '\' group by projects.projectname, projects.username order by projects.id desc',
         shared = 'projectName, username from projects where isPublic = true and username = \'' .. username .. '\' order by id desc',
-        notes = 'projectName, username from projects where isPublic = true and username = \'' .. username .. '\' and notes ilike \'%' .. notes .. '%\' order by id desc',
-        tag = 'projectName, username from projects where isPublic = true and admin_tags ilike \'%' .. tag .. '%\' order by id desc',
-        list = 'projectName, username from projects where isPublic = true and username = \'' .. username .. '\' and projectName in ' .. list ..  ' order by id desc'
+        notes = 'projectName, username from projects where isPublic = true and username = \'' .. username .. '\' and notes = \'' .. notes .. '\' order by id desc',
+        list = 'projectName, username from projects where isPublic = true and username = \'' .. username .. '\' and projectName in ' .. list ..  ' order by id desc',
+        tag = 'projectName, username from projects where isPublic = true and admin_tags ilike \'%' .. tag .. '%\' order by id desc'
     }
 
     return jsonResponse(
@@ -341,7 +341,6 @@ app:match('update_project', '/api/users/:username/projects/:projectname/update/:
     POST = function (self)
         local project = Projects:find(self.params.username, self.params.projectname);
 
-
         if (not project) then
             return err.nonexistentProject
         end
@@ -370,6 +369,7 @@ app:match('update_project', '/api/users/:username/projects/:projectname/update/:
         if options['admin_tags'] == nil then
             options['admin_tags'] = ""
         end
+
         project:update(options)
 
     end
