@@ -227,6 +227,7 @@ function post_comment (projectname, author, username) {
         "&contents=" +
         encodeURIComponent(document.getElementById('new_comment').value)
         );
+      document.getElementById('new_comment').classList.add('flash');
 }
 
 function delete_comment (id) {
