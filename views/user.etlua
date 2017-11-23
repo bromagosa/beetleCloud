@@ -1,7 +1,9 @@
 <div class="user">
     <span class="title-text">
-            <% if (session.gravatar) then %>
-                    <img width='48' height='48' class="gravatar" style="vertical-align:top;border-radius: 50%;padding-top:1px" src="http://www.gravatar.com/avatar/<%- session.gravatar %>?s=48" />
+            <% if (gravatar) then %>
+                    <img width='48' height='48' class="gravatar" 
+                    style="vertical-align:top;border-radius: 50%;padding-top:1px" 
+                    src="http://www.gravatar.com/avatar/<%- gravatar %>?s=48&d=http%3A%2F%2Fbeetleblocks.com%2Fstatic/logo.png" />
 			<% end %>
 			<%- user.username %></span>
     <div class="info pure-g">

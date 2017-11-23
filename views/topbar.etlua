@@ -24,7 +24,8 @@
             <li class="pure-menu-item pure-u-3-24 pure-menu-has-children pure-menu-allow-hover">
                 <a href="#" id="menuLink1" class="pure-menu-link">
 					<% if (session.gravatar) then %>
-						<img width='24' height='24' class="gravatar" style="vertical-align:top;border-radius: 50%;padding-top:1px" src="http://www.gravatar.com/avatar/<%- session.gravatar %>?s=24" />
+						<img width='24' height='24' class="gravatar"
+						src="http://www.gravatar.com/avatar/<%- session.gravatar %>?s=24&d=http%3A%2F%2Fbeetleblocks.com%2Fstatic/logo.png" />
 					<% end %>
 				 <%- session.username %>
 				</a>
