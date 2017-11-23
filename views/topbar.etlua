@@ -23,7 +23,9 @@
             <i class="pure-u-3-24"></i>
             <li class="pure-menu-item pure-u-3-24 pure-menu-has-children pure-menu-allow-hover">
                 <a href="#" id="menuLink1" class="pure-menu-link">
-                 <img width='24' height='24' class="gravatar" style="vertical-align:top;border-radius: 50%;padding-top:1px" src="http://www.gravatar.com/avatar/<%- session.gravatar %>?s=24" />
+					<% if (session.gravatar) then %>
+						<img width='24' height='24' class="gravatar" style="vertical-align:top;border-radius: 50%;padding-top:1px" src="http://www.gravatar.com/avatar/<%- session.gravatar %>?s=24" />
+					<% end %>
 				 <%- session.username %>
 				</a>
                 <ul class="pure-menu-children pure-u-3-24">

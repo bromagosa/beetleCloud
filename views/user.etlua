@@ -1,5 +1,9 @@
 <div class="user">
-    <span class="title-text"><%- user.username %></span>
+    <span class="title-text">
+            <% if (session.gravatar) then %>
+                    <img width='48' height='48' class="gravatar" style="vertical-align:top;border-radius: 50%;padding-top:1px" src="http://www.gravatar.com/avatar/<%- session.gravatar %>?s=48" />
+			<% end %>
+			<%- user.username %></span>
     <div class="info pure-g">
         <div class="pure-u-5-8">
             <span class="title-text">About me</span>
