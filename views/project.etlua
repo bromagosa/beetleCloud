@@ -106,11 +106,62 @@
 				</div>
 
             <% end %>
+            
+
+		<div class="comments">
+			<h3><i class="fa fa-comments" aria-hidden="true"></i>
+			Comments (<i id="comments-count"><%= table.getn(project.comments) %></i>)</h3>
+
+			<% if (session.username ~= "") then %>
+
+
+
+			<div class="pure-g">
+				<div class="pure-u-5-5">
+					<textarea style="padding:0.5em;margin:0.5em 0; background:white"
+						class="in-place"
+						id="new_comment"
+						contenteditable="true"
+						onblur=""
+						placeholder="Leave a comment"
+						onfocus="document.getElementById('new_comment').classList.remove('flash');"
+						>
+
+					</textarea>
+				</div>
+				<div class="pure-u-1-5">
+					<a class="pure-button red-button" onClick="post_comment('<%= project.projectname %>','<%= session.username %>','<%= project.username %>')">Post</a>
+				</div>
+				<div class="pure-u-1-5">
+					<a class="pure-button red-button" onClick="reset_comment()">Cancel</a>
+				</div>
+			</div>
+
+			<% end %>
+
+			<div id="comment-pool">
+			</div>
+
+		</div>
+		            
         </div>
     </div>
 </div>
 
 <script src="/static/project.js"></script>
+<script src="/static/moment.js"></script>
+<script>
+	var ajax = new XMLHttpRequest();
+	getComments('<%= project.username %>','<%= project.projectname %>', '<%= session.username %>', );
+	username = '<%= session.username %>';
+
+	<% if visitor and visitor.isadmin then %>
+	isadmin = true;
+	<% else %>
+	isadmin = false;
+	<% end %>
+</script>
+
 
 <% if visitor and visitor.isadmin then %>
     <script>

@@ -22,7 +22,13 @@
         %>
             <i class="pure-u-3-24"></i>
             <li class="pure-menu-item pure-u-3-24 pure-menu-has-children pure-menu-allow-hover">
-                <a href="#" id="menuLink1" class="pure-menu-link"><%- session.username %></a>
+                <a href="#" id="menuLink1" class="pure-menu-link">
+					<% if (session.gravatar) then %>
+						<img width='24' height='24' class="gravatar"
+						src="http://www.gravatar.com/avatar/<%- session.gravatar %>?s=24&d=http%3A%2F%2Fbeetleblocks.com%2Fstatic/logo.png" />
+					<% end %>
+				 <%- session.username %>
+				</a>
                 <ul class="pure-menu-children pure-u-3-24">
                     <li class="pure-menu-item"><a class="pure-menu-link" href="/myprojects">My Projects</a></li>
                     <li class="pure-menu-item"><a class="pure-menu-link" href="/users/<%= session.username %>">My Profile</a></li>
