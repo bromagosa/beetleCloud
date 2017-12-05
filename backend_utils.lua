@@ -1,28 +1,28 @@
-local db = require 'lapis.db' 
+local db = require 'lapis.db'
 
-function altImageFor (aProject, wantsRaw) 
+function altImageFor (aProject, wantsRaw)
     local dir = 'projects/' .. math.floor(aProject.id / 1000) .. '/' .. aProject.id -- we store max 1000 projects per dir
     local file = io.open(dir .. '/image.png', 'r')
     if (file) then
         local image = file:read("*all")
         file:close()
         return {
-            layout = false, 
-            status = 200, 
+            layout = false,
+            status = 200,
             readyState = 4,
             image
         }
     else
         return {
-            layout = false, 
-            status = 200, 
+            layout = false,
+            status = 200,
             readyState = 4,
             '/static/no-image.png'
         }
     end
 end
 
-function getStats() 
+function getStats()
     function count (tableName, interval, dateField)
         local query = 'select count(*) from ' .. tableName
         if interval ~= nil then
@@ -68,6 +68,16 @@ function getStats()
         }
     }
 end
+
+
+function dateString(sqlDate)
+    if (sqlDate == nil) then return 'never' end
+    actualDate = require('date')(sqlDate)
+    return string.format('%02d', actualDate:getday()) ..
+                '.' .. string.format('%02d', actualDate:getmonth()) ..
+                '.' .. actualDate:getyear()
+end
+
 
 send_mail =  function (rcpt, subject, body)
     local socket = require 'socket'

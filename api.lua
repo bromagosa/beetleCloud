@@ -5,12 +5,14 @@
 local app = require 'app'
 local app_helpers = require 'lapis.application'
 local validate = require 'lapis.validate'
+local md5 = require 'md5'
 local bcrypt = require 'bcrypt'
-local db = require 'lapis.db' 
+local db = require 'lapis.db'
 local Model = require('lapis.db.model').Model
 local util = require('lapis.util')
 local respond_to = require('lapis.application').respond_to
 local xml = require('xml')
+local config = require "lapis.config".get()
 
 require 'backend_utils'
 
@@ -22,9 +24,9 @@ end
 
 jsonResponse = function (json)
     return {
-        layout = false, 
-        status = 200, 
-        readyState = 4, 
+        layout = false,
+        status = 200,
+        readyState = 4,
         json = json
     }
 end
@@ -37,6 +39,7 @@ end
 
 err = {
     notLoggedIn = errorResponse('you are not logged in'),
+    notfound = errorResponse('not found'),
     auth = errorResponse('authentication error'),
     nonexistentUser = errorResponse('no user with this username exists'),
     nonexistentProject = errorResponse('this project does not exist, or you do not have permissions to access it')
@@ -55,6 +58,11 @@ local Projects = Model:extend('projects', {
 local Likes = Model:extend('likes', {
     primary_key = { 'id' }
 })
+
+local Comments = Model:extend('comments', {
+    primary_key = { 'id' }
+})
+
 
 
 -- Before filter
@@ -90,13 +98,29 @@ app:get('/api/users/:username', function (self)
     return jsonResponse(Users:select('where username = ?', self.params.username, { fields = 'username, location, about, joined' })[1])
 end)
 
+app:get('/api/users/:username/gravatar', function (self)
+    local user = Users:find(self.params.username)
+
+    if (user) then
+        return {
+            layout = false,
+            status = 200,
+            readyState = 4,
+            "http://www.gravatar.com/avatar/"
+                .. md5.sumhexa(user.email)
+        }
+    else
+        return err.nonexistentUser
+    end
+end)
+
 app:get('/api/users/:username/become', function (self)
     local visitor = Users:find(self.session.username)
 
     if (visitor and visitor.isadmin) then
         self.session.username = self.params.username
         return jsonResponse({ text = visitor.username .. ' became ' .. self.params.username })
-    else 
+    else
         return err.auth
     end
 end)
@@ -105,22 +129,22 @@ app:get('/api/projects/:selection/:limit/:offset(/:username)', function (self)
 
     local username = self.params.username or 'Examples'
     local list = self.params.list or ''
-    local notes = self.params.notes or ''
     local tag = self.params.tag or ''
+    local notes = self.params.notes or ''
 
-    local query = { 
+    local query = {
         newest = 'projectName, username from projects where isPublic = true order by id desc',
         popular = 'count(*) as likecount, projects.projectName, projects.username from projects, likes where projects.isPublic = true and projects.projectName = likes.projectName and projects.username = likes.projectowner group by projects.projectname, projects.username order by likecount desc',
         favorite = 'distinct projects.id, projects.projectName, projects.username from projects, likes where projects.projectName = likes.projectName and projects.username = likes.projectowner and likes.liker = \'' .. username .. '\' group by projects.projectname, projects.username order by projects.id desc',
         shared = 'projectName, username from projects where isPublic = true and username = \'' .. username .. '\' order by id desc',
         notes = 'projectName, username from projects where isPublic = true and username = \'' .. username .. '\' and notes = \'' .. notes .. '\' order by id desc',
         list = 'projectName, username from projects where isPublic = true and username = \'' .. username .. '\' and projectName in ' .. list ..  ' order by id desc',
-        tag = 'projectName, username from projects where isPublic = true and admin_tags ilike \'%' .. tag .. '%\' order by id desc',
+        tag = 'projectName, username from projects where isPublic = true and admin_tags ilike \'%' .. tag .. '%\' order by id desc'
     }
 
     return jsonResponse(
         db.select(
-            query[self.params.selection] ..' limit ? offset ?',
+            query[self.params.selection] .. ' limit ? offset ?',
             self.params.limit or 5,
             self.params.offset or 0))
 end)
@@ -133,8 +157,8 @@ app:get('/api/users/:username/projects/:projectname/image', function (self)
             return altImageFor(project)
         else
             return {
-                layout = false, 
-                status = 200, 
+                layout = false,
+                status = 200,
                 readyState = 4,
                 project.thumbnail
             }
@@ -151,12 +175,12 @@ app:match('project_list', '/api/users/:username/projects', respond_to({
 
         if (self.params.username == self.session.username) then
             return jsonResponse(Projects:find_all(
-            { self.params.username }, 
+            { self.params.username },
             { key = 'username' }))
         else
             return jsonResponse(Projects:find_all(
-            { self.params.username }, 
-            { 
+            { self.params.username },
+            {
                 key = 'username',
                 where = { ispublic = true }
             }))
@@ -201,10 +225,12 @@ app:match('login', '/api/users/login', respond_to({
             end
         elseif (bcrypt.verify(self.params.password, user.password)) then
             self.session.username = user.username
+            self.session.email = user.email
+            self.session.gravatar = md5.sumhexa(user.email)
             if comesFromWebClient then
                 return { redirect_to = '/' }
             else
-                return jsonResponse({ 
+                return jsonResponse({
                     text = 'User ' .. self.params.username .. ' logged in'
                 })
             end
@@ -227,7 +253,7 @@ app:match('logout', '/api/users/logout', respond_to({
         if comesFromWebClient then
             return { redirect_to = '/' }
         else
-            return jsonResponse({ 
+            return jsonResponse({
                 text = 'User ' .. username .. ' logged out'
             })
         end
@@ -340,7 +366,7 @@ app:match('update_project', '/api/users/:username/projects/:projectname/update/:
         end
 
         project:update(options)
-        
+
     end
 }))
 
@@ -430,14 +456,14 @@ app:match('set_visibility', '/api/users/:username/projects/:projectname/visibili
                 project:update({ shared = db.format_date() })
             end
 
-            return jsonResponse({ 
+            return jsonResponse({
                 text = 'project ' .. self.params.projectname .. ' is now ' ..
                 (self.params.ispublic == 'true' and 'public' or 'private')
             })
         else
             return err.nonexistentProject
         end
-        
+
     end
 }))
 
@@ -464,7 +490,7 @@ app:match('remove_project', '/api/users/:username/projects/:projectname/delete',
         else
             return err.nonexistentProject
         end
-        
+
     end
 }))
 
@@ -482,12 +508,13 @@ app:match('toggle_like', '/api/users/:username/projects/:projectname/like', resp
         end
 
         local project = Projects:find(self.params.username, self.params.projectname)
+        local user = Users:find(self.params.username)
 
         if (project) then
 
-            if (Likes:count('liker = ? and projectname = ? and projectowner = ?', 
-                self.session.username, 
-                self.params.projectname, 
+            if (Likes:count('liker = ? and projectname = ? and projectowner = ?',
+                self.session.username,
+                self.params.projectname,
                 self.params.username) == 0) then
 
                 Likes:create({
@@ -496,13 +523,25 @@ app:match('toggle_like', '/api/users/:username/projects/:projectname/like', resp
                     liker = self.session.username
                 })
 
+                if (user.notify_like) then
+                    ok, err = send_mail(user.email, "Someone likes your project",
+                        "Dear " .. self.params.username .. ", \n\n"
+                        .. "Your project \"" .. self.params.projectname .. "\" got "
+                        .. "a thumb up from user "
+                        .. self.session.username .. "\n\n"
+                        .. "Visit your project and see all likes here: \n"
+                        .. self:build_url("/users/" .. self.params.username .. "/projects/" .. util.escape(self.params.projectname))
+                        .. config.mail_footer
+                    )
+                end
+
                 return jsonResponse({ text = 'project liked' })
             else
                 db.delete(
                     'likes',
                     'liker = ? and projectname = ? and projectowner = ?',
-                    self.session.username, 
-                    self.params.projectname, 
+                    self.session.username,
+                    self.params.projectname,
                     self.params.username)
                 return jsonResponse({ text = 'project unliked' })
             end
@@ -523,7 +562,7 @@ app:match('alternate_image', '/api/users/:username/projects/:projectname/altimag
             return err.nonexistentProject
         end
 
-        if (self.params.featureImage) then 
+        if (self.params.featureImage) then
             -- we got the featureImage parameter, meaning we want to change the featured image
             -- for this project
 
@@ -573,5 +612,100 @@ app:match('stats', '/api/stats', respond_to({
     OPTIONS = cors_options,
     GET = function (self)
         return jsonResponse(getStats())
-    end 
+    end
 }))
+
+-- comments
+
+app:match('new_comment', '/api/comments/new', respond_to({
+    OPTIONS = cors_options,
+    POST = function (self)
+
+        validate.assert_valid(self.params, {
+            { 'projectname', exists = true, min_length = 3 },
+            { 'projectowner', exists = true },
+            { 'author', exists = true, min_length = 3 },
+            { 'contents', exists = true, min_length = 3 }
+        })
+
+        if (string.len(self.params.contents) < 3) then
+             return errorResponse('comment too short')
+        end
+
+        if (self.params.author ~= self.session.username) then
+            return err.auth
+        end
+
+        local existingProject = Projects:find(self.params.projectowner, self.params.projectname)
+
+        if (existingProject) then
+            self.params.contents = self.params.contents:gsub("^%s*(.-)%s*$", "%1")
+            self.params.contents = self.params.contents:gsub("%b<>", "")
+            comment = Comments:create({
+                projectname = self.params.projectname,
+                author = self.params.author,
+                contents = self.params.contents,
+                projectowner = self.params.projectowner,
+                date = os.date()
+            })
+
+            if (self.params.author ~= self.params.projectowner) then
+                user = Users:find(self.params.projectowner)
+                if (user.notify_comment) then
+                    ok, err = send_mail(user.email, "New comment",
+                        "Dear " .. self.params.projectowner .. ", \n\n"
+                        .. "Your project \"" .. self.params.projectname .. "\" received "
+                        .. "a new comment from user "
+                        .. self.params.author .. "\n\n"
+                        .. "Visit your project and read all comments here: \n"
+                        .. self:build_url("/users/" .. self.params.projectowner .. "/projects/" .. util.escape(self.params.projectname))
+                        .. config.mail_footer
+                    )
+                end
+            end
+            return jsonResponse({ comment = comment})
+        else
+            return err.nonexistentProject
+        end
+    end
+}))
+
+
+app:get('/api/users/:username/projects/:projectname/comments', function (self)
+    return jsonResponse(
+    --    Comments:select('where projectowner = ? and projectname = ? order by id desc',
+    --    self.params.username,
+    --    self.params.projectname)
+        db.select(
+            'distinct comments.contents, comments.id, comments.date, username as author, md5(email) as gravatar from comments, users where comments.projectname = ? and comments.projectowner = ? and comments.author = users.username order by comments.id desc',
+            self.params.projectname,
+            self.params.username)
+    )
+end)
+
+app:get('/api/comment/:id', function (self)
+    return jsonResponse(
+    db.select(
+        'distinct comments.contents, comments.id, comments.date, users.username as author, md5(users.email) as gravatar from comments, users where comments.id = ? and comments.author = users.username',
+        self.params.id)
+    )
+end)
+
+
+app:get('/api/comment/delete/:id', function (self)
+    local visitor = Users:find(self.session.username)
+    local comment = Comments:find(self.params.id)
+
+    if (not comment) then
+        return err.notfound
+    end
+
+    if (self.params.username ~= self.session.username and not (visitor or visitor.isadmin)) then
+        return err.auth
+    end
+
+    comment:delete()
+
+    return jsonResponse({ text = 'comment removed', id = self.params.id })
+
+end)
