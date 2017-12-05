@@ -33,6 +33,7 @@
                     <li class="pure-menu-item"><a class="pure-menu-link" href="/myprojects">My Projects</a></li>
                     <li class="pure-menu-item"><a class="pure-menu-link" href="/users/<%= session.username %>">My Profile</a></li>
                     <li class="pure-menu-item"><a class="pure-menu-link" href="/migration">Migration</a></li>
+                    <li class="pure-menu-item"><a class="pure-menu-link" href="/change_password">Change Password</a></li>
                     <li class="pure-menu-item"><a class="pure-menu-link" href="/logout">Log Out</a></li>
                 </ul>
             </li>
