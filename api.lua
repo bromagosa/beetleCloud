@@ -314,7 +314,7 @@ app:match('update_project', '/api/users/:username/projects/:projectname/update/:
             return err.nonexistentProject
         end
 
-		if (self.params.property == 'admin_tags') then
+        if (self.params.property == 'admin_tags') then
             local visitor = Users:find(self.session.username)
             if (not visitor.isadmin) then
                 return err.auth
