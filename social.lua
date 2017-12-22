@@ -4,13 +4,12 @@
 -- project pages and user pages
 
 local app = require 'app'
-local db = require 'lapis.db' 
-local Model = require('lapis.db.model').Model
-local config = require "lapis.config".get()
-local respond_to = require('lapis.application').respond_to
+local db = require 'lapis.db'
 local md5 = require 'md5'
+local Model = require('lapis.db.model').Model
+local respond_to = require('lapis.application').respond_to
 local bcrypt = require 'bcrypt'
-
+local config = require "lapis.config".get()
 
 -- Database abstractions
 
@@ -25,6 +24,11 @@ local Projects = Model:extend('projects', {
 local Likes = Model:extend('likes', {
     primary_key = { 'id' }
 })
+
+local Comments = Model:extend('comments', {
+    primary_key = { 'username', 'projectowner' }
+})
+
 
 -- Endpoints
 
@@ -62,9 +66,15 @@ end)
 
 app:get('/users/:username', function(self)
     self.user = Users:find(self.params.username)
-    self.user.joinedString = dateString(self.user.joined)
-    self.visitor = Users:find(self.session.username)
-    return { render = 'user' }
+    if self.user then
+        self.user.joinedString = dateString(self.user.joined)
+        self.visitor = Users:find(self.session.username)
+        self.gravatar = md5.sumhexa(self.user.email)
+        self.page_title = "User " .. self.params.username
+        return { render = 'user' }
+    else
+        return { render = 'notfound' }
+    end
 end)
 
 app:get('/users/:username/projects/g/:collection', function(self)
@@ -97,15 +107,22 @@ app:get('/users/:username/projects/:projectname', function(self)
         self.project.modifiedString = dateString(self.project.updated)
         self.project.sharedString = self.project.ispublic and dateString(self.project.shared) or '-'
         self.project.likes =
-            Likes:count('projectname = ? and projectowner = ?', 
-                self.params.projectname, 
+            Likes:count('projectname = ? and projectowner = ?',
+                self.params.projectname,
                 self.params.username)
         self.project.likedByUser =
-            Likes:count('liker = ? and projectname = ? and projectowner = ?', 
-                self.session.username, 
-                self.params.projectname, 
+            Likes:count('liker = ? and projectname = ? and projectowner = ?',
+                self.session.username,
+                self.params.projectname,
                 self.params.username) > 0
-        
+        self.project.comments =  Comments:select('where projectowner = ? and projectname = ? order by id desc',
+            self.project.username,
+            self.project.projectname)
+        self.project.likers =
+                db.select(
+                    'distinct likes.liker, md5(users.email) as gravatar from likes, users where likes.projectname = ? and likes.projectowner = ? and likes.liker = users.username ',
+                    self.params.projectname,
+                    self.params.username)
         self.project:update({
             views = (self.project.views or 0) + 1
         })
@@ -115,14 +132,6 @@ app:get('/users/:username/projects/:projectname', function(self)
         return { render = 'notfound' }
     end
 end)
-
-function dateString(sqlDate)
-    if (sqlDate == nil) then return 'never' end
-    actualDate = require('date')(sqlDate)
-    return string.format('%02d', actualDate:getday()) ..
-                '.' .. string.format('%02d', actualDate:getmonth()) ..
-                '.' .. actualDate:getyear()
-end
 
 app:match('forgot_password', '/forgot_password', respond_to({
     OPTIONS = cors_options,

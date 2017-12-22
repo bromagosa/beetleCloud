@@ -781,3 +781,15 @@ span.author {
     padding-left: 2em;
     margin: 0;
 }
+
+.comments {margin-top:2em}
+.comment-item {margin:2em 0em}
+.comment-item .date{color:gray;font-size:0.8em}
+
+.gravatar {vertical-align:top;border-radius: 50%;padding-top:1px}
+textarea.in-place {
+	width:100%;
+    padding: 0 2px;
+    border: 2px dashed #dddddd;
+}
+

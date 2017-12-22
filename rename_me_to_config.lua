@@ -17,6 +17,7 @@ config('development', {
     secret = 'a super secret phrase you should never ever make public',
 
      -- for sending email
+    mail_from_name = "",
     mail_server = "",
     mail_user     = "",
     mail_password = "",
@@ -38,6 +39,7 @@ config('production', {
     secret = 'a super secret phrase you should never ever make public',
 
      -- for sending email
+    mail_from_name = "",
     mail_server = "",
     mail_user     = "",
     mail_password = "",
