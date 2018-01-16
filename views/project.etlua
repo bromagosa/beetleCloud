@@ -125,9 +125,7 @@
 						onblur=""
 						placeholder="Leave a comment"
 						onfocus="document.getElementById('new_comment').classList.remove('flash');"
-						>
-
-					</textarea>
+						></textarea>
 				</div>
 				<div class="pure-u-1-5">
 					<a class="pure-button red-button" onClick="post_comment('<%= project.projectname %>','<%= session.username %>','<%= project.username %>')">Post</a>
