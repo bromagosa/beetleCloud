@@ -1,0 +1,31 @@
+<div id="bb-title"><i class="logo"></i><span>Beetle Blocks</span></div>
+<span id="bb-subtitle">Visual Code for 3D Design</span>
+<br>
+<br>
+<h1>Phasing Out</h1>
+<p>Beetle Blocks hasn't been actively maintained for more than four years. Other projects have taken all of our time, and the effort needed to maintain Beetle Blocks and keep it up to date with the latest developments in Snap<em>!</em> has been too much for us to handle.</p>
+<p>However, about two years ago, Bernat, the main developer of Beetle Blocks, started working on a reimplementation of the Beetle abstractions as a new extension for Snap<em>!</em>, to be made available from its official Library Browser.</p>
+<p>The 3D Beetle extension for Snap<em>!</em> has been advancing at great pace and is currently in pre-release state, and already merged into the development branch of Snap<em>!</em> v10, to be launched later this year.</p>
+<br>
+<p>You can read all about this new extension <a href="snap_extension">here</a>.</p>
+<br>
+<p>For all these reasons, we've decided to phase out Beetle Blocks according to the following calendar:</p>
+<h2>PHASEOUT CALENDAR</h2>
+<table>
+    <tr>
+        <td><strong>April 2024</strong></td>
+        <td>We're closing down the forums.</td>
+    </tr>
+    <tr>
+        <td><strong>June 2024</strong></td>
+        <td>We won't allow any more write access to the cloud, but we'll still allow cloud read access. This means you won't be able to create new users, update your projects or create new projects, but you'll still be able to load and run all of your projects.</td>
+    </tr>
+    <tr>
+        <td><strong>December 2024</strong></td>
+        <td>We're closing down the cloud for good. If a user forgot to back up their data and wants to get it back, we'll still probably be able to do so for a reasonable period of time.</td>
+    </tr>
+    <tr>
+        <td><strong>January 2025</strong></td>
+        <td>The beetleblocks.com domain will point to a website with history about the project, showcasing the new 3D Beetle extension for Snap<em>!</em></td>
+    </tr>
+</table>

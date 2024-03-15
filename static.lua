@@ -18,3 +18,7 @@ end)
 app:get('/about', function(self)
     return { render = 'about' }
 end)
+
+app:get('/roadmap', function(self)
+    return { render = 'roadmap' }
+end)
