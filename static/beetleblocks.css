@@ -28,7 +28,24 @@
   margin: 1em 0;
   color: black;
   padding: 1em;
-  border-radius: 5px
+  border-radius: 5px;
+}
+
+table {
+  background-color: #eaebeb;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 1em;
+  display: block;
+}
+
+tr {
+  display: block;
+  margin-bottom: 1em;
+}
+
+td:first-child {
+  min-width: 150px;
 }
 
 /* General Styles */
