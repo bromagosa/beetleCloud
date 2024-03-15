@@ -1,3 +1,36 @@
+/* PHASEOUT */
+
+.warning {
+  background: #ae272b;
+  color: white;
+  padding: 0.2em 1em;
+  margin: 4em 0;
+  border: 1px solid black;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.warning h1 {
+  font-weight: bold;
+  font-size:3em;
+  margin-bottom:0;
+    text-shadow:
+    2px 2px 0 #000,
+    -2px 2px 0 #000,
+    -2px -2px 0 #000,
+    2px -2px 0 #000;
+}
+
+.warning span {
+  display: block;
+  border: 1px solid black;
+  background-color: #eaebeb;
+  margin: 1em 0;
+  color: black;
+  padding: 1em;
+  border-radius: 5px
+}
+
 /* General Styles */
 
 a {
