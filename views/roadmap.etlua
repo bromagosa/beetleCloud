@@ -7,7 +7,7 @@
 <p>However, about two years ago, Bernat, the main developer of Beetle Blocks, started working on a reimplementation of the Beetle abstractions as a new extension for Snap<em>!</em>, to be made available from its official Library Browser.</p>
 <p>The 3D Beetle extension for Snap<em>!</em> has been advancing at great pace and is currently in pre-release state, and already merged into the development branch of Snap<em>!</em> v10, to be launched later this year.</p>
 <br>
-<p>You can read all about this new extension <a href="snap_extension">here</a>.</p>
+<p>You can read all about this new extension <a href="static/snap_extension">here</a>.</p>
 <br>
 <p>For all these reasons, we've decided to phase out Beetle Blocks according to the following calendar:</p>
 <h2>PHASEOUT CALENDAR</h2>
