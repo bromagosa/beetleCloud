@@ -1,3 +1,11 @@
+# !!! THIS REPOSITORY IS UNMAINTAINED !!!
+Beetle Blocks and the BeetleCloud have been discontinued. Please check https://beetleblocks.com for more info. If you're looking for a similar cloud, please check the following projects:
+* Snap!Cloud: https://github.com/snap-cloud/snapCloud
+* TurtleNest: https://github.com/backface/turtlenest
+* TurtleCloud: https://github.com/backface/turtleCloud 
+
+---
+
 # BeetleCloud
 Parallel cloud for Beetle Blocks, plus its sharing site
 
